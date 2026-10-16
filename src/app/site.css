@@ -373,3 +373,34 @@ html,body{margin:0;padding:0;background:#fff}
 .pg-home .hcard .who img{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:0 0 64px;border:2px solid var(--yel)}
 .pg-home .hcard .who h3{margin:0 0 3px}
 .pg-home .hcard .who .deg{margin:0}
+
+/* Mobile navigation */
+.gnav .burger{display:none;width:42px;height:42px;margin-left:10px;border:1px solid var(--line);border-radius:8px;background:#fff;
+ cursor:pointer;align-items:center;justify-content:center;flex:0 0 42px}
+.gnav .burger span,.gnav .burger span::before,.gnav .burger span::after{display:block;width:18px;height:2px;border-radius:2px;
+ background:var(--navy);position:relative;transition:transform .18s,background .18s}
+.gnav .burger span::before,.gnav .burger span::after{content:"";position:absolute;left:0}
+.gnav .burger span::before{top:-6px}.gnav .burger span::after{top:6px}
+.gnav .burger.open span{background:transparent}
+.gnav .burger.open span::before{transform:translateY(6px) rotate(45deg)}
+.gnav .burger.open span::after{transform:translateY(-6px) rotate(-45deg)}
+.gnav .burger:focus-visible,.mnav a:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.mnav[hidden]{display:none}
+.mnav{position:absolute;top:100%;left:0;right:0}
+/* .gnav has backdrop-filter, which makes it the containing block for fixed children, so size the scrim explicitly. */
+.mnav-scrim{position:absolute;top:0;left:0;right:0;height:100dvh;background:rgba(8,26,62,.35)}
+.mnav-panel{position:relative;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 18px 40px rgba(13,35,84,.16);
+ max-height:calc(100dvh - 68px);overflow-y:auto;padding:10px 22px 22px}
+.gnav .mnav-panel ul{display:block;list-style:none;margin:0}
+.mnav-panel li a{display:block;padding:13px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)}
+.mnav-panel li.on a{color:var(--navy);box-shadow:inset 3px 0 0 var(--yel);padding-left:12px}
+.mnav-group{padding:12px 0 4px}
+.mnav-group a{display:block;padding:9px 4px;font-size:15px;font-weight:600;color:var(--navy);line-height:1.35}
+.mnav-group a span{display:block;font-size:12.5px;font-weight:500;color:var(--mut)}
+.mnav-group .mnav-head{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A7B12;padding-bottom:4px}
+.mnav-cta{display:block;margin-top:14px;text-align:center;background:var(--yel);color:var(--navy);font-weight:700;font-size:15px;
+ padding:14px 18px;border-radius:6px}
+@media(max-width:1000px){.gnav .burger{display:inline-flex}}
+@media(min-width:1001px){.mnav{display:none}}
+@media(max-width:420px){.gnav .cta{display:none}.gnav .burger{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){.gnav .burger span,.gnav .burger span::before,.gnav .burger span::after{transition:none}}
