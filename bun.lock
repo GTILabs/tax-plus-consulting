@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "tax-consulting",
+      "name": "taxplus-consulting",
       "dependencies": {
         "next": "16.4.2",
         "react": "19.3.0",
