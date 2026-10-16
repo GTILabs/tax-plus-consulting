@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { site } from "@/modules/content/site";
 import "./globals.css";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="id">
       <body>
         <div className="site">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
