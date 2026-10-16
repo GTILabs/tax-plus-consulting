@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FloatingActions } from "@/components/layout/FloatingActions";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { routes } from "@/modules/content/navigation";
@@ -33,6 +34,7 @@ export default function NotFound() {
         </section>
       </main>
       <SiteFooter />
+      <FloatingActions />
     </>
   );
 }
