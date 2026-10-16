@@ -503,3 +503,10 @@ ul.social{list-style:none;display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
 @media(max-width:640px){.pcar-btn{width:36px;height:36px}.pcar-btn.prev{left:8px}.pcar-btn.next{right:8px}
  .pcar-foot{flex-direction:column;align-items:flex-start}.pcar-dots{align-self:center}}
 @media(prefers-reduced-motion:reduce){.pcar-dots button::before{transition:none}}
+
+/* Pain-point cards: the design dropped the left border, leaving the cards visibly clipped. */
+.pg-home .pcard{display:flex;flex-direction:column;border:1px solid var(--line);border-left:3px solid var(--red);
+ transition:border-color .16s,box-shadow .16s,transform .16s}
+.pg-home .pcard:hover{border-color:#D9C2BB;border-left-color:var(--red);box-shadow:0 12px 28px rgba(13,35,84,.09);transform:translateY(-2px)}
+.pg-home .pcard:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.pg-home .pcard{transition:none}.pg-home .pcard:hover{transform:none}}
