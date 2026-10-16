@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { ContactOptions } from "@/components/sections/ContactOptions";
-import { Stars } from "@/components/ui/icons";
+import { GoogleG, Stars } from "@/components/ui/icons";
 import { ReviewButton } from "@/components/ui/ReviewButton";
 import { StagingNote, StagingOnly } from "@/components/ui/StagingNote";
 import { routes } from "@/modules/content/navigation";
+import { featuredReviews, moreReviews } from "@/modules/content/reviews";
 import { mapsEmbedUrl, mapsLink, site } from "@/modules/content/site";
 
 export const metadata: Metadata = {
@@ -330,37 +331,34 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <StagingOnly>
-          <section className="ab-sec">
-            <div className="gwrap">
-              <div className="ab-k">Kata klien</div>
-              <h2>
-                {site.rating.score} dari {site.rating.count} ulasan di Google
-              </h2>
-              <p className="ab-sub">
-                Diambil langsung dari Google Business Profile kami, jadi bisa Anda cek sendiri.
-              </p>
-              <div className="ab-rev">
-                {[1, 2, 3].map((i) => (
-                  <div className="ab-rc" key={i}>
-                    <Stars className="st" />
-                    <p>[Salin teks ulasan Google asli di sini]</p>
-                    <div className="who">
-                      [Nama depan penulis ulasan]<span>Ulasan Google</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <StagingNote className="ab-note">
-                <b>Tiga testimoni lama sudah dihapus.</b> &ldquo;Budi S. &mdash; CEO Perusahaan
-                Teknologi&rdquo;, &ldquo;Dewi M &mdash; Freelancer&rdquo;, dan &ldquo;Andi R. &mdash; PT Maju
-                Jaya&rdquo; adalah nama contoh, bukan klien nyata. Bagi kantor yang dipimpin Advokat dan
-                Konsultan Pajak berizin, menerbitkan testimoni yang dibuat-buat adalah risiko etika profesi,
-                bukan sekadar kelemahan pemasaran. Ganti ketiga slot di atas dengan ulasan Google asli.
-              </StagingNote>
+        <section className="ab-sec">
+          <div className="gwrap">
+            <div className="ab-k">Kata klien</div>
+            <h2>
+              {site.rating.score} dari {site.rating.count} ulasan di Google
+            </h2>
+            <p className="ab-sub">Diambil langsung dari Google Business Profile kami, jadi bisa Anda cek sendiri.</p>
+            <div className="ab-rev">
+              {[...featuredReviews, ...moreReviews].map((r) => (
+                <figure className="ab-rc" key={r.author}>
+                  <Stars className="st" />
+                  <blockquote>
+                    <p>&ldquo;{r.text}&rdquo;</p>
+                  </blockquote>
+                  <figcaption className="who">
+                    {r.author}
+                    <span>Ulasan Google</span>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
-          </section>
-        </StagingOnly>
+            <p className="revmore">
+              <a href={site.googleReviewUrl} target="_blank" rel="noopener noreferrer">
+                <GoogleG /> Baca semua {site.rating.count} ulasan di Google
+              </a>
+            </p>
+          </div>
+        </section>
 
         <section className="ab-sec tintb" id="rvcta">
           <div className="gwrap">

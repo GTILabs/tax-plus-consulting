@@ -3,11 +3,11 @@ import Link from "next/link";
 import { ConsultationForm } from "@/components/home/ConsultationForm";
 import { SocialLinks } from "@/components/sections/SocialLinks";
 import { Accordion } from "@/components/ui/Accordion";
-import { ArrowDown, ArrowRight, ContactIcon, ServiceIcon, Stars } from "@/components/ui/icons";
+import { ArrowDown, ArrowRight, ContactIcon, GoogleG, ServiceIcon, Stars } from "@/components/ui/icons";
 import { ReviewButton } from "@/components/ui/ReviewButton";
-import { StagingNote } from "@/components/ui/StagingNote";
 import { articles } from "@/modules/content/articles";
 import { homeFaqs } from "@/modules/content/faqs";
+import { featuredReviews } from "@/modules/content/reviews";
 import { routes } from "@/modules/content/navigation";
 import { services } from "@/modules/content/services";
 import { mailtoLink, site, whatsappLink } from "@/modules/content/site";
@@ -77,23 +77,6 @@ const sectors = [
   {
     title: "Properti & Developer",
     text: "Saat terutangnya penghasilan atas unit yang belum diserahkan, dan PPh final pengalihan hak.",
-  },
-];
-
-const reviews = [
-  {
-    quote:
-      "Responsif dan detail. Proses pemeriksaan kami berjalan jauh lebih tenang karena semua dokumen sudah disiapkan sejak awal.",
-    who: "Klien sektor manufaktur",
-  },
-  {
-    quote:
-      "Penjelasannya mudah dipahami untuk orang yang bukan orang pajak. Kami jadi tahu apa yang sebenarnya kami bayar.",
-    who: "Klien sektor F&B",
-  },
-  {
-    quote: "Sangat membantu untuk urusan pajak talent dan royalti. Tim lain sebelumnya tidak sedetail ini.",
-    who: "Klien industri hiburan",
   },
 ];
 
@@ -326,17 +309,24 @@ export default function HomePage() {
             <p>Dari berbagai sektor, di berbagai kota.</p>
           </div>
           <div className="revs">
-            {reviews.map((r) => (
-              <div className="rcard" key={r.who}>
+            {featuredReviews.map((r) => (
+              <figure className="rcard" key={r.author}>
                 <Stars className="s" />
-                <p>&ldquo;{r.quote}&rdquo;</p>
-                <div className="who">
-                  &mdash; {r.who}
-                  <span>Ulasan Google</span>
-                </div>
-              </div>
+                <blockquote>
+                  <p>&ldquo;{r.text}&rdquo;</p>
+                </blockquote>
+                <figcaption className="who">
+                  &mdash; {r.author}
+                  <span>Ulasan Google &middot; {r.context}</span>
+                </figcaption>
+              </figure>
             ))}
           </div>
+          <p className="revmore">
+            <a href={site.googleReviewUrl} target="_blank" rel="noopener noreferrer">
+              <GoogleG /> Baca semua {site.rating.count} ulasan di Google
+            </a>
+          </p>
           <div className="sect-logos">
             {sectorChips.map((chip) => (
               <span className="slog" key={chip}>
@@ -344,10 +334,6 @@ export default function HomePage() {
               </span>
             ))}
           </div>
-          <StagingNote className="tag-note">
-            <b>Catatan untuk tim:</b> ganti tiga kutipan di atas dengan ulasan Google asli (salin teks + nama
-            depan penulisnya). Ulasan nyata yang bisa dicek jauh lebih meyakinkan daripada kutipan umum.
-          </StagingNote>
         </div>
       </section>
 

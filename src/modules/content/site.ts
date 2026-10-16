@@ -17,8 +17,8 @@ export const site = {
       "Jl. Cherry Field, Cipagalo, Kec. Bojongsoang, Kabupaten Bandung, Jawa Barat 40287",
     hours: "Senin–Jumat, 09.00–17.00 WIB",
   },
-  /** Direct "write a review" link from Google Business Profile. Empty until provided. */
-  googleReviewUrl: "",
+  /** TAXPLUS CONSULTING Google Business Profile (opens the listing, where visitors can write a review). */
+  googleReviewUrl: "https://www.google.com/maps?cid=4490344035819018732",
   /** Social profiles; entries with an empty url are hidden. Instagram and TikTok are listed on the old site. */
   social: [
     { id: "instagram", label: "Instagram", handle: "@taxplus.consulting", url: "https://www.instagram.com/taxplus.consulting/" },
@@ -27,7 +27,7 @@ export const site = {
     { id: "linkedin", label: "LinkedIn", handle: "", url: "" },
     { id: "youtube", label: "YouTube", handle: "", url: "" },
   ],
-  rating: { score: "5,0", count: 20 },
+  rating: { score: "5,0", count: 30 },
 } as const;
 
 export type SocialProfile = {
@@ -39,9 +39,8 @@ export type SocialProfile = {
 
 export const socialProfiles: SocialProfile[] = site.social.filter((p) => p.url !== "");
 
-const mapsQuery = encodeURIComponent(`TaxPlus Consulting, ${site.contact.addressFull}`);
-export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
-export const mapsEmbedUrl = `https://maps.google.com/maps?q=${mapsQuery}&z=16&output=embed`;
+export const mapsLink = site.googleReviewUrl;
+export const mapsEmbedUrl = "https://maps.google.com/maps?cid=4490344035819018732&z=16&output=embed";
 
 export function whatsappLink(message?: string) {
   const base = `https://wa.me/${site.contact.whatsappNumber}`;

@@ -466,3 +466,13 @@ ul.social{list-style:none;display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
 .pg-home .ksoc .social{margin-top:10px}
 @media(prefers-reduced-motion:reduce){.social a{transition:none}}
 @media(max-width:560px){.gft .g{grid-template-columns:repeat(2,minmax(0,1fr))}.gft .g>div:first-child{grid-column:1/-1}}
+
+/* Real Google reviews */
+.ab-rc p{color:var(--ink)}
+.pg-home .rcard,.ab-rc{display:flex;flex-direction:column}
+.pg-home .rcard .who,.ab-rc .who{margin-top:auto}
+.revmore{text-align:center;margin-top:22px}
+.revmore a{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;color:var(--navy);background:#fff;
+ border:1px solid var(--line);border-radius:30px;padding:10px 18px;transition:border-color .15s,box-shadow .15s}
+.revmore a:hover{border-color:#C9D5EC;box-shadow:0 8px 20px rgba(13,35,84,.08)}
+.revmore .gg{width:18px;height:18px}
