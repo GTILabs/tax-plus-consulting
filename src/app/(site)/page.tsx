@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight, ContactIcon, ServiceIcon, Stars } from "@/compon
 import { ReviewButton } from "@/components/ui/ReviewButton";
 import { StagingNote } from "@/components/ui/StagingNote";
 import { articles } from "@/modules/content/articles";
+import { homeFaqs } from "@/modules/content/faqs";
 import { routes } from "@/modules/content/navigation";
 import { services } from "@/modules/content/services";
 import { mailtoLink, site, whatsappLink } from "@/modules/content/site";
@@ -124,33 +125,6 @@ const steps = [
   },
 ];
 
-const faqs = [
-  {
-    question: "Saya menerima SP2DK. Apakah itu berarti saya diperiksa?",
-    answer:
-      "Belum tentu. SP2DK adalah permintaan penjelasan atas data yang berbeda dengan SPT Anda, dan masih berada di tahap pengawasan — bukan pemeriksaan. Tetapi tanggapan yang keliru atau terlambat dapat membuatnya berlanjut menjadi pemeriksaan. Karena itu tanggapan pertama sangat menentukan.",
-  },
-  {
-    question: "Berapa biaya jasa konsultan pajak, dan apakah sepadan?",
-    answer:
-      "Biaya disesuaikan dengan jumlah entitas, jenis pajak, dan volume transaksi. Sebagai pembanding: denda keterlambatan lapor SPT Badan saja Rp1.000.000 per SPT, sementara kurang bayar yang ditemukan lewat pemeriksaan dikenai bunga hingga 24 bulan. Kami sampaikan estimasi biaya di konsultasi awal, sebelum ada komitmen apa pun.",
-  },
-  {
-    question: "Pajak saya sudah dipotong kantor. Kenapa masih muncul kurang bayar?",
-    answer:
-      "Karena pemberi kerja hanya menghitung penghasilan yang ia bayarkan sendiri. Bila Anda punya penghasilan lain — usaha sampingan, honor, sewa, royalti — seluruhnya wajib digabung di SPT Tahunan dan dihitung ulang dengan tarif progresif hingga 35%. Selisihnya menjadi PPh Pasal 29 yang harus disetor sendiri sebelum SPT dilaporkan.",
-  },
-  {
-    question: "Apakah TaxPlus bisa mewakili saya di Pengadilan Pajak?",
-    answer:
-      "Bisa. Managing Partner kami memegang Izin Kuasa Hukum Pengadilan Pajak No. 1507/PP/IKH/2023 dan Kartu Advokat PERADI, sehingga dapat bertindak sebagai kuasa hukum untuk keberatan, banding, maupun gugatan.",
-  },
-  {
-    question: "Klien saya di luar Bandung. Apakah tetap bisa dilayani?",
-    answer:
-      "Bisa. Kantor kami di Bandung, tetapi klien kami tersebar di berbagai kota. Seluruh administrasi perpajakan kini berjalan lewat Coretax, dan koordinasi dilakukan daring dengan laporan status berkala.",
-  },
-];
 
 export default function HomePage() {
   return (
@@ -453,7 +427,12 @@ export default function HomePage() {
             <h2>Pertanyaan yang sering muncul</h2>
           </div>
           <div className="faq">
-            <Accordion items={faqs} itemClassName="fitem" buttonClassName="hfq" answerClassName="fa" />
+            <Accordion items={homeFaqs} itemClassName="fitem" buttonClassName="hfq" answerClassName="fa" />
+            <p style={{ textAlign: "center", marginTop: 20 }}>
+              <Link className="more" href={routes.faq}>
+                Lihat semua pertanyaan pajak <ArrowRight />
+              </Link>
+            </p>
           </div>
         </div>
       </section>

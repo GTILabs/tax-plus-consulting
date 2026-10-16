@@ -17,6 +17,7 @@ export const routes = {
   articles: "/artikel",
   article: (slug: string) => `/artikel/${slug}`,
   career: "/karier",
+  faq: "/faq",
   contact: "/#kontak",
   download: "/#unduh",
   legal: "/tentang-kami#legalitas",
