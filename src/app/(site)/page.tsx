@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ConsultationForm } from "@/components/home/ConsultationForm";
 import { Accordion } from "@/components/ui/Accordion";
@@ -182,8 +183,20 @@ export default function HomePage() {
             </div>
             <div className="hcard">
               <div className="t">Ditangani Langsung Oleh</div>
-              <h3>Kalam Al-Iqbal</h3>
-              <div className="deg">S.Ak., S.H., M.Ak., BKP &mdash; Managing Partner</div>
+              <div className="who">
+                <Image
+                  src="/images/photos/kalam-al-iqbal-avatar.jpg"
+                  alt="Kalam Al-Iqbal"
+                  width={256}
+                  height={256}
+                  sizes="64px"
+                  priority
+                />
+                <div>
+                  <h3>Kalam Al-Iqbal</h3>
+                  <div className="deg">S.Ak., S.H., M.Ak., BKP &mdash; Managing Partner</div>
+                </div>
+              </div>
               <ul>
                 <li>
                   <span className="dot" />

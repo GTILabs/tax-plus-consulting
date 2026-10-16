@@ -358,3 +358,18 @@ html,body{margin:0;padding:0;background:#fff}
 .fab-wa:focus-visible,.fab-top:focus-visible{outline:3px solid var(--yel);outline-offset:3px}
 @media(max-width:560px){.fab{right:14px;bottom:14px}.fab-wa{width:52px;height:52px}}
 @media(prefers-reduced-motion:reduce){.fab-wa,.fab-top{transition:none}}
+
+/* Photos (About page + homepage hero card) */
+.ab-photo.has-img{padding:0;border:none;overflow:hidden;box-shadow:0 14px 34px rgba(13,35,84,.14)}
+.ab-photo.has-img img{width:100%;height:100%;object-fit:cover}
+.ab-figure{margin:18px 0 0}
+.ab-figure img,.ab-figure iframe{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:var(--tint)}
+.ab-figure figcaption{font-size:13px;color:var(--mut);margin-top:9px}
+.ab-figure figcaption a{color:var(--navy);font-weight:600}
+.ab-office{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
+.ab-office .ab-figure img,.ab-office .ab-figure iframe{aspect-ratio:4/3;object-fit:cover;height:auto;border:0}
+@media(max-width:860px){.ab-office{grid-template-columns:1fr}}
+.pg-home .hcard .who{display:flex;align-items:center;gap:14px;margin:12px 0 15px}
+.pg-home .hcard .who img{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:0 0 64px;border:2px solid var(--yel)}
+.pg-home .hcard .who h3{margin:0 0 3px}
+.pg-home .hcard .who .deg{margin:0}

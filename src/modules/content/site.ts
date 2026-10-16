@@ -22,6 +22,10 @@ export const site = {
   rating: { score: "5,0", count: 20 },
 } as const;
 
+const mapsQuery = encodeURIComponent(`TaxPlus Consulting, ${site.contact.addressFull}`);
+export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+export const mapsEmbedUrl = `https://maps.google.com/maps?q=${mapsQuery}&z=16&output=embed`;
+
 export function whatsappLink(message?: string) {
   const base = `https://wa.me/${site.contact.whatsappNumber}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
