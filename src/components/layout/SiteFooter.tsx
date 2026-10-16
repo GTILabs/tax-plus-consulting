@@ -32,6 +32,7 @@ export function SiteFooter() {
               <li><Link href={routes.articles}>Artikel</Link></li>
               <li><Link href={routes.career}>Karier</Link></li>
               <li><Link href={routes.faq}>FAQ Pajak</Link></li>
+              <li><Link href={routes.forms}>Formulir Pajak</Link></li>
               <li><Link href={routes.legal}>Legalitas</Link></li>
             </ul>
           </div>

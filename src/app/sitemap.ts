@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...articles.map((a) => routes.article(a.slug)),
     routes.career,
     routes.faq,
+    routes.forms,
   ];
   return paths.map((path) => ({ url: `${site.url}${path === "/" ? "" : path}` }));
 }

@@ -424,3 +424,28 @@ html,body{margin:0;padding:0;background:#fff}
 .faqb-group h2{font-family:var(--fh);color:var(--navy);font-size:22px;font-weight:600;letter-spacing:-.012em;margin-bottom:14px}
 .faqb-empty{border:1px dashed var(--line);border-radius:10px;padding:22px;font-size:15px;color:var(--body)}
 .faqb-empty b{display:block;color:var(--navy);margin-bottom:4px}
+
+/* Tax forms page */
+.fnote{background:#FFF8DE;border:1px solid #EFD98A;border-left:4px solid var(--yel);border-radius:9px;padding:16px 20px;
+ font-size:14.8px;line-height:1.65;color:#5F4B0E;margin-bottom:30px}
+.fnote b{color:#4A3A08}
+.fnote a{color:var(--navy);font-weight:600;text-decoration:underline}
+.fgroup{margin-bottom:30px}
+.fgroup h2{font-family:var(--fh);color:var(--navy);font-size:22px;font-weight:600;letter-spacing:-.012em;margin-bottom:12px}
+.flist{list-style:none;display:grid;gap:12px}
+.flist li{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:#fff;border:1px solid var(--line);
+ border-radius:11px;padding:18px 20px;transition:border-color .15s,box-shadow .15s}
+.flist li:hover{border-color:#C9D5EC;box-shadow:0 10px 24px rgba(13,35,84,.07)}
+.fbadge{display:flex;align-items:center;justify-content:center;width:48px;height:56px;border-radius:7px;font-size:11px;font-weight:800;
+ letter-spacing:.06em;color:#fff}
+.f-xls,.f-xlsx{background:#1E7A4C}.f-pdf{background:#A8452F}
+.fbody h3{font-family:var(--fh);color:var(--navy);font-size:17px;font-weight:600;line-height:1.35;margin-bottom:4px}
+.fbody p{font-size:14.2px;line-height:1.6;color:var(--body)}
+.site .fdl{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:var(--navy);color:#fff;border-radius:7px;
+ padding:10px 16px;font-size:13.5px;font-weight:700;width:112px;text-align:center}
+.fdl svg{width:18px;height:18px;fill:none;stroke:var(--yel);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.fdl small{font-size:10.5px;font-weight:500;color:#AEBCD8;letter-spacing:.03em}
+.site .fdl:hover{background:var(--navy2)}
+.fdl:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+@media(max-width:640px){.flist li{grid-template-columns:auto 1fr;gap:12px 14px}.site .fdl{grid-column:1/-1;width:auto;flex-direction:row;justify-content:center;gap:8px}
+ .fbadge{width:40px;height:48px}}
