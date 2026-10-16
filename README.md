@@ -81,6 +81,17 @@ Schema lives in `src/lib/db/schema.ts`; migrations are generated into `drizzle/`
 edit the schema file, run `bun run db:generate`, review the SQL, then `bun run db:migrate`. Apply migrations before
 deploying code that depends on them.
 
+## Deployment
+
+The app deploys to [Vercel](https://vercel.com) (project `tax-plus-consulting`), connected to this repository:
+every push to `main` deploys to production, and every other branch or pull request gets a preview deployment.
+
+- `vercel.json` pins the Next.js preset and runs functions in `sin1` (Singapore), next to the Neon database in
+  `ap-southeast-1`.
+- The Neon integration sets `DATABASE_URL`, `DATABASE_URL_UNPOOLED` and related variables for every environment.
+- Set `NEXT_PUBLIC_SITE_URL` to the production domain, and `SITE_INDEXABLE=true` only at launch.
+- Run `bun run db:migrate` before pushing code that needs a new migration.
+
 ## Project structure
 
 ```text
