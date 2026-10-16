@@ -5,9 +5,11 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { ContactOptions } from "@/components/sections/ContactOptions";
 import { GoogleG, Stars } from "@/components/ui/icons";
 import { ReviewButton } from "@/components/ui/ReviewButton";
+import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
 import { StagingNote, StagingOnly } from "@/components/ui/StagingNote";
 import { routes } from "@/modules/content/navigation";
 import { featuredReviews, moreReviews } from "@/modules/content/reviews";
+import { teamPhotos } from "@/modules/content/team";
 import { mapsEmbedUrl, mapsLink, site } from "@/modules/content/site";
 
 export const metadata: Metadata = {
@@ -287,16 +289,7 @@ export default function AboutPage() {
             <p className="ab-sub">
               Satu PIC tetap per klien, dengan Reviewer yang memeriksa ulang sebelum apa pun dilaporkan.
             </p>
-            <figure className="ab-figure">
-              <Image
-                src="/images/photos/team.jpg"
-                alt="Tim TaxPlus Consulting di kantor Bandung"
-                width={1600}
-                height={1064}
-                sizes="(max-width: 1120px) 100vw, 1076px"
-              />
-              <figcaption>Tim TaxPlus Consulting di kantor kami, Bandung.</figcaption>
-            </figure>
+            <PhotoCarousel photos={teamPhotos} label="Foto tim TaxPlus Consulting" />
             <StagingNote className="ab-note">
               <b>Untuk diisi.</b> Cukup nama dan peran, tanpa gelar panjang. Menampilkan tim menjawab
               kekhawatiran yang jarang ditanyakan calon klien secara terbuka: &ldquo;kalau Managing

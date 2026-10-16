@@ -476,3 +476,30 @@ ul.social{list-style:none;display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
  border:1px solid var(--line);border-radius:30px;padding:10px 18px;transition:border-color .15s,box-shadow .15s}
 .revmore a:hover{border-color:#C9D5EC;box-shadow:0 8px 20px rgba(13,35,84,.08)}
 .revmore .gg{width:18px;height:18px}
+
+/* Photo carousel (About page team) */
+.pcar{margin-top:18px}
+.pcar-frame{position:relative;border-radius:12px;overflow:hidden;background:var(--tint)}
+.pcar-track{display:flex;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.pcar-track::-webkit-scrollbar{display:none}
+.pcar-track:focus-visible{outline:3px solid var(--yel);outline-offset:-3px}
+.pcar-track li{flex:0 0 100%;scroll-snap-align:start}
+.pcar-track img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.pcar-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+ background:rgba(255,255,255,.92);box-shadow:0 6px 18px rgba(13,35,84,.2);display:flex;align-items:center;justify-content:center}
+.pcar-btn:hover{background:#fff}
+.pcar-btn:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.pcar-btn svg{width:20px;height:20px;fill:none;stroke:var(--navy);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pcar-btn.prev{left:14px}.pcar-btn.next{right:14px}
+.pcar-count{position:absolute;right:14px;bottom:12px;background:rgba(8,26,62,.72);color:#fff;font-size:12px;font-weight:600;
+ letter-spacing:.04em;padding:4px 10px;border-radius:20px}
+.pcar-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px}
+.pcar-caption{font-size:13px;color:var(--mut);margin:0}
+.pcar-dots{display:flex;gap:4px;flex:0 0 auto}
+.pcar-dots button{width:24px;height:24px;border:none;background:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
+.pcar-dots button::before{content:"";width:8px;height:8px;border-radius:50%;background:#C9D2E3;transition:width .2s,background .2s}
+.pcar-dots button.on::before{width:20px;border-radius:5px;background:var(--navy)}
+.pcar-dots button:focus-visible{outline:2px solid var(--yel);border-radius:4px}
+@media(max-width:640px){.pcar-btn{width:36px;height:36px}.pcar-btn.prev{left:8px}.pcar-btn.next{right:8px}
+ .pcar-foot{flex-direction:column;align-items:flex-start}.pcar-dots{align-self:center}}
+@media(prefers-reduced-motion:reduce){.pcar-dots button::before{transition:none}}
