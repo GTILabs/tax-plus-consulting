@@ -12,13 +12,16 @@ The pages are converted from the single-file staging design in
 - Next.js 16 (App Router, Cache Components) with TypeScript
 - Tailwind CSS v4 (theme + utilities, no Preflight) alongside the design stylesheet in `src/app/site.css`
 - Zod for server-side input validation
+- Neon Postgres (via the Vercel Marketplace) with Drizzle ORM and `node-postgres`
 - [Bun](https://bun.sh) as the package manager
 
 ## Getting started
 
 ```bash
 bun install
-cp .env.example .env.local
+vercel link            # once, to connect this folder to the Vercel project
+vercel env pull .env.local
+bun run db:migrate
 bun dev
 ```
 
@@ -30,6 +33,9 @@ Open [http://localhost:3000](http://localhost:3000).
 | `bun run build` | Create a production build        |
 | `bun start`     | Serve the production build       |
 | `bun run lint`  | Run ESLint                       |
+| `bun run db:generate` | Generate a migration from `src/lib/db/schema.ts` |
+| `bun run db:migrate`  | Apply pending migrations (uses `DATABASE_URL_UNPOOLED`) |
+| `bun run db:studio`   | Browse the database with Drizzle Studio |
 
 ## Environment variables
 
@@ -37,6 +43,8 @@ Open [http://localhost:3000](http://localhost:3000).
 | ---------------------- | ----------------------- | ------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | Public base URL for canonical URLs, Open Graph and the sitemap                        |
 | `SITE_INDEXABLE`       | `false`                 | `true` allows search engines; otherwise robots.txt disallows all and pages are noindex |
+| `DATABASE_URL`         | —                       | Neon pooled connection string, used by the app                                         |
+| `DATABASE_URL_UNPOOLED`| —                       | Neon direct connection string, used by migrations                                     |
 | `SHOW_STAGING_NOTES`   | `false`                 | `true` shows the design's editorial notes and placeholder blocks ("[Nama]", photos)   |
 
 ## Routes
@@ -62,8 +70,16 @@ Open [http://localhost:3000](http://localhost:3000).
 | `GET`  | `/api/articles/[slug]`   | Full article, including `bodyHtml`                                  |
 | `POST` | `/api/consultations`     | Validate a consultation request and return a WhatsApp hand-off link |
 
-`POST /api/consultations` accepts `{ name, whatsapp, sector, message }` and responds with `200 { data: { whatsappUrl } }`,
-`422 { fieldErrors }` or `400` for a malformed body. Requests are not stored yet.
+`POST /api/consultations` accepts `{ name, whatsapp, sector, message }`, stores it in the `consultation_requests` table
+and responds with `201 { data: { id, saved: true, whatsappUrl } }`. If the database is unavailable it still returns the
+WhatsApp hand-off as `200 { data: { saved: false, whatsappUrl } }`. Invalid input returns `422 { fieldErrors }`, a
+malformed body `400`.
+
+## Database
+
+Schema lives in `src/lib/db/schema.ts`; migrations are generated into `drizzle/` and committed. To change the schema,
+edit the schema file, run `bun run db:generate`, review the SQL, then `bun run db:migrate`. Apply migrations before
+deploying code that depends on them.
 
 ## Project structure
 
@@ -78,13 +94,14 @@ src/
 │   ├── layout/            # Nav, breadcrumb, footer
 │   ├── sections/, home/   # Page sections and the consultation form
 │   └── ui/                # Icons, accordion, staging-only helpers
+├── lib/db/                # Drizzle client, schema and helpers
 └── modules/
     ├── content/           # Typed site, navigation, services and article content
-    └── consultations/     # Consultation schema and hand-off logic
+    └── consultations/     # Consultation validation, persistence and hand-off
 ```
 
 ## Next steps
 
 Content lives in typed modules under `src/modules/content`, shaped so it can seed the CMS planned in the handoff
-document (PostgreSQL + Drizzle, Auth.js, admin dashboard, media storage). Before that work starts, decide whether the
-CMS is single-site or multi-tenant.
+document. The CMS is single-site. Next slices: Auth.js with roles, an admin dashboard (starting with consultation
+requests), then articles and pages in the database, media storage and revisions.

@@ -1,12 +1,21 @@
+import "server-only";
+
+import { getDb } from "@/lib/db";
+import { consultationRequests } from "@/lib/db/schema";
 import { whatsappLink } from "@/modules/content/site";
 import type { ConsultationInput } from "./schema";
 
-/**
- * Turns a validated consultation request into a pre-filled WhatsApp message
- * for the office. Requests are not stored yet; persistence (and notifying
- * the team) arrives with the database phase of the CMS.
- */
-export function createConsultationHandoff(input: ConsultationInput) {
+/** Stores a validated consultation request and returns its id. */
+export async function saveConsultationRequest(input: ConsultationInput) {
+  const [row] = await getDb()
+    .insert(consultationRequests)
+    .values(input)
+    .returning({ id: consultationRequests.id });
+  return row.id;
+}
+
+/** Pre-filled WhatsApp message so the visitor can follow up with the office directly. */
+export function createWhatsappHandoff(input: ConsultationInput) {
   const message = [
     "Halo TaxPlus, saya ingin menjadwalkan konsultasi.",
     "",
@@ -16,5 +25,5 @@ export function createConsultationHandoff(input: ConsultationInput) {
     `Masalah: ${input.message}`,
   ].join("\n");
 
-  return { whatsappUrl: whatsappLink(message) };
+  return whatsappLink(message);
 }
