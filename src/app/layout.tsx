@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: site.title, template: `%s — ${site.name}` },
   description: site.description,
+  robots: site.indexable ? undefined : { index: false, follow: false },
   openGraph: {
     type: "website",
     locale: "id_ID",

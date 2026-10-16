@@ -1,38 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TaxPlus Consulting
 
-## Getting Started
+Company profile website for TaxPlus Consulting, a licensed tax consultancy in Bandung. It is a full-stack
+[Next.js](https://nextjs.org) App Router application: the public site and its API live in one project, as described
+in the [CMS handoff](docs/company-cms-chat-summary.md).
 
-This project uses [Bun](https://bun.sh) as its package manager.
+The pages are converted from the single-file staging design in
+[`docs/design/TaxPlus-Web.html`](docs/design/TaxPlus-Web.html).
 
-Install dependencies:
+## Stack
+
+- Next.js 16 (App Router, Cache Components) with TypeScript
+- Tailwind CSS v4 (theme + utilities, no Preflight) alongside the design stylesheet in `src/app/site.css`
+- Zod for server-side input validation
+- [Bun](https://bun.sh) as the package manager
+
+## Getting started
 
 ```bash
 bun install
-```
-
-Then run the development server:
-
-```bash
+cp .env.example .env.local
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+| Script          | Description                      |
+| --------------- | -------------------------------- |
+| `bun dev`       | Start the development server     |
+| `bun run build` | Create a production build        |
+| `bun start`     | Serve the production build       |
+| `bun run lint`  | Run ESLint                       |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+| Variable               | Default                 | Description                                                                           |
+| ---------------------- | ----------------------- | ------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` | Public base URL for canonical URLs, Open Graph and the sitemap                        |
+| `SITE_INDEXABLE`       | `false`                 | `true` allows search engines; otherwise robots.txt disallows all and pages are noindex |
+| `SHOW_STAGING_NOTES`   | `false`                 | `true` shows the design's editorial notes and placeholder blocks ("[Nama]", photos)   |
 
-To learn more about Next.js, take a look at the following resources:
+## Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Path               | Page                                                     |
+| ------------------ | -------------------------------------------------------- |
+| `/`                | Homepage with consultation form                          |
+| `/tentang-kami`    | About, licenses and company legality (`#legalitas`)      |
+| `/layanan`         | Services hub                                             |
+| `/layanan/[slug]`  | `tax-compliance`, `tax-accounting`, `tax-management`, `tax-audit`, `tax-litigation` |
+| `/spesialisasi`    | Industry specialization                                  |
+| `/artikel`         | Article index                                            |
+| `/artikel/[slug]`  | Article detail                                           |
+| `/karier`          | Careers                                                  |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API
 
-## Deploy on Vercel
+| Method | Path                     | Description                                                         |
+| ------ | ------------------------ | ------------------------------------------------------------------- |
+| `GET`  | `/api/services`          | Service summaries                                                   |
+| `GET`  | `/api/services/[slug]`   | Full service content                                                |
+| `GET`  | `/api/articles`          | Article summaries                                                   |
+| `GET`  | `/api/articles/[slug]`   | Full article, including `bodyHtml`                                  |
+| `POST` | `/api/consultations`     | Validate a consultation request and return a WhatsApp hand-off link |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`POST /api/consultations` accepts `{ name, whatsapp, sector, message }` and responds with `200 { data: { whatsappUrl } }`,
+`422 { fieldErrors }` or `400` for a malformed body. Requests are not stored yet.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project structure
+
+```text
+src/
+├── app/
+│   ├── (site)/            # Public pages sharing the nav + footer layout
+│   ├── api/               # Route handlers
+│   ├── site.css           # Design stylesheet ported from the staging HTML
+│   ├── robots.ts, sitemap.ts, not-found.tsx
+├── components/
+│   ├── layout/            # Nav, breadcrumb, footer
+│   ├── sections/, home/   # Page sections and the consultation form
+│   └── ui/                # Icons, accordion, staging-only helpers
+└── modules/
+    ├── content/           # Typed site, navigation, services and article content
+    └── consultations/     # Consultation schema and hand-off logic
+```
+
+## Next steps
+
+Content lives in typed modules under `src/modules/content`, shaped so it can seed the CMS planned in the handoff
+document (PostgreSQL + Drizzle, Auth.js, admin dashboard, media storage). Before that work starts, decide whether the
+CMS is single-site or multi-tenant.

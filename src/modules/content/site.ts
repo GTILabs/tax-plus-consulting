@@ -1,6 +1,8 @@
 export const site = {
   name: "TaxPlus Consulting",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  /** Search engines may index the site only when explicitly enabled (staging stays noindex). */
+  indexable: process.env.SITE_INDEXABLE === "true",
   title: "Konsultan Pajak Bandung — TaxPlus Consulting",
   description:
     "Konsultan pajak berizin di Bandung: Tax Compliance, Tax Accounting, Tax Management, Tax Audit, dan Tax Litigation sampai Pengadilan Pajak.",
