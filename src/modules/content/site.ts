@@ -19,8 +19,25 @@ export const site = {
   },
   /** Direct "write a review" link from Google Business Profile. Empty until provided. */
   googleReviewUrl: "",
+  /** Social profiles; entries with an empty url are hidden. Instagram and TikTok are listed on the old site. */
+  social: [
+    { id: "instagram", label: "Instagram", handle: "@taxplus.consulting", url: "https://www.instagram.com/taxplus.consulting/" },
+    { id: "tiktok", label: "TikTok", handle: "@taxplusconsulting", url: "https://www.tiktok.com/@taxplusconsulting" },
+    { id: "facebook", label: "Facebook", handle: "", url: "" },
+    { id: "linkedin", label: "LinkedIn", handle: "", url: "" },
+    { id: "youtube", label: "YouTube", handle: "", url: "" },
+  ],
   rating: { score: "5,0", count: 20 },
 } as const;
+
+export type SocialProfile = {
+  id: (typeof site.social)[number]["id"];
+  label: string;
+  handle: string;
+  url: string;
+};
+
+export const socialProfiles: SocialProfile[] = site.social.filter((p) => p.url !== "");
 
 const mapsQuery = encodeURIComponent(`TaxPlus Consulting, ${site.contact.addressFull}`);
 export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;

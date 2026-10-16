@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { site } from "@/modules/content/site";
+import { site, socialProfiles } from "@/modules/content/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,10 +19,35 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/images/logo.png`,
+  image: `${site.url}/images/photos/office-front.jpg`,
+  telephone: `+${site.contact.whatsappNumber}`,
+  email: site.contact.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Jl. Cherry Field, Cipagalo, Kec. Bojongsoang",
+    addressLocality: "Kabupaten Bandung",
+    addressRegion: "Jawa Barat",
+    postalCode: "40287",
+    addressCountry: "ID",
+  },
+  openingHours: "Mo-Fr 09:00-17:00",
+  sameAs: socialProfiles.map((p) => p.url),
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
+        />
         <div className="site">{children}</div>
         <Analytics />
         <SpeedInsights />

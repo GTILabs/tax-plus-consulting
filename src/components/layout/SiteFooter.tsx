@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SocialLinks } from "@/components/sections/SocialLinks";
 import { ReviewButton } from "@/components/ui/ReviewButton";
 import { Stars } from "@/components/ui/icons";
 import { routes, serviceLinks } from "@/modules/content/navigation";
@@ -13,6 +14,7 @@ export function SiteFooter() {
           <div>
             <Image src="/images/logo-white.png" alt="TaxPlus Consulting" width={360} height={115} style={{ width: "auto" }} />
             <p>{site.footerBlurb}</p>
+            <SocialLinks />
           </div>
           <div>
             <h5>Layanan</h5>

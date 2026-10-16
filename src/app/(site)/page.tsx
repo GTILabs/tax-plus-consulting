@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ConsultationForm } from "@/components/home/ConsultationForm";
+import { SocialLinks } from "@/components/sections/SocialLinks";
 import { Accordion } from "@/components/ui/Accordion";
 import { ArrowDown, ArrowRight, ContactIcon, ServiceIcon, Stars } from "@/components/ui/icons";
 import { ReviewButton } from "@/components/ui/ReviewButton";
@@ -492,6 +493,10 @@ export default function HomePage() {
                     <div className="vl">{site.contact.hours}</div>
                   </div>
                 </div>
+              </div>
+              <div className="ksoc">
+                <span>Ikuti kami</span>
+                <SocialLinks />
               </div>
             </div>
             <ConsultationForm />
