@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ConsultLink } from "@/components/sections/ConsultLink";
 import { Check } from "@/components/ui/icons";
 import { StagingNote } from "@/components/ui/StagingNote";
 import { routes } from "@/modules/content/navigation";
@@ -139,7 +140,7 @@ export default function SpecializationPage() {
             <p className="sp-sub">Klik untuk melihat isu khas tiap sektor.</p>
             <div className="sp-grid">
               {mainSectors.map((s) => (
-                <Link className="sp-card" key={s.title} href={routes.contact}>
+                <ConsultLink className="sp-card" key={s.title}>
                   {s.tag && <span className="tag">{s.tag}</span>}
                   <h3>{s.title}</h3>
                   <p>{s.text}</p>
@@ -152,8 +153,8 @@ export default function SpecializationPage() {
                       </li>
                     ))}
                   </ul>
-                  <span className="go">Bicarakan sektor ini</span>
-                </Link>
+                  <span className="go">Bicarakan sektor ini &rarr;</span>
+                </ConsultLink>
               ))}
             </div>
           </div>
@@ -223,16 +224,19 @@ export default function SpecializationPage() {
                 <p>
                   Ceritakan jenis usaha dan masalah Anda. Kalau memang bukan bidang kami, kami katakan sejak awal.
                 </p>
-                <Link className="sp-btn" href={routes.services}>
-                  Lihat layanan kami
-                </Link>
+                <div className="cta-pair">
+                  <ConsultLink className="sp-btn">Jadwalkan konsultasi gratis</ConsultLink>
+                  <Link className="cta-sec" href={routes.services}>
+                    Lihat layanan kami &rarr;
+                  </Link>
+                </div>
               </div>
               <div className="row">
-                <Link className="op" href={routes.contact}>
+                <ConsultLink className="op">
                   <b>Konsultasi gratis 15 menit</b>
                   <span>Tanpa biaya dan tanpa komitmen.</span>
-                </Link>
-                <Link className="op" href={routes.download}>
+                </ConsultLink>
+                <Link className="op" href="/#unduh">
                   <b>Unduh panduan sektor Anda</b>
                   <span>Tiga kebocoran pajak yang paling sering terjadi di bisnis seperti milik Anda.</span>
                 </Link>

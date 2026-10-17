@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ConsultBand } from "@/components/sections/ConsultBand";
 import { StagingNote } from "@/components/ui/StagingNote";
 import { articles, upcomingArticles } from "@/modules/content/articles";
 import { routes } from "@/modules/content/navigation";
@@ -79,6 +80,10 @@ export default function ArticlesPage() {
           </div>
         </section>
       </div>
+      <ConsultBand
+        title="Kasus Anda tidak ada di artikel?"
+        text="Artikel menjelaskan pola umumnya. Untuk angka dan dasar hukum yang berlaku di kasus Anda, konsultasi pertama 15 menit tanpa biaya."
+      />
     </>
   );
 }

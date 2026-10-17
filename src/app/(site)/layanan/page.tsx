@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ConsultBand } from "@/components/sections/ConsultBand";
 import { routes } from "@/modules/content/navigation";
 import { getService, serviceGroups } from "@/modules/content/services";
 
@@ -69,6 +70,10 @@ export default function ServicesPage() {
           </div>
         </section>
       </div>
+      <ConsultBand
+        title="Belum yakin layanan mana yang Anda butuhkan?"
+        text="Ceritakan kondisinya dalam 15 menit, gratis. Kami arahkan ke layanan yang tepat — atau katakan terus terang bila Anda belum membutuhkannya."
+      />
     </>
   );
 }

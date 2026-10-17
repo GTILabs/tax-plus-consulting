@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ConsultLink } from "@/components/sections/ConsultLink";
 import { ContactOptions } from "@/components/sections/ContactOptions";
 import { GoogleG, Stars } from "@/components/ui/icons";
 import { ReviewButton } from "@/components/ui/ReviewButton";
@@ -434,9 +435,12 @@ export default function AboutPage() {
               <div>
                 <h3>Ceritakan dulu masalahnya</h3>
                 <p>15 menit, tanpa biaya. Kami tidak menawarkan paket sebelum tahu kondisi Anda.</p>
-                <Link className="ab-btn" href={routes.services}>
-                  Lihat layanan kami
-                </Link>
+                <div className="cta-pair">
+                  <ConsultLink className="ab-btn">Jadwalkan konsultasi gratis</ConsultLink>
+                  <Link className="cta-sec" href={routes.services}>
+                    Lihat layanan kami &rarr;
+                  </Link>
+                </div>
               </div>
               <div className="row">
                 <ContactOptions />
