@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ConsultLink } from "@/components/sections/ConsultLink";
 import { ArrowLeft } from "@/components/ui/icons";
 import { articles, getArticle } from "@/modules/content/articles";
 import { routes } from "@/modules/content/navigation";
@@ -64,9 +65,14 @@ export default async function ArticlePage(props: PageProps<"/artikel/[slug]">) {
               <div className="cta3">
                 <h4>{article.cta.title}</h4>
                 <p>{article.cta.text}</p>
-                <Link href={article.cta.href}>
-                  <span>{article.cta.label}</span>
-                </Link>
+                <div className="cta3-acts">
+                  <ConsultLink topic={article.cta.topic}>
+                    <span>Konsultasi gratis 15 menit</span>
+                  </ConsultLink>
+                  <Link className="cta3-sec" href={article.cta.href}>
+                    {article.cta.label} &rarr;
+                  </Link>
+                </div>
               </div>
             </article>
           </div>

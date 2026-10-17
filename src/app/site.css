@@ -510,3 +510,28 @@ ul.social{list-style:none;display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
 .pg-home .pcard:hover{border-color:#D9C2BB;border-left-color:var(--red);box-shadow:0 12px 28px rgba(13,35,84,.09);transform:translateY(-2px)}
 .pg-home .pcard:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.pg-home .pcard{transition:none}.pg-home .pcard:hover{transform:none}}
+
+/* Consultation form: confirmation, trust row, guide steps */
+.pg-home .form .trust{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:12px;
+ font-weight:600;color:var(--ink)}
+.pg-home .form .trust li{display:inline-flex;align-items:center;gap:5px}
+.pg-home .form .trust li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--grn)}
+.pg-home .form .err a{color:var(--navy);font-weight:700;text-decoration:underline}
+.pg-home .form-done{text-align:center;padding:34px 28px}
+.pg-home .form-done .done-ic{width:58px;height:58px;border-radius:50%;background:#E5F3EC;display:flex;align-items:center;
+ justify-content:center;margin:0 auto 16px}
+.pg-home .form-done .done-ic svg{width:28px;height:28px;fill:none;stroke:var(--grn);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.pg-home .form-done h3{font-size:21px;line-height:1.35;margin-bottom:10px}
+.pg-home .form-done p{font-size:14.5px;color:var(--body);margin-bottom:20px}
+.pg-home .form-done .btn{width:100%;text-align:center}
+.pg-home .form-done .done-again{margin-top:12px;background:none;border:none;font:inherit;font-size:13.5px;font-weight:600;
+ color:var(--navy);text-decoration:underline;cursor:pointer}
+.pg-home .mag .mag-steps{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13.5px;color:var(--ink);margin-bottom:0}
+.pg-home .mag .mag-steps b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;
+ background:var(--navy);color:var(--yel);font-size:11.5px}
+.pg-home .mitem .ar{font-size:12.5px;font-weight:700;color:var(--navy);gap:6px;align-items:center}
+.pg-home .mitem:hover{border-color:var(--navy)}
+.pg-home .mitem:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.post .cta3-acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.post .cta3 .cta3-sec{font-size:14px;font-weight:600;color:#fff;border-bottom:2px solid var(--yel);padding-bottom:1px}
+.pg-home .kgrid .form-done{align-self:start}

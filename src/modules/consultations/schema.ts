@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DEFAULT_TOPIC, TOPIC_SLUGS } from "./topics";
 
 export const BUSINESS_SECTORS = [
   "Industri hiburan / kreator",
@@ -12,6 +13,7 @@ export const BUSINESS_SECTORS = [
 ] as const;
 
 export const consultationSchema = z.object({
+  topic: z.enum(TOPIC_SLUGS, { error: "Pilih kebutuhan Anda." }).default(DEFAULT_TOPIC),
   name: z.string().trim().min(2, "Isi nama lengkap Anda.").max(100, "Nama terlalu panjang."),
   whatsapp: z
     .string()

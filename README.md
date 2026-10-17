@@ -70,7 +70,8 @@ Open [http://localhost:3000](http://localhost:3000).
 | `GET`  | `/api/articles/[slug]`   | Full article, including `bodyHtml`                                  |
 | `POST` | `/api/consultations`     | Validate a consultation request and return a WhatsApp hand-off link |
 
-`POST /api/consultations` accepts `{ name, whatsapp, sector, message }`, stores it in the `consultation_requests` table
+`POST /api/consultations` accepts `{ topic, name, whatsapp, sector, message }` (`topic` is a slug from
+`src/modules/consultations/topics.ts`, default `umum`; link to the form with `/?topik=<slug>#kontak`), stores it in the `consultation_requests` table
 and responds with `201 { data: { id, saved: true, whatsappUrl } }`. If the database is unavailable it still returns the
 WhatsApp hand-off as `200 { data: { saved: false, whatsappUrl } }`. Invalid input returns `422 { fieldErrors }`, a
 malformed body `400`.

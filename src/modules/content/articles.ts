@@ -1,3 +1,4 @@
+import type { TopicSlug } from "@/modules/consultations/topics";
 import { routes } from "./navigation";
 
 export type Article = {
@@ -19,7 +20,8 @@ export type Article = {
    * .kb / .law callouts). Must be sanitized once articles come from the CMS.
    */
   bodyHtml: string;
-  cta: { title: string; text: string; label: string; href: string };
+  /** `topic` pre-selects the consultation form; `label`/`href` is the related page. */
+  cta: { title: string; text: string; label: string; href: string; topic: TopicSlug };
 };
 
 /** Announced on the article index as "Segera" (coming soon); no detail page yet. */
@@ -67,6 +69,7 @@ export const articles: Article[] = [
       text: "Tenggatnya berjalan sejak surat diterima, bukan sejak Anda membacanya. Konsultasi awal 15 menit, tanpa biaya.",
       label: "Lihat layanan pendampingan pemeriksaan",
       href: routes.service("tax-audit"),
+      topic: "tax-audit",
     },
   },
   {
@@ -107,6 +110,7 @@ export const articles: Article[] = [
       text: "Kami buatkan perbandingan angka berdampingan untuk setiap skenario, lengkap dengan dasar hukumnya.",
       label: "Lihat layanan perencanaan pajak",
       href: routes.service("tax-management"),
+      topic: "tax-management",
     },
   },
   {
@@ -146,6 +150,7 @@ export const articles: Article[] = [
       text: "Kami rutin menangani kreator dan manajemen talent. Konsultasi awal 15 menit, tanpa biaya.",
       label: "Lihat spesialisasi industri kreatif",
       href: routes.specialization,
+      topic: "umum",
     },
   },
 ];

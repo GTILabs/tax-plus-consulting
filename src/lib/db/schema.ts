@@ -11,6 +11,8 @@ export const consultationRequests = pgTable(
     whatsapp: text("whatsapp").notNull(),
     sector: text("sector").notNull(),
     message: text("message").notNull(),
+    /** Topic slug from src/modules/consultations/topics.ts. */
+    topic: text("topic").notNull().default("umum"),
     status: consultationStatus("status").notNull().default("new"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },

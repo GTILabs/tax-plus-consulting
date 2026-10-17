@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { ConsultLink } from "@/components/sections/ConsultLink";
 import { ContactOptions } from "@/components/sections/ContactOptions";
 import { Accordion } from "@/components/ui/Accordion";
 import { Check, Cross } from "@/components/ui/icons";
@@ -48,9 +49,9 @@ export default async function ServicePage(props: PageProps<"/layanan/[slug]">) {
               >
                 Konsultasi gratis 15 menit
               </a>
-              <Link className="btn btn-o" href={routes.contact}>
-                Kirim lewat formulir
-              </Link>
+              <ConsultLink className="btn btn-o" topic={service.slug}>
+                Isi formulir konsultasi
+              </ConsultLink>
             </div>
           </div>
         </header>
@@ -183,7 +184,7 @@ export default async function ServicePage(props: PageProps<"/layanan/[slug]">) {
                 <p>15 menit, tanpa biaya. Kami tidak menawarkan paket sebelum tahu kondisi Anda.</p>
               </div>
               <div className="opts">
-                <ContactOptions />
+                <ContactOptions topic={service.slug} />
               </div>
             </div>
           </div>

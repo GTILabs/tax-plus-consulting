@@ -8,6 +8,13 @@
       "when": 1792185905282,
       "tag": "0000_init_consultation_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792209503935,
+      "tag": "0001_add_consultation_topic",
+      "breakpoints": true
     }
   ]
 }

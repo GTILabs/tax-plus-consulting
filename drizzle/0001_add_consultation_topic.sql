@@ -1,0 +1,1 @@
+ALTER TABLE "consultation_requests" ADD COLUMN "topic" text DEFAULT 'umum' NOT NULL;

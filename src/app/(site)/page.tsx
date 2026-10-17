@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ConsultationForm } from "@/components/home/ConsultationForm";
+import { ConsultLink } from "@/components/sections/ConsultLink";
 import { SocialLinks } from "@/components/sections/SocialLinks";
 import { Accordion } from "@/components/ui/Accordion";
-import { ArrowDown, ArrowRight, ContactIcon, GoogleG, ServiceIcon, Stars } from "@/components/ui/icons";
+import { ArrowRight, ContactIcon, GoogleG, ServiceIcon, Stars } from "@/components/ui/icons";
 import { ReviewButton } from "@/components/ui/ReviewButton";
 import { articles } from "@/modules/content/articles";
+import type { TopicSlug } from "@/modules/consultations/topics";
 import { homeFaqs } from "@/modules/content/faqs";
 import { featuredReviews } from "@/modules/content/reviews";
 import { routes } from "@/modules/content/navigation";
@@ -90,11 +92,11 @@ const sectorChips = [
   "F&B",
 ];
 
-const guides = [
-  "Manajemen Kreator & Talent",
-  "Bisnis F&B",
-  "Brand Fashion & Retail",
-  "Perusahaan Manajemen & Agensi",
+const guides: { label: string; topic: TopicSlug }[] = [
+  { label: "Manajemen Kreator & Talent", topic: "panduan-kreator" },
+  { label: "Bisnis F&B", topic: "panduan-fnb" },
+  { label: "Brand Fashion & Retail", topic: "panduan-fashion" },
+  { label: "Perusahaan Manajemen & Agensi", topic: "panduan-agensi" },
 ];
 
 const steps = [
@@ -127,11 +129,9 @@ export default function HomePage() {
                 Berizin, berpengalaman, dan tidak berhenti ketika perkara masuk pengadilan.
               </p>
               <div className="acts">
-                <a className="btn btn-y" href="#kontak">
-                  Konsultasi awal gratis &middot; 15 menit
-                </a>
+                <ConsultLink className="btn btn-y">Konsultasi awal gratis &middot; 15 menit</ConsultLink>
                 <a className="btn btn-o" href="#unduh">
-                  Unduh panduan gratis
+                  Minta panduan gratis
                 </a>
               </div>
               <div className="rev">
@@ -344,21 +344,21 @@ export default function HomePage() {
               <span className="eyebrow">Gratis &middot; tanpa biaya</span>
               <h3 style={{ marginTop: 14 }}>3 Kebocoran Pajak di Bisnis Anda</h3>
               <p>
-                Satu halaman, tiga kesalahan paling umum di sektor Anda, dan cara membetulkannya. Pilih yang
-                sesuai.
+                Satu halaman, tiga kesalahan paling umum di sektor Anda, dan cara membetulkannya. Pilih sektor
+                Anda &mdash; panduannya kami kirim lewat WhatsApp.
               </p>
-              <a className="btn btn-n" href="#kontak">
-                Minta panduannya
-              </a>
+              <p className="mag-steps">
+                <b>1</b> Pilih sektor <b>2</b> Isi nama &amp; nomor WhatsApp <b>3</b> Panduan dikirim
+              </p>
             </div>
             <div className="mlist">
               {guides.map((g, i) => (
-                <a className="mitem" key={g} href="#kontak">
-                  <span className="n">{String(i + 1).padStart(2, "0")}</span> {g}{" "}
+                <ConsultLink className="mitem" key={g.topic} topic={g.topic}>
+                  <span className="n">{String(i + 1).padStart(2, "0")}</span> {g.label}
                   <span className="ar">
-                    <ArrowDown />
+                    Minta <ArrowRight />
                   </span>
-                </a>
+                </ConsultLink>
               ))}
             </div>
           </div>
