@@ -562,3 +562,23 @@ ul.social{list-style:none;display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
 .cta-pair .ab-btn,.cta-pair .sp-btn{margin-top:0}
 .site .cta-pair .cta-sec{color:#fff;font-size:14.5px;font-weight:600;border-bottom:2px solid var(--yel);padding-bottom:1px}
 .site .ab-btn,.site .sp-btn{color:var(--navy)}
+
+/* Sticky mobile CTA bar (replaces the floating WhatsApp button on phones) */
+.mbar{display:none}
+@media(max-width:760px){
+ .fab .fab-wa{display:none}
+ .mbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:84;background:rgba(255,255,255,.97);
+  backdrop-filter:blur(6px);border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(13,35,84,.10);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));transform:translateY(110%);transition:transform .22s ease}
+ .mbar.on{transform:none}
+ .site .mbar-wa{display:flex;align-items:center;justify-content:center;gap:7px;flex:0 0 auto;padding:0 16px;height:48px;border-radius:8px;
+  border:1.5px solid #CFE9D9;background:#F1FBF5;color:#126C3A;font-weight:700;font-size:14.5px}
+ .mbar-wa svg{width:21px;height:21px;fill:#25D366}
+ .site .mbar-cta{flex:1;display:flex;align-items:center;justify-content:center;height:48px;border-radius:8px;background:var(--yel);
+  color:var(--navy);font-weight:700;font-size:15px;text-align:center}
+ .mbar a:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+ .fab.bar-on{bottom:calc(80px + env(safe-area-inset-bottom))}
+ .fab{transition:bottom .22s ease}
+ .site{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){.mbar,.fab{transition:none}}
