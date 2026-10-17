@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ConsultLink } from "@/components/sections/ConsultLink";
 import { routes, serviceLinks } from "@/modules/content/navigation";
 
 const items = [
@@ -62,9 +63,9 @@ export function SiteNav() {
             </li>
           ))}
         </ul>
-        <Link className="cta" href={routes.contact} onClick={close}>
-          Konsultasi Gratis
-        </Link>
+        <span className="cta-wrap" onClick={close}>
+          <ConsultLink className="cta">Konsultasi Gratis</ConsultLink>
+        </span>
         <button
           type="button"
           className={menuOpen ? "burger open" : "burger"}
@@ -102,9 +103,9 @@ export function SiteNav() {
               </Link>
             ))}
           </div>
-          <Link className="mnav-cta" href={routes.contact} onClick={close}>
-            Konsultasi Gratis &middot; 15 menit
-          </Link>
+          <span onClick={close}>
+            <ConsultLink className="mnav-cta">Konsultasi Gratis &middot; 15 menit</ConsultLink>
+          </span>
         </div>
       </div>
     </nav>

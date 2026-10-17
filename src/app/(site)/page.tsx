@@ -134,6 +134,11 @@ export default function HomePage() {
                   Minta panduan gratis
                 </a>
               </div>
+              <ul className="hero-trust">
+                <li>Gratis</li>
+                <li>Tanpa komitmen</li>
+                <li>Dibalas di hari kerja yang sama</li>
+              </ul>
               <div className="rev">
                 <Stars className="stars" /> <b style={{ color: "#fff" }}>{site.rating.score}</b> dari{" "}
                 {site.rating.count} ulasan Google
@@ -275,6 +280,9 @@ export default function HomePage() {
                 Respons dalam 24 jam &middot; Satu PIC khusus per klien &middot; Laporan status berkala lewat
                 dashboard monitoring.
               </p>
+              <ConsultLink className="more more-light">
+                Jadwalkan konsultasi <ArrowRight />
+              </ConsultLink>
             </div>
           </div>
         </div>
@@ -379,6 +387,10 @@ export default function HomePage() {
                 <p>{s.text}</p>
               </div>
             ))}
+          </div>
+          <div className="steps-cta">
+            <ConsultLink className="btn btn-n">Mulai langkah 1 &mdash; konsultasi gratis</ConsultLink>
+            <span>15 menit, daring atau tatap muka.</span>
           </div>
         </div>
       </section>
