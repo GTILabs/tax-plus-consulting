@@ -21,14 +21,3 @@ export const featuredReviews: GoogleReview[] = [
     text: "sangat profesional dan dapat mengerti client dengan cepat dan tepat. highly recommended",
   },
 ];
-
-/** Shorter reviews for the About page. */
-export const moreReviews: GoogleReview[] = [
-  {
-    author: "Andy S.",
-    context: "Ulasan Google",
-    text: "Top-tier service! Super helpful, professional, and genuinely nice people to work with",
-  },
-  { author: "Lia R.", context: "Ulasan Google", text: "Taxplus pilihan tepat dan terpercaya" },
-  { author: "Intan A.", context: "Ulasan Google", text: "Good sangat profesional. Very recomend" },
-];
