@@ -1,178 +1,234 @@
-import type { TopicSlug } from "@/modules/consultations/topics";
-import { routes } from "./navigation";
+import type { ArticleCategory } from "./article-meta";
+import { articleCovers } from "./article-covers";
 
 export type Article = {
   slug: string;
-  status: "published";
-  category: string;
-  title: string;
-  excerpt: string;
-  /** Label on the navy thumbnail of article cards. */
-  thumbLabel: string;
-  featured?: boolean;
-  /** Label on the large featured-article image; newlines are line breaks. */
-  featureLabel?: string;
+  category: ArticleCategory;
+  /** ISO date (YYYY-MM-DD). */
+  publishedAt: string;
   readingMinutes: number;
-  byline: string;
-  lead: string;
+  title: string;
+  /** Two-sentence summary, also used as the meta description. */
+  excerpt: string;
+  legalBasis: string;
   /**
-   * Trusted HTML authored in this repository (p, h3, b, ul/li and the
-   * .kb / .law callouts). Must be sanitized once articles come from the CMS.
+   * Trusted HTML authored in this repository (p, h3, ul/li, the .ar-box callout
+   * and .ar-tbl tables). Must be sanitized once articles come from the CMS.
    */
   bodyHtml: string;
-  /** `topic` pre-selects the consultation form; `label`/`href` is the related page. */
-  cta: { title: string; text: string; label: string; href: string; topic: TopicSlug };
 };
 
-/** Announced on the article index as "Segera" (coming soon); no detail page yet. */
-export type UpcomingArticle = { thumbLabel: string; title: string; excerpt: string };
+export const ARTICLE_AUTHOR = "Tim TaxPlus Consulting";
 
-/* Content extracted from docs/design/TaxPlus-Web.html. */
+/* The 18 launch articles from the approved prototype (taxplus-website-prototipe.html), newest first. */
 export const articles: Article[] = [
   {
-    slug: "sp2dk-apa-yang-harus-dilakukan",
-    status: "published",
+    slug: "pph-ter-desember",
+    category: "PPh",
+    publishedAt: "2026-10-14",
+    readingMinutes: 5,
+    title: "Kenapa potongan PPh 21 bulan Desember lebih besar",
+    excerpt: "Gaji sama, tapi potongan pajaknya melonjak di akhir tahun. Ini bukan salah hitung. Begini cara kerja TER dan masa pajak terakhir.",
+    legalBasis: "PP 58/2023; PMK 168/2023, khususnya Pasal 15.",
+    bodyHtml: "<p>Hampir setiap Januari, bagian HR klien kami menerima pertanyaan yang sama dari karyawan: kenapa potongan pajak di slip gaji Desember jauh lebih besar dari bulan-bulan sebelumnya? Gajinya tidak naik, tidak ada bonus, tapi potongannya bisa tiga atau empat kali lipat.</p>\n<p>Jawabannya ada di cara PPh 21 dipotong sejak 2024.</p>\n<h3>Januari sampai November: tarif efektif</h3>\n<p>Untuk pegawai tetap, pemotongan bulanan memakai tarif efektif rata-rata (TER). Tarifnya cukup dikalikan ke penghasilan bruto sebulan. Kategorinya ditentukan status PTKP:</p>\n<ul><li>Kategori A: TK/0, TK/1, dan K/0</li><li>Kategori B: TK/2, TK/3, K/1, dan K/2</li><li>Kategori C: K/3</li></ul>\n<p>TER sengaja dibuat sederhana. Ia tidak memperhitungkan biaya jabatan, iuran pensiun, atau PTKP secara rinci. Akibatnya, total potongan sebelas bulan hampir selalu tidak persis sama dengan pajak setahun yang sebenarnya.</p>\n<h3>Desember: dihitung ulang setahun penuh</h3>\n<p>Di masa pajak terakhir, pemberi kerja tidak memakai TER. PPh 21 setahun dihitung dengan tarif Pasal 17 UU PPh atas penghasilan neto dikurangi PTKP, lalu dikurangi potongan yang sudah dilakukan Januari sampai November. Selisihnya itulah yang dipotong di Desember.</p>\n<div class=\"ar-box\"><b>Contoh sederhana</b><p>Pegawai TK/0, gaji Rp10.000.000 per bulan, tanpa iuran pensiun.</p><ul><li>TER kategori A untuk Rp10 juta: 2%. Potongan Rp200.000 per bulan, sebelas bulan = Rp2.200.000.</li><li>Setahun: bruto Rp120 juta, biaya jabatan Rp6 juta, neto Rp114 juta, PTKP Rp54 juta, PKP Rp60 juta. PPh 5% = Rp3.000.000.</li><li>Potongan Desember: Rp3.000.000 &minus; Rp2.200.000 = <b>Rp800.000</b>.</li></ul></div>\n<p>Jadi total pajak setahun tidak berubah. Yang berubah hanya cara pembagiannya per bulan.</p>\n<h3>Yang perlu disiapkan perusahaan</h3>\n<p>Pertama, beri tahu karyawan sejak awal tahun bahwa potongan Desember akan berbeda. Penjelasan satu paragraf di slip gaji November sering cukup mencegah keluhan.</p>\n<p>Kedua, pastikan status PTKP setiap pegawai benar per 1 Januari. Salah kategori berarti salah TER selama sebelas bulan, dan semuanya baru ketahuan di Desember.</p>\n<p>Ketiga, untuk pegawai yang berhenti di tengah tahun, masa pajak terakhirnya adalah bulan ia berhenti. Hitung ulang setahunnya dilakukan di bulan itu, bukan di Desember.</p>\n<p>Kalau hasil hitung ulang Anda janggal, misalnya Desember justru minus besar, biasanya ada komponen yang salah dimasukkan sejak awal tahun. Itu lebih mudah diperbaiki sebelum bukti potong tahunan diterbitkan.</p>",
+  },
+  {
+    slug: "umkm-500-juta",
+    category: "UMKM",
+    publishedAt: "2026-10-07",
+    readingMinutes: 4,
+    title: "Rp500 juta pertama bebas pajak: cara menghitungnya dengan benar",
+    excerpt: "Bagi pengusaha orang pribadi, omzet sampai Rp500 juta setahun tidak dikenai PPh final. Hitungannya kumulatif, dan ada beberapa jebakan kecil.",
+    legalBasis: "UU PPh Pasal 7 ayat (2a) dan Pasal 14 s.t.d.t.d. UU HPP; PP 55/2022 s.t.d.d. PP 20/2026.",
+    bodyHtml: "<p>Sejak UU HPP, pengusaha orang pribadi yang memakai tarif final 0,5% tidak membayar PPh atas peredaran bruto sampai Rp500 juta dalam satu tahun pajak. Pajak baru dihitung atas bagian omzet di atas angka itu.</p>\n<p>Fasilitas ini sederhana di atas kertas, tetapi sering salah dalam praktik.</p>\n<h3>Hitungannya kumulatif</h3>\n<p>Rp500 juta bukan batas per bulan, dan bukan rata-rata. Yang dihitung adalah omzet kumulatif sejak Januari. Pajak mulai terutang di bulan ketika kumulatifnya melewati Rp500 juta, dan hanya atas kelebihannya.</p>\n<div class=\"ar-box\"><b>Contoh</b><p>Omzet Rp60 juta per bulan.</p><ul><li>Januari sampai Agustus: kumulatif Rp480 juta. Belum ada PPh.</li><li>September: kumulatif Rp540 juta. PPh = 0,5% &times; Rp40 juta = Rp200.000.</li><li>Oktober sampai Desember: 0,5% &times; Rp60 juta = Rp300.000 per bulan.</li></ul><p>Total setahun Rp1.100.000, bukan Rp3.600.000.</p></div>\n<h3>Tiga jebakan yang sering kami temui</h3>\n<p><b>Membayar sejak Januari.</b> Banyak pengusaha langsung menyetor 0,5% dari bulan pertama karena kebiasaan lama. Kelebihan bayar itu sebenarnya bisa dimintakan kembali, tetapi prosesnya tidak sebanding dengan nilainya. Lebih baik dihitung benar sejak awal.</p>\n<p><b>Suami istri dihitung gabungan.</b> Jika tidak ada perjanjian pisah harta dan istri tidak memilih menjalankan kewajiban pajak sendiri, omzet usaha keduanya digabung. Batas Rp500 juta berlaku sekali untuk keluarga, bukan dua kali.</p>\n<p><b>Omzet dicatat tidak lengkap.</b> Pembayaran lewat transfer, QRIS, dan marketplace sering tersebar di beberapa rekening. Semuanya tetap omzet. Rekap dari satu rekening saja hampir pasti kurang.</p>\n<h3>Kapan tarif final tidak menguntungkan</h3>\n<p>Tarif 0,5% dikenakan atas omzet, bukan laba. Jika usaha sedang rugi atau margin sangat tipis, pengusaha orang pribadi dengan omzet di bawah Rp4,8 miliar bisa memilih memakai norma penghitungan penghasilan neto. Pilihan ini harus diberitahukan dalam tiga bulan pertama tahun pajak. Jika terlewat, Anda dianggap memilih pembukuan.</p>",
+  },
+  {
+    slug: "gugatan-pajak",
+    category: "Sengketa",
+    publishedAt: "2026-09-30",
+    readingMinutes: 4,
+    title: "Bukan banding, tapi gugatan: jalur yang sering terlupa",
+    excerpt: "Tidak semua sengketa pajak diselesaikan lewat keberatan dan banding. Untuk penagihan dan cacat prosedur, jalurnya gugatan, dengan tenggat yang jauh lebih pendek.",
+    legalBasis: "UU KUP Pasal 23 ayat (2); UU 14/2002 tentang Pengadilan Pajak, Pasal 40 dan Pasal 43.",
+    bodyHtml: "<p>Banyak wajib pajak mengira satu-satunya jalan melawan keputusan kantor pajak adalah keberatan lalu banding. Padahal ada jalur lain: gugatan ke Pengadilan Pajak. Objeknya berbeda, dan tenggatnya jauh lebih pendek.</p>\n<h3>Apa saja yang bisa digugat</h3>\n<p>Gugatan diajukan terhadap:</p>\n<ul><li>pelaksanaan Surat Paksa, Surat Perintah Melaksanakan Penyitaan, atau Pengumuman Lelang;</li><li>keputusan pencegahan dalam rangka penagihan pajak;</li><li>keputusan lain yang berkaitan dengan pelaksanaan keputusan perpajakan;</li><li>penerbitan surat ketetapan pajak atau keputusan keberatan yang tidak sesuai prosedur atau tata cara yang diatur dalam peraturan perpajakan.</li></ul>\n<p>Poin terakhir sering terlewat. Jika surat ketetapan diterbitkan tanpa prosedur yang benar, misalnya tanpa SPHP atau tanpa kesempatan pembahasan akhir, persoalannya adalah prosedur, dan jalurnya gugatan.</p>\n<h3>Tenggatnya pendek</h3>\n<ul><li><b>14 hari</b> sejak tanggal pelaksanaan penagihan, untuk gugatan atas pelaksanaan penagihan.</li><li><b>30 hari</b> sejak tanggal diterimanya keputusan yang digugat, untuk gugatan atas keputusan lainnya.</li></ul>\n<p>Bandingkan dengan tiga bulan untuk keberatan dan banding. Wajib pajak yang menunggu terlalu lama sering kehilangan hak gugatnya sebelum menyadari bahwa jalur ini ada.</p>\n<h3>Gugatan tidak menunda penagihan</h3>\n<p>Mengajukan gugatan tidak otomatis menghentikan tindakan penagihan. Penundaan dapat dimohonkan kepada Pengadilan Pajak, tetapi dikabulkan atau tidak tergantung keadaan yang sangat mendesak.</p>\n<h3>Kapan memilih gugatan</h3>\n<p>Jika masalahnya adalah jumlah pajak, itu wilayah keberatan dan banding. Jika masalahnya adalah cara kantor pajak bertindak, itu wilayah gugatan. Dalam beberapa kasus, keduanya dapat berjalan bersamaan untuk objek yang berbeda.</p>\n<p>Ketika menerima surat penagihan atau surat ketetapan yang terasa janggal prosedurnya, jangan tunggu. Hitung tenggatnya hari itu juga.</p>",
+  },
+  {
+    slug: "sphp-pembahasan-akhir",
     category: "Pemeriksaan",
-    title: "Menerima SP2DK? Ini yang harus Anda lakukan dalam 14 hari",
-    excerpt:
-      "SP2DK bukan pemeriksaan. Tapi tanggapan yang keliru di tahap ini yang paling sering membuatnya berubah menjadi pemeriksaan. Berikut urutan yang benar.",
-    thumbLabel: "SP2DK",
-    featured: true,
-    featureLabel: "SP2DK\nTahap Pengawasan",
-    readingMinutes: 6,
-    byline: "Kalam Al-Iqbal, BKP · Kuasa Hukum Pengadilan Pajak",
-    lead: "SP2DK bukan pemeriksaan. Tetapi tanggapan yang keliru di tahap ini adalah sebab paling umum sebuah selisih kecil berkembang menjadi ketetapan yang besar.",
-    bodyHtml: `
-      <p>SP2DK adalah Surat Permintaan Penjelasan atas Data dan/atau Keterangan. Isinya sederhana: kantor pajak memegang data yang berbeda dengan yang Anda laporkan, dan mereka meminta penjelasan. Datanya bisa berasal dari lawan transaksi Anda, dari bank, dari marketplace, atau dari sistem Coretax yang mencocokkan SPT Badan dengan SPT PPN Anda sendiri.</p>
-      <p>Yang penting dipahami: pada tahap ini Anda masih berada di ruang pengawasan, bukan pemeriksaan. Posisi Anda masih longgar, dan justru itulah alasan tahap ini menentukan.</p>
-      <h3>Empat langkah, sesuai urutan</h3>
-      <p><b>1. Baca dulu, jangan langsung menjawab.</b> Cari tahu tiga hal: data apa yang dipermasalahkan, masa pajak berapa, dan berapa tenggat yang diberikan. Banyak wajib pajak langsung menelepon Account Representative dan memberi penjelasan lisan yang kemudian sulit ditarik.</p>
-      <p><b>2. Telusuri sumber selisihnya di pembukuan Anda.</b> Sering kali tidak ada kesalahan sama sekali — yang terjadi hanya perbedaan cara membaca data. Contoh yang paling sering kami temui: omzet marketplace dicatat neto setelah potongan komisi, sedangkan data yang diterima kantor pajak adalah nilai bruto.</p>
-      <p><b>3. Susun tanggapan tertulis, bukan lisan.</b> Tanggapan Anda menjadi bagian berkas perkara dan akan dibaca kembali bila perkara berlanjut ke pemeriksaan, keberatan, bahkan banding. Tanggapan yang baik menjelaskan dan melampirkan bukti, bukan sekadar membantah.</p>
-      <p><b>4. Kalau memang ada kesalahan, pertimbangkan pembetulan.</b> Pasal 8 UU KUP memberi ruang membetulkan SPT atas kemauan sendiri. Konsekuensinya jauh lebih ringan dibanding bila kesalahan yang sama ditemukan lewat pemeriksaan.</p>
-      <div class="kb"><b>Yang membuat keadaan lebih buruk</b>
-        <ul>
-          <li>Mendiamkan surat sampai tenggat lewat — kantor pajak dapat menetapkan pajak berdasarkan data mereka sendiri, tanpa versi Anda</li>
-          <li>Memberi penjelasan lisan yang tidak sesuai pembukuan</li>
-          <li>Melampirkan dokumen yang tidak diminta, yang justru membuka pertanyaan baru</li>
-          <li>Mengakui koreksi tanpa lebih dulu menghitung dampaknya</li>
-        </ul>
-      </div>
-      <h3>Berapa lama waktu Anda</h3>
-      <p>SP2DK umumnya memberi waktu 14 hari sejak surat diterima. Angka ini yang paling sering terlewat, karena suratnya kerap sampai ke tangan yang salah di kantor Anda lebih dulu. Begitu perkara berlanjut ke pemeriksaan, tenggatnya makin ketat: permintaan peminjaman dokumen satu bulan, dan tanggapan atas SPHP hanya tujuh hari kerja.</p>
-      <div class="law"><b>Dasar hukum</b>
-        Pasal 8 UU KUP (pembetulan SPT atas kemauan sendiri) · Pasal 13 UU KUP (penerbitan Surat Ketetapan Pajak) · PMK 18/PMK.03/2021 (tata cara pemeriksaan). Prosedur SP2DK diatur lewat Surat Edaran Direktur Jenderal Pajak tentang pengawasan kepatuhan wajib pajak.
-      </div>
-    `,
-    cta: {
-      title: "Sedang memegang SP2DK?",
-      text: "Tenggatnya berjalan sejak surat diterima, bukan sejak Anda membacanya. Konsultasi awal 15 menit, tanpa biaya.",
-      label: "Lihat layanan pendampingan pemeriksaan",
-      href: routes.service("tax-audit"),
-      topic: "tax-audit",
-    },
+    publishedAt: "2026-09-22",
+    readingMinutes: 4,
+    title: "SPHP datang: lima hari kerja untuk menjawab",
+    excerpt: "Surat Pemberitahuan Hasil Pemeriksaan adalah kesempatan terakhir menyanggah temuan sebelum ketetapan terbit. Waktunya kini lebih pendek.",
+    legalBasis: "PMK 15/2025 Pasal 18 ayat (2); UU KUP Pasal 25 ayat (3a).",
+    bodyHtml: "<p>Di ujung pemeriksaan, pemeriksa menyampaikan Surat Pemberitahuan Hasil Pemeriksaan (SPHP). Isinya daftar temuan dan koreksi, lengkap dengan perhitungan pajak yang menurut pemeriksa masih kurang dibayar.</p>\n<p>Berdasarkan PMK 15/2025, wajib pajak punya waktu <b>5 hari kerja</b> untuk menyampaikan tanggapan tertulis. Sebelumnya tujuh hari kerja.</p>\n<h3>Kenapa tanggapan SPHP penting</h3>\n<p>Tanggapan dan pembahasan akhir menentukan dua hal. Pertama, koreksi mana yang bisa dibatalkan sebelum ketetapan terbit. Kedua, jumlah yang Anda setujui dalam pembahasan akhir. Jumlah ini nanti harus dilunasi sebelum Anda bisa mengajukan keberatan.</p>\n<p>Artinya, apa yang Anda setujui di tahap ini ikut menentukan ruang gerak di tahap sengketa.</p>\n<h3>Cara menyusun tanggapan</h3>\n<ol><li><b>Petakan setiap koreksi.</b> Buat tabel: pos, nilai koreksi, dasar koreksi menurut pemeriksa, dan posisi Anda (setuju, setuju sebagian, tidak setuju).</li><li><b>Untuk yang tidak disetujui, tulis alasan dan buktinya.</b> Rujuk pada dokumen yang sudah diserahkan selama pemeriksaan, dengan nomor dan tanggal.</li><li><b>Pisahkan sengketa fakta dan sengketa hukum.</b> Sengketa fakta selesai dengan dokumen. Sengketa hukum perlu argumen atas dasar peraturan.</li><li><b>Minta pembahasan akhir.</b> Hadir, bawa dokumen, dan pastikan risalahnya mencatat posisi Anda dengan akurat.</li></ol>\n<h3>Satu kesalahan yang sering terjadi</h3>\n<p>Wajib pajak menyetujui semua koreksi dengan harapan prosesnya cepat selesai, lalu kemudian ingin mengajukan keberatan. Pada titik itu, jumlah yang sudah disetujui tidak bisa dipersoalkan lagi.</p>\n<p>Lima hari kerja memang pendek. Karena itu, mulailah menyiapkan argumen sejak koreksi pertama muncul di tengah pemeriksaan, bukan saat SPHP diterima.</p>",
   },
   {
-    slug: "pt-cv-tidak-lagi-pph-final-0-5-persen",
-    status: "published",
-    category: "Perencanaan Pajak",
-    title: "PT dan CV tidak lagi dapat PPh final 0,5%. Apa gantinya?",
-    excerpt: "Aturan yang berlaku tahun lalu sudah berubah. Untuk sebagian usaha ini justru menguntungkan.",
-    thumbLabel: "PP 20/2026",
+    slug: "ppn-batas-pkp",
+    category: "PPN",
+    publishedAt: "2026-09-15",
+    readingMinutes: 4,
+    title: "Omzet lewat Rp4,8 miliar: kapan wajib menjadi PKP",
+    excerpt: "Batas pengusaha kecil dihitung per tahun buku dan sering terlewati di kuartal terakhir. Terlambat dikukuhkan bisa berarti PPN yang tidak pernah Anda pungut tetap harus dibayar.",
+    legalBasis: "UU PPN Pasal 3A; PMK 197/PMK.03/2013 tentang batasan pengusaha kecil PPN.",
+    bodyHtml: "<p>Pengusaha dengan peredaran bruto tidak lebih dari Rp4,8 miliar dalam satu tahun buku termasuk pengusaha kecil. Mereka tidak wajib memungut PPN. Begitu omzet melewati angka itu, statusnya berubah: wajib melaporkan usaha untuk dikukuhkan sebagai Pengusaha Kena Pajak (PKP).</p>\n<h3>Cara menghitungnya</h3>\n<p>Yang dihitung adalah peredaran bruto kumulatif sejak awal tahun buku, bukan rata-rata bulanan. Bagi orang pribadi yang tidak wajib pembukuan, tahun buku sama dengan tahun kalender.</p>\n<p>Contoh: omzet usaha Anda Rp450 juta per bulan. Di akhir Oktober kumulatifnya Rp4,5 miliar. Di November menjadi Rp4,95 miliar. Batas terlampaui di November, dan pelaporan untuk dikukuhkan paling lambat akhir bulan berikutnya.</p>\n<h3>Risiko jika terlambat</h3>\n<p>Pengusaha yang seharusnya PKP tetapi tidak mendaftar dapat dikukuhkan secara jabatan. PPN atas penyerahan sejak saat seharusnya menjadi PKP tetap terutang, padahal Anda tidak pernah memungutnya dari pelanggan. Artinya PPN itu keluar dari kantong sendiri, ditambah sanksi.</p>\n<p>Ini yang membuat kami selalu menyarankan klien yang omzetnya mendekati Rp4 miliar untuk memantau angka kumulatif setiap bulan, bukan menunggu laporan akhir tahun.</p>\n<h3>Belum lewat batas, tapi ingin jadi PKP</h3>\n<p>Pengusaha kecil boleh memilih dikukuhkan sebagai PKP. Ini masuk akal jika pelanggan Anda sebagian besar perusahaan yang juga PKP. Mereka bisa mengkreditkan PPN yang Anda pungut, sementara Anda bisa mengkreditkan PPN atas pembelian.</p>\n<p>Sebaliknya, jika pelanggan Anda konsumen akhir, menjadi PKP berarti harga jual efektif naik. Keputusan ini sebaiknya dihitung, bukan ikut-ikutan.</p>\n<h3>Setelah dikukuhkan</h3>\n<p>Kewajiban berubah cukup banyak: membuat faktur pajak untuk setiap penyerahan, melaporkan SPT Masa PPN setiap bulan, dan menjaga pencatatan pajak masukan. Siapkan sistem penagihan sebelum pengukuhan, bukan sesudahnya.</p>",
+  },
+  {
+    slug: "coretax-pic-badan",
+    category: "Coretax",
+    publishedAt: "2026-08-25",
+    readingMinutes: 4,
+    title: "Akun perusahaan di Coretax: siapa PIC-nya, dan siapa saja yang boleh masuk",
+    excerpt: "Di Coretax, perusahaan diakses lewat akun pribadi pengurusnya. Pengaturan peran akses yang rapi menentukan lancar tidaknya administrasi pajak.",
+    legalBasis: "PMK 81/2024 tentang ketentuan perpajakan dalam rangka pelaksanaan sistem inti administrasi perpajakan.",
+    bodyHtml: "<p>Di sistem lama, akun DJP Online perusahaan punya kata sandi sendiri, dan sering dipakai bersama oleh beberapa orang. Coretax mengubah pola itu. Perusahaan diakses melalui akun pribadi pengurus yang ditunjuk sebagai penanggung jawab, atau PIC.</p>\n<h3>Cara kerjanya</h3>\n<p>PIC masuk dengan NIK dan kata sandinya sendiri, lalu berpindah peran untuk bertindak atas nama perusahaan. Dokumen yang ditandatangani PIC, seperti SPT dan bukti potong, memakai kode otorisasi yang dibuat untuk perusahaan melalui akun tersebut.</p>\n<p>Konsekuensinya jelas: setiap tindakan di akun perusahaan tercatat sebagai tindakan orang tertentu. Ini baik untuk akuntabilitas, tetapi menuntut pengaturan yang rapi.</p>\n<h3>Tiga hal yang perlu diputuskan</h3>\n<p><b>Siapa PIC utama.</b> Idealnya direktur atau pengurus yang memang tercatat di akta dan aktif mengurus keuangan. Pastikan data pengurus di DJP sudah sesuai akta terakhir.</p>\n<p><b>Siapa cadangannya.</b> Jika PIC berhalangan, harus ada pengurus lain yang bisa bertindak. Banyak perusahaan baru menyadari kebutuhan ini saat tenggat sudah dekat.</p>\n<p><b>Siapa diberi peran akses.</b> Staf pajak, bagian keuangan, atau konsultan dapat diberi peran sesuai tugasnya, misalnya hanya membuat faktur atau hanya menyiapkan konsep SPT. Tidak semua orang perlu akses penuh.</p>\n<h3>Saat pengurus berganti</h3>\n<p>Ini titik rawan. Direktur lama keluar, tetapi namanya masih tercatat sebagai PIC dan aksesnya masih aktif. Begitu terjadi perubahan pengurus, perbarui data di DJP dan tinjau ulang semua peran akses. Cabut akses orang yang sudah tidak berwenang.</p>\n<p>Kami menyarankan klien menyimpan satu daftar sederhana: nama, peran di Coretax, tanggal diberi akses, dan tanggal dicabut. Daftar ini cukup satu halaman, dan sangat membantu ketika ada audit internal atau pergantian manajemen.</p>",
+  },
+  {
+    slug: "umkm-pt-cv-pembukuan",
+    category: "UMKM",
+    publishedAt: "2026-08-18",
     readingMinutes: 5,
-    byline: "Kalam Al-Iqbal, BKP",
-    lead: "Perhitungan yang benar tahun lalu belum tentu benar sekarang. Dan untuk sebagian usaha, perubahan ini justru menguntungkan.",
-    bodyHtml: `
-      <p>Selama bertahun-tahun, skema PPh final 0,5% dari peredaran bruto menjadi pilihan favorit pelaku usaha kecil: mudah dihitung, tidak perlu pembukuan rumit. PP 20 Tahun 2026 mengubah peta itu dengan mencabut kelayakan PT biasa dan CV dari skema tersebut.</p>
-      <p>Reaksi pertama kebanyakan pemilik usaha adalah panik. Reaksi itu belum tentu tepat.</p>
-      <h3>Kenapa 0,5% belum tentu lebih murah</h3>
-      <p>Tarif final dihitung dari <b>omzet</b>, bukan dari laba. Artinya Anda tetap membayar meskipun sedang rugi. Tarif umum dihitung dari <b>laba kena pajak</b>, sehingga mengikuti kondisi usaha Anda yang sebenarnya.</p>
-      <p>Sederhananya: bila margin laba usaha Anda tipis, tarif final 0,5% dari omzet bisa jadi lebih mahal daripada tarif umum atas laba. Titik baliknya bergantung pada margin Anda, dan itu harus dihitung per kasus — tidak bisa disimpulkan secara umum.</p>
-      <h3>Fasilitas yang sering terlupakan</h3>
-      <p>Pasal 31E UU PPh memberi pengurangan tarif sebesar 50% atas bagian penghasilan kena pajak yang berasal dari peredaran bruto sampai dengan Rp4,8 miliar, bagi wajib pajak badan dengan peredaran bruto sampai Rp50 miliar setahun.</p>
-      <p>Untuk banyak usaha yang selama ini memakai skema final, fasilitas ini menurunkan tarif efektif jauh di bawah yang mereka bayangkan.</p>
-      <div class="kb"><b>Yang perlu Anda siapkan sekarang</b>
-        <ul>
-          <li>Hitung ulang beban pajak Anda dengan tarif umum, bandingkan dengan yang selama ini dibayar</li>
-          <li>Pastikan pembukuan memadai — tarif umum menuntut laba fiskal yang bisa dipertahankan</li>
-          <li>Siapkan kertas kerja koreksi fiskal, karena tidak semua biaya diakui secara fiskal</li>
-          <li>Tinjau ulang bentuk badan usaha, bila memang masih relevan diubah</li>
-        </ul>
-      </div>
-      <h3>Bagaimana dengan CV?</h3>
-      <p>CV sering disebut lebih hemat karena bagian laba yang diterima sekutu dikecualikan dari objek pajak. Itu benar, tetapi tidak lengkap: Pasal 9 ayat (1) huruf j UU PPh melarang gaji yang dibayarkan kepada sekutu dibiayakan. Keunggulan CV jauh lebih sempit daripada yang umum dibayangkan, dan hasil akhirnya bergantung pada struktur penghasilan Anda.</p>
-      <div class="law"><b>Dasar hukum</b>
-        PP 20 Tahun 2026 · Pasal 17 dan Pasal 31E UU PPh · Pasal 4 ayat (3) huruf i dan Pasal 9 ayat (1) huruf j UU PPh.
-      </div>
-    `,
-    cta: {
-      title: "Perlu dihitung untuk kasus Anda?",
-      text: "Kami buatkan perbandingan angka berdampingan untuk setiap skenario, lengkap dengan dasar hukumnya.",
-      label: "Lihat layanan perencanaan pajak",
-      href: routes.service("tax-management"),
-      topic: "tax-management",
-    },
+    title: "PT dan CV setelah PP 20/2026: bersiap meninggalkan tarif final",
+    excerpt: "Masa tarif 0,5% bagi badan usaha akan habis. Peralihan ke tarif umum tidak selalu berarti pajak lebih besar, asal pembukuannya siap.",
+    legalBasis: "PP 20/2026 Pasal II; UU PPh Pasal 17 ayat (1) huruf b dan Pasal 31E s.t.d.t.d. UU HPP.",
+    bodyHtml: "<p>Bagi PT dan CV yang selama ini memakai tarif final 0,5%, PP 20/2026 berarti satu hal: masa itu tidak akan diperpanjang. Setelah sisa masanya habis, badan usaha beralih ke tarif umum PPh Badan dan wajib menyelenggarakan pembukuan.</p>\n<p>Peralihan ini sering ditakuti. Padahal hasilnya belum tentu lebih mahal.</p>\n<h3>Tarif umum dengan fasilitas Pasal 31E</h3>\n<p>Tarif PPh Badan adalah 22% dari penghasilan kena pajak. Untuk wajib pajak badan dengan peredaran bruto sampai Rp50 miliar, ada fasilitas pengurangan tarif 50% atas bagian penghasilan kena pajak dari omzet sampai Rp4,8 miliar.</p>\n<div class=\"ar-box\"><b>Contoh</b><p>PT dengan omzet Rp3 miliar dan laba fiskal Rp300 juta.</p><ul><li>Tarif final 0,5%: 0,5% &times; Rp3 miliar = Rp15 juta.</li><li>Tarif umum dengan Pasal 31E: seluruh omzet di bawah Rp4,8 miliar, sehingga tarifnya 11%. Pajak = 11% &times; Rp300 juta = Rp33 juta.</li></ul><p>Jika laba fiskalnya hanya Rp100 juta, pajaknya Rp11 juta, lebih rendah dari tarif final. Jika rugi, tidak ada PPh Badan sama sekali.</p></div>\n<p>Jadi yang menentukan adalah margin laba. Usaha dengan margin tipis bisa justru lebih ringan dengan tarif umum.</p>\n<h3>Yang perlu disiapkan</h3>\n<ol><li><b>Pembukuan sejak awal tahun peralihan.</b> Bukan pencatatan omzet saja, tetapi pembukuan lengkap: neraca, laba rugi, dan rincian biaya.</li><li><b>Pemisahan rekening usaha dan pribadi.</b> Ini syarat dasar agar biaya bisa dibuktikan.</li><li><b>Bukti biaya yang rapi.</b> Tanpa bukti, biaya akan dikoreksi dan laba fiskal membengkak.</li><li><b>Angsuran PPh Pasal 25.</b> Setelah SPT Tahunan pertama dengan tarif umum, ada kewajiban angsuran bulanan yang perlu dianggarkan.</li></ol>\n<h3>Kapan mulai</h3>\n<p>Mulailah satu tahun sebelum masa tarif final habis. Tahun itu dipakai untuk mencoba pembukuan, menguji sistem, dan menghitung perkiraan pajak dengan tarif umum. Saat peralihan benar-benar terjadi, tidak ada lagi yang mengejutkan.</p>",
   },
   {
-    slug: "pajak-endorse-dan-royalti",
-    status: "published",
-    category: "Industri Kreatif",
-    title: "Pajak endorse dan royalti: tiga hal yang paling sering terlewat",
-    excerpt: "Fee yang tidak dipotong, barang endorse, dan pemasukan dari platform luar negeri.",
-    thumbLabel: "Industri Kreatif",
+    slug: "pph-bukti-potong-23",
+    category: "PPh",
+    publishedAt: "2026-07-21",
+    readingMinutes: 4,
+    title: "Bukti potong PPh 23 dari klien: cek setiap bulan, jangan tunggu SPT",
+    excerpt: "PPh 23 yang dipotong klien adalah kredit pajak Anda. Tanpa bukti potong yang benar, kredit itu bisa hilang.",
+    legalBasis: "UU PPh Pasal 23, termasuk ayat (1a); PMK 81/2024 tentang ketentuan perpajakan dalam rangka pelaksanaan sistem inti administrasi perpajakan.",
+    bodyHtml: "<p>Setiap kali klien membayar tagihan jasa Anda, umumnya ia memotong PPh 23 sebesar 2% dari nilai jasa. Uang yang Anda terima berkurang, tapi pajak itu bukan hilang. Ia menjadi kredit yang mengurangi PPh Badan Anda di akhir tahun.</p>\n<p>Masalahnya, kredit itu hanya bisa dipakai kalau bukti potongnya ada dan datanya benar.</p>\n<h3>Kesalahan yang sering kami temukan</h3>\n<ul><li>Klien memotong PPh 23 tetapi tidak pernah menerbitkan bukti potong.</li><li>Bukti potong terbit atas nama atau NPWP yang salah, misalnya NPWP pemilik, bukan NPWP perusahaan.</li><li>Nilai di bukti potong berbeda dengan potongan yang benar-benar terjadi.</li><li>Klien memotong 4%, bukan 2%, karena data NPWP Anda tidak tercatat di sistemnya.</li></ul>\n<p>Poin terakhir berasal dari ketentuan bahwa tarif PPh 23 lebih tinggi 100% bagi penerima yang tidak memiliki NPWP. Kalau ini terjadi padahal Anda punya NPWP, minta klien membetulkan.</p>\n<h3>Cek bulanan, bukan tahunan</h3>\n<p>Sejak Coretax berjalan, bukti potong yang diterbitkan klien dapat dilihat langsung dari akun Anda. Manfaatkan itu. Setiap bulan, cocokkan tiga hal:</p>\n<ol><li>daftar pembayaran yang dipotong PPh 23 di rekening koran;</li><li>bukti potong yang muncul di Coretax;</li><li>invoice yang Anda terbitkan.</li></ol>\n<p>Selisih yang ditemukan di bulan yang sama biasanya selesai dengan satu email ke bagian pajak klien. Selisih yang baru ditemukan bulan Maret tahun berikutnya sering berarti menunggu pembetulan, atau kredit pajaknya tidak bisa diklaim.</p>\n<h3>Satu catatan untuk tarif</h3>\n<p>Tarif 2% berlaku untuk sewa dan jasa tertentu. Dividen, bunga, royalti, dan hadiah dikenai 15%. Jika bukti potong yang Anda terima menyebut tarif yang tidak sesuai dengan jenis transaksinya, tanyakan dulu sebelum dicatat.</p>",
+  },
+  {
+    slug: "banding-pengadilan-pajak",
+    category: "Sengketa",
+    publishedAt: "2026-07-08",
     readingMinutes: 5,
-    byline: "Kalam Al-Iqbal, BKP",
-    lead: "Penghasilan kreator datang dari banyak arah sekaligus. Yang membuat repot bukan jumlahnya, melainkan bahwa sebagian besar tidak dipotong pihak mana pun.",
-    bodyHtml: `
-      <p>Kami rutin menangani klien dari industri hiburan dan kreatif. Pola masalahnya hampir selalu sama, dan hampir selalu bermuara pada satu titik: PPh Pasal 29 yang membengkak di akhir tahun, padahal sepanjang tahun terasa tidak ada masalah.</p>
-      <h3>1. Fee yang tidak dipotong brand</h3>
-      <p>Ketika brand memotong PPh 21 atau PPh 23 atas fee Anda, pajaknya sudah dibayar di muka dan menjadi kredit pajak. Tetapi banyak kerja sama — terutama dengan UMKM, agensi kecil, atau brand luar negeri — dibayar penuh tanpa pemotongan.</p>
-      <p>Penghasilan itu tetap wajib dilaporkan dan tetap terutang pajak. Bedanya, tidak ada kredit pajak yang mengurangi. Seluruhnya menjadi kekurangan bayar yang harus Anda setor sendiri.</p>
-      <h3>2. Barang endorse</h3>
-      <p>Tas, gawai, kendaraan, menginap di hotel. Karena tidak berbentuk uang, banyak yang menganggapnya bukan penghasilan. Secara pajak, imbalan dalam bentuk natura atas suatu pekerjaan atau jasa tetap merupakan penghasilan, dan dinilai berdasarkan nilai pasarnya.</p>
-      <p>Ini yang paling sering menjadi temuan, karena jejaknya terbuka: unggahan Anda sendiri.</p>
-      <h3>3. Pemasukan dari platform luar negeri</h3>
-      <p>AdSense, royalti platform musik, pembayaran dari agensi luar negeri. Penghasilan ini masuk ke rekening Anda tanpa bukti potong Indonesia, dan karena itu sering dianggap tidak perlu dilaporkan.</p>
-      <p>Wajib pajak dalam negeri dikenai pajak atas penghasilan dari mana pun sumbernya. Bila ada pajak yang telah dipotong di negara lain, perjanjian penghindaran pajak berganda dapat dimanfaatkan — tetapi itu baru bisa dilakukan bila penghasilannya dilaporkan lebih dulu.</p>
-      <div class="kb"><b>Tiga langkah yang bisa Anda lakukan sekarang</b>
-        <ul>
-          <li>Catat seluruh pemasukan dalam satu tempat, termasuk yang berbentuk barang</li>
-          <li>Kumpulkan bukti potong dari setiap brand yang memotong pajak Anda</li>
-          <li>Bila nilainya sudah besar, hitung apakah bentuk badan usaha lebih menguntungkan — termasuk sesudah PP 20 Tahun 2026</li>
-        </ul>
-      </div>
-      <div class="law"><b>Dasar hukum</b>
-        Pasal 4 ayat (1) UU PPh (pengertian penghasilan, termasuk natura) · Pasal 17 UU PPh (tarif progresif hingga 35%) · Pasal 29 UU PPh (kekurangan pembayaran pajak) · Pasal 21 dan Pasal 23 UU PPh (pemotongan oleh pihak lain).
-      </div>
-    `,
-    cta: {
-      title: "Penghasilan Anda dari banyak sumber?",
-      text: "Kami rutin menangani kreator dan manajemen talent. Konsultasi awal 15 menit, tanpa biaya.",
-      label: "Lihat spesialisasi industri kreatif",
-      href: routes.specialization,
-      topic: "umum",
-    },
-  },
-];
-
-export const upcomingArticles: UpcomingArticle[] = [
-  {
-    thumbLabel: "SPT Tahunan",
-    title: "Pajak sudah dipotong kantor, kenapa masih muncul kurang bayar?",
-    excerpt: "Penjelasan PPh Pasal 29 untuk karyawan yang punya penghasilan lain.",
+    title: "Banding ke Pengadilan Pajak: tenggat, syarat, dan risiko 60%",
+    excerpt: "Banding adalah tahap terakhir sengketa pada tingkat fakta. Persiapan yang baik dimulai sejak keberatan, bukan setelah keputusannya keluar.",
+    legalBasis: "UU 14/2002 tentang Pengadilan Pajak, Pasal 35 dan 36; UU KUP Pasal 27 ayat (5d) s.t.d.t.d. UU HPP; Putusan MK 26/PUU-XXI/2023.",
+    bodyHtml: "<p>Jika keberatan Anda ditolak atau hanya dikabulkan sebagian, langkah berikutnya adalah banding ke Pengadilan Pajak. Di sini sengketa diperiksa oleh majelis hakim, bukan lagi oleh DJP.</p>\n<h3>Tenggat dan syarat</h3>\n<ul><li>Diajukan paling lama tiga bulan sejak keputusan keberatan diterima.</li><li>Tertulis dalam bahasa Indonesia, dengan alasan yang jelas.</li><li>Dilampiri salinan keputusan keberatan.</li><li>Satu keputusan keberatan, satu surat banding.</li></ul>\n<p>Tenggat ini tidak bisa diperpanjang. Banding yang terlambat tidak akan diperiksa pokok sengketanya.</p>\n<h3>Risiko denda 60%</h3>\n<p>Jika banding ditolak atau dikabulkan sebagian, wajib pajak dikenai denda 60% dari jumlah pajak berdasarkan putusan banding, dikurangi pembayaran sebelum keberatan. Sebelum UU HPP, dendanya 100%.</p>\n<p>Angka ini lebih besar dari denda keberatan. Itu sebabnya keputusan untuk banding perlu dihitung ulang, meskipun Anda sudah melewati tahap keberatan.</p>\n<h3>Apa yang menentukan hasil banding</h3>\n<p>Persidangan di Pengadilan Pajak berpusat pada bukti. Majelis akan menilai dokumen yang diajukan kedua pihak dan keterangan dalam sidang. Beberapa hal yang dari pengalaman kami paling berpengaruh:</p>\n<ol><li><b>Konsistensi argumen</b> sejak pemeriksaan, keberatan, sampai banding. Perubahan posisi di tengah jalan melemahkan kredibilitas.</li><li><b>Dokumen yang tersusun.</b> Bukti yang disusun per pos sengketa, lengkap dengan indeks, jauh lebih mudah dinilai.</li><li><b>Pemisahan isu fakta dan isu hukum.</b> Majelis perlu tahu persis apa yang dipersoalkan.</li></ol>\n<h3>Siapa yang boleh mewakili</h3>\n<p>Wajib pajak boleh hadir sendiri atau diwakili kuasa hukum. Kuasa hukum di Pengadilan Pajak harus memenuhi persyaratan dan memiliki izin sebagai kuasa hukum Pengadilan Pajak.</p>\n<p>Satu catatan kelembagaan: berdasarkan putusan Mahkamah Konstitusi, pembinaan Pengadilan Pajak akan sepenuhnya berada di bawah Mahkamah Agung paling lambat 31 Desember 2028.</p>",
   },
   {
-    thumbLabel: "PKP & PPN",
-    title: "Omzet mendekati Rp4,8 miliar: apa yang berubah",
-    excerpt: "Kewajiban PKP, PPN, dan hal yang sebaiknya disiapkan sebelum ambang itu terlewati.",
+    slug: "pmk-15-2025-pemeriksaan",
+    category: "Pemeriksaan",
+    publishedAt: "2026-06-17",
+    readingMinutes: 4,
+    title: "PMK 15/2025: pemeriksaan lebih singkat, persiapan harus lebih cepat",
+    excerpt: "Jangka waktu pemeriksaan kini dibagi tiga jenis, paling lama lima bulan. Waktu yang lebih pendek berlaku untuk kedua pihak.",
+    legalBasis: "PMK 15/2025 tentang Pemeriksaan Pajak, khususnya Pasal 6.",
+    bodyHtml: "<p>Sejak 14 Februari 2025, tata cara pemeriksaan untuk menguji kepatuhan diatur dalam PMK 15/2025. Peraturan ini menggantikan PMK 17/2013 berikut perubahannya. Perubahan yang paling terasa di lapangan adalah soal waktu.</p>\n<h3>Tiga jenis pemeriksaan</h3>\n<table class=\"ar-tbl\"><tr><th>Jenis</th><th>Cakupan</th><th>Jangka waktu</th></tr>\n<tr><td>Lengkap</td><td>Seluruh pos dalam SPT</td><td>Paling lama 5 bulan</td></tr>\n<tr><td>Terfokus</td><td>Pos tertentu</td><td>Paling lama 3 bulan</td></tr>\n<tr><td>Spesifik</td><td>Satu atau beberapa pos tertentu</td><td>Paling lama 1 bulan</td></tr></table>\n<p>Pemeriksaan spesifik atas data konkret pajak yang belum atau kurang dibayar bahkan hanya 10 hari kerja. Setelah pemeriksaan lapangan, pembahasan akhir dan pelaporan paling lama 30 hari kerja.</p>\n<h3>Apa artinya bagi wajib pajak</h3>\n<p>Waktu pemeriksa lebih pendek. Itu juga berarti waktu Anda untuk menyiapkan dokumen lebih pendek. Pemeriksa tidak akan menunggu lama untuk dokumen yang tidak kunjung diserahkan. Mereka akan bekerja dengan data yang ada.</p>\n<p>Dari pengalaman kami, pemeriksaan yang berjalan baik hampir selalu punya satu ciri: dokumen pokok sudah tertata sebelum surat pemberitahuan pemeriksaan datang.</p>\n<h3>Yang sebaiknya selalu siap</h3>\n<ul><li>buku besar dan neraca saldo per bulan;</li><li>rekonsiliasi omzet di laporan keuangan, SPT Masa PPN, dan SPT Tahunan;</li><li>rekonsiliasi biaya gaji dengan SPT Masa PPh 21;</li><li>kontrak dengan pelanggan dan pemasok utama;</li><li>daftar nominatif biaya entertainment dan promosi.</li></ul>\n<p>Lima dokumen ini menjawab sebagian besar pertanyaan awal pemeriksa. Jika semuanya sudah ada, waktu yang pendek bukan masalah. Jika belum, mulailah dari rekonsiliasi omzet, karena di situlah koreksi terbesar biasanya berasal.</p>",
   },
   {
-    thumbLabel: "Coretax",
-    title: "Ekualisasi omzet: kenapa Coretax bisa menemukan selisih Anda",
-    excerpt: "Bagaimana sistem mencocokkan SPT Badan, SPT PPN, dan data lawan transaksi.",
+    slug: "pp-20-2026-umkm",
+    category: "UMKM",
+    publishedAt: "2026-06-04",
+    readingMinutes: 5,
+    title: "PP 20/2026: siapa yang masih boleh memakai tarif 0,5%",
+    excerpt: "Tarif final 0,5% kini tanpa batas waktu bagi orang pribadi, tetapi tertutup bagi PT dan CV yang baru. Ini peta lengkapnya.",
+    legalBasis: "PP 20/2026 tentang Perubahan atas PP 55/2022, khususnya Pasal 57 dan Pasal II.",
+    bodyHtml: "<p>Sejak 22 April 2026, PPh final UMKM diatur ulang melalui PP 20/2026, perubahan atas PP 55/2022. Tarifnya tetap 0,5% dari peredaran bruto, dengan batas omzet Rp4,8 miliar setahun. Yang berubah adalah siapa yang boleh memakainya dan untuk berapa lama.</p>\n<h3>Yang masih boleh</h3>\n<table class=\"ar-tbl\"><tr><th>Wajib pajak</th><th>Jangka waktu</th></tr>\n<tr><td>Orang pribadi</td><td>Tanpa batas waktu, selama syarat terpenuhi</td></tr>\n<tr><td>Perseroan perorangan yang didirikan satu orang</td><td>Tanpa batas waktu, selama syarat terpenuhi</td></tr>\n<tr><td>Koperasi</td><td>Paling lama 4 tahun pajak sejak terdaftar</td></tr></table>\n<h3>Yang tidak lagi bisa memakai</h3>\n<p>PT biasa, CV, dan firma yang terdaftar setelah PP ini berlaku tidak bisa memakai tarif 0,5%. Mereka langsung memakai tarif umum dan wajib menyelenggarakan pembukuan.</p>\n<p>Badan yang sudah memanfaatkan tarif 0,5% sebelumnya hanya menyelesaikan sisa masa sesuai ketentuan lama: tiga tahun untuk PT, empat tahun untuk CV dan firma.</p>\n<p>Pengecualian lain tetap berlaku, misalnya bentuk usaha tetap, badan yang menerima fasilitas tertentu, dan perseroan perorangan milik tenaga ahli yang menyerahkan jasa sejenis pekerjaan bebas.</p>\n<h3>Ketentuan peralihan bagi orang pribadi</h3>\n<p>Orang pribadi yang masa tujuh tahunnya sudah habis di 2024 atau 2025 kembali bisa memakai tarif 0,5% untuk tahun pajak sesudahnya. Bagi banyak pedagang yang sempat beralih ke tarif umum, ini kabar baik.</p>\n<h3>Satu hal yang perlu diperhatikan</h3>\n<p>Batas Rp4,8 miliar untuk orang pribadi dihitung bersama seluruh perseroan perorangan yang ia dirikan. Memecah usaha ke beberapa perseroan perorangan tidak membuat masing-masing punya batas sendiri.</p>\n<p>Jika Anda sedang mempertimbangkan bentuk usaha baru, perubahan ini layak dihitung sebelum akta dibuat. Bentuk badan yang dipilih hari ini menentukan tarif pajak bertahun-tahun ke depan.</p>",
+  },
+  {
+    slug: "coretax-spt-tahunan",
+    category: "Coretax",
+    publishedAt: "2026-05-06",
+    readingMinutes: 5,
+    title: "Catatan dari musim lapor SPT pertama di Coretax",
+    excerpt: "Musim lapor 2026 sudah selesai. Beberapa pola masalahnya berulang, dan sebaiknya dibereskan sebelum tahun depan.",
+    legalBasis: "UU KUP Pasal 3 ayat (3); PMK 81/2024.",
+    bodyHtml: "<p>Batas lapor SPT Tahunan 2025 untuk orang pribadi dan badan sudah lewat. Ini musim pertama pelaporan lewat Coretax, dan kami mencatat beberapa pola yang terus muncul di klien yang kami dampingi. Kami tuliskan di sini supaya persiapan tahun depan lebih ringan.</p>\n<h3>1. Bukti potong sudah terisi, tapi belum tentu benar</h3>\n<p>Coretax menarik bukti potong yang diterbitkan pemberi kerja dan klien ke dalam SPT. Ini memudahkan, tapi juga membuat orang lengah. Kami menemukan bukti potong ganda, bukti potong dengan NPWP yang salah, dan bukti potong yang belum diterbitkan sama sekali oleh pemotongnya. Semua itu baru ketahuan karena dicocokkan dengan catatan sendiri.</p>\n<h3>2. Daftar harta harus konsisten dengan tahun lalu</h3>\n<p>Harta yang dilaporkan tahun sebelumnya menjadi titik awal. Kendaraan yang sudah dijual tetapi masih tercantum, atau tabungan yang tidak pernah dilaporkan, menjadi perbedaan yang terlihat jelas di sistem baru. Rapikan daftar harta sebelum mulai mengisi.</p>\n<h3>3. Aktivasi dan kode otorisasi di menit terakhir</h3>\n<p>Wajib pajak yang baru aktivasi di bulan Maret paling sering terlambat. Bukan karena SPT-nya rumit, tetapi karena email verifikasi tidak masuk, passphrase lupa, atau NIK belum padan.</p>\n<h3>4. Akun badan bergantung pada satu orang</h3>\n<p>Di beberapa perusahaan, hanya satu direktur yang memegang akses. Ketika ia sedang di luar kota, seluruh pelaporan berhenti. Coretax menyediakan pengaturan peran akses agar staf atau konsultan dapat diberi akses sesuai tugasnya.</p>\n<h3>Persiapan untuk tahun depan</h3>\n<ul><li>Cocokkan bukti potong setiap triwulan, bukan setahun sekali.</li><li>Perbarui daftar harta setiap ada pembelian atau penjualan aset.</li><li>Pastikan setidaknya dua orang yang berwenang punya akses ke akun badan.</li><li>Simpan konsep SPT lebih awal, lalu tinjau sebelum dikirim.</li></ul>\n<p>SPT yang dikirim di bulan Februari jarang bermasalah. Yang dikirim di hari terakhir hampir selalu menyisakan pembetulan.</p>",
+  },
+  {
+    slug: "ppn-pajak-masukan",
+    category: "PPN",
+    publishedAt: "2026-04-28",
+    readingMinutes: 4,
+    title: "Pajak masukan punya batas waktu pengkreditan",
+    excerpt: "Faktur pembelian yang terlambat dikreditkan tidak bisa diklaim lagi. Tiga masa pajak terdengar panjang sampai faktur tercecer.",
+    legalBasis: "UU PPN Pasal 9 ayat (8) dan ayat (9) s.t.d.t.d. UU HPP.",
+    bodyHtml: "<p>PPN yang Anda bayar saat membeli barang atau jasa untuk usaha disebut pajak masukan. Bagi PKP, pajak masukan dapat dikreditkan, yaitu dikurangkan dari PPN yang Anda pungut dari pelanggan. Namun hak itu ada batas waktunya.</p>\n<h3>Aturan tiga masa</h3>\n<p>Pajak masukan dapat dikreditkan pada masa pajak faktur dibuat, atau paling lama tiga masa pajak setelah berakhirnya masa pajak tersebut. Faktur bertanggal Januari masih bisa dikreditkan di SPT Masa PPN Februari, Maret, atau April. Lewat dari April, faktur itu tidak lagi bisa dikreditkan lewat SPT Masa normal.</p>\n<p>Untuk perusahaan yang pembeliannya rutin dan besar, faktur yang tercecer di meja bagian pembelian bisa bernilai puluhan juta rupiah.</p>\n<h3>Faktur yang tidak bisa dikreditkan sama sekali</h3>\n<p>Ada pula pajak masukan yang memang tidak dapat dikreditkan, berapa pun cepatnya Anda mencatat. Di antaranya:</p>\n<ul><li>perolehan yang tidak berhubungan langsung dengan kegiatan usaha;</li><li>perolehan dan pemeliharaan mobil sedan dan station wagon, kecuali untuk dijual atau disewakan;</li><li>faktur yang identitas pembelinya tidak sesuai atau isinya tidak lengkap.</li></ul>\n<p>Poin terakhir paling sering terjadi. Pemasok salah memasukkan NPWP atau NITKU cabang, dan faktur itu tidak terbaca sebagai milik Anda.</p>\n<h3>Di Coretax, faktur tidak otomatis terkredit</h3>\n<p>Faktur dari pemasok memang muncul di akun Coretax Anda. Tetapi faktur itu tetap harus dipilih dan dikreditkan saat menyusun SPT Masa PPN. Kami menemukan beberapa kasus di awal masa Coretax ketika klien mengira semua faktur sudah otomatis masuk, padahal statusnya belum dikreditkan.</p>\n<h3>Rutinitas yang kami sarankan</h3>\n<ol><li>Setiap awal bulan, unduh daftar pajak masukan dari Coretax.</li><li>Cocokkan dengan daftar pembelian dari bagian purchasing.</li><li>Hubungi pemasok untuk faktur yang belum muncul atau datanya salah.</li><li>Tandai faktur yang mendekati batas tiga masa.</li></ol>",
+  },
+  {
+    slug: "pph-entertainment",
+    category: "PPh",
+    publishedAt: "2026-03-09",
+    readingMinutes: 4,
+    title: "Biaya jamuan relasi: boleh dibiayakan, asal ada daftar nominatif",
+    excerpt: "Biaya entertainment bukan otomatis dikoreksi fiskal. Yang sering membuatnya gugur adalah dokumen yang tidak lengkap.",
+    legalBasis: "UU PPh Pasal 6 ayat (1) huruf a dan Pasal 9; SE-27/PJ.22/1986; PMK 02/PMK.03/2010 untuk biaya promosi.",
+    bodyHtml: "<p>Dalam pemeriksaan, biaya entertainment hampir selalu masuk daftar koreksi. Banyak pengusaha lalu menyimpulkan biaya ini memang tidak boleh dibiayakan. Kesimpulan itu keliru.</p>\n<p>Biaya jamuan, makan bersama klien, atau hiburan untuk relasi bisnis tetap dapat menjadi pengurang penghasilan bruto. Syaratnya dua: berkaitan dengan kegiatan mendapatkan, menagih, dan memelihara penghasilan, serta didukung daftar nominatif yang dilampirkan pada SPT Tahunan.</p>\n<h3>Isi daftar nominatif</h3>\n<p>Daftar nominatif bukan rekap pengeluaran biasa. Untuk setiap kegiatan, cantumkan:</p>\n<ol><li>tanggal kegiatan;</li><li>tempat dan alamat;</li><li>jenis kegiatan (jamuan makan, hiburan, dan sebagainya);</li><li>jumlah biaya;</li><li>nama relasi yang dijamu, jabatannya, nama perusahaannya, dan jenis usahanya.</li></ol>\n<p>Kolom terakhir paling sering kosong. Tanpa nama relasi, pemeriksa tidak bisa menilai apakah jamuan itu memang untuk kepentingan usaha. Struk restoran saja tidak menjawab pertanyaan itu.</p>\n<h3>Kebiasaan yang membuat koreksi besar</h3>\n<p>Dari pengalaman kami, masalahnya jarang di aturan. Masalahnya di kebiasaan pencatatan:</p>\n<ul><li>Daftar nominatif baru disusun saat diperiksa, dua atau tiga tahun setelah kejadian. Detail relasi sudah tidak ada yang ingat.</li><li>Biaya makan karyawan sendiri dicampur ke akun entertainment.</li><li>Pengeluaran kartu kredit direksi masuk entertainment tanpa ada keterangan tamu.</li></ul>\n<h3>Saran praktis</h3>\n<p>Buat formulir sederhana yang wajib diisi setiap kali ada pengajuan penggantian biaya jamuan. Isinya sama dengan kolom daftar nominatif. Bagian keuangan cukup menolak klaim yang formulirnya kosong.</p>\n<p>Dengan cara ini daftar nominatif tersusun sendiri sepanjang tahun, dan saat SPT Tahunan disiapkan tinggal dilampirkan. Biaya promosi pun sama: ia juga memerlukan daftar nominatif dengan format tersendiri.</p>",
+  },
+  {
+    slug: "keberatan-denda-30",
+    category: "Sengketa",
+    publishedAt: "2026-03-03",
+    readingMinutes: 5,
+    title: "Keberatan pajak: hitung dulu risiko denda 30%",
+    excerpt: "Keberatan adalah hak. Tetapi keberatan yang ditolak membawa denda. Keputusan untuk mengajukannya sebaiknya dihitung, bukan hanya dirasakan.",
+    legalBasis: "UU KUP Pasal 25 dan Pasal 26 s.t.d.t.d. UU HPP, khususnya Pasal 25 ayat (3a) dan ayat (9).",
+    bodyHtml: "<p>Ketika menerima Surat Ketetapan Pajak Kurang Bayar yang menurut Anda keliru, keberatan adalah jalur pertama. Permohonannya diajukan ke Direktur Jenderal Pajak, paling lama tiga bulan sejak tanggal surat ketetapan dikirim.</p>\n<h3>Syarat yang sering terlewat</h3>\n<ul><li>Diajukan tertulis dalam bahasa Indonesia.</li><li>Menyebutkan jumlah pajak yang terutang menurut perhitungan Anda, beserta alasannya.</li><li>Satu permohonan untuk satu surat ketetapan.</li><li>Jumlah pajak yang <b>sudah Anda setujui dalam pembahasan akhir</b> hasil pemeriksaan harus dilunasi sebelum keberatan diajukan.</li></ul>\n<p>DJP wajib memberi keputusan paling lama 12 bulan sejak permohonan diterima. Jika lewat, keberatan dianggap dikabulkan.</p>\n<h3>Risiko denda</h3>\n<p>Jika keberatan ditolak atau hanya dikabulkan sebagian, wajib pajak dikenai denda 30% dari jumlah pajak berdasarkan keputusan keberatan, dikurangi pajak yang sudah dibayar sebelum mengajukan keberatan. Sebelum UU HPP, dendanya 50%.</p>\n<div class=\"ar-box\"><b>Contoh</b><p>SKPKB Rp400 juta. Dalam pembahasan akhir Anda menyetujui Rp100 juta dan sudah melunasinya. Sisa Rp300 juta diajukan keberatan.</p><p>Jika keberatan ditolak seluruhnya, denda = 30% &times; Rp300 juta = <b>Rp90 juta</b>, di luar pokok pajak yang tetap harus dibayar.</p></div>\n<p>Denda ini tidak dikenakan jika Anda melanjutkan ke banding. Tetapi banding membawa risikonya sendiri.</p>\n<h3>Pertanyaan yang kami ajukan sebelum menyarankan keberatan</h3>\n<ol><li>Apakah koreksi ini soal fakta yang bisa dibuktikan dengan dokumen, atau soal tafsir aturan?</li><li>Apakah dokumen pendukungnya lengkap dan sudah diserahkan saat pemeriksaan?</li><li>Berapa besar peluang dikabulkan dibandingkan risiko dendanya?</li></ol>\n<p>Kadang hasilnya adalah mengajukan keberatan hanya atas sebagian koreksi, yang argumennya paling kuat. Keputusan ini lebih aman diambil dengan perhitungan daripada atas dasar rasa tidak terima.</p>",
+  },
+  {
+    slug: "sp2dk-14-hari",
+    category: "Pemeriksaan",
+    publishedAt: "2026-02-10",
+    readingMinutes: 5,
+    title: "Menerima SP2DK: 14 hari yang menentukan",
+    excerpt: "SP2DK bukan surat ketetapan, tetapi cara Anda menanggapinya bisa menentukan apakah urusan berhenti di situ atau berlanjut ke pemeriksaan.",
+    legalBasis: "PMK 111/2025 (berlaku 1 Januari 2026); UU KUP Pasal 8.",
+    bodyHtml: "<p>SP2DK adalah Surat Permintaan Penjelasan atas Data dan/atau Keterangan. Kantor pajak mengirimnya ketika menemukan data yang menurut mereka belum sesuai dengan SPT Anda. Datanya bisa berasal dari faktur lawan transaksi, bukti potong, data perbankan, atau instansi lain.</p>\n<p>SP2DK belum berisi tagihan. Tetapi ia juga bukan surat yang bisa disimpan di laci.</p>\n<h3>Tenggat terbaru</h3>\n<p>Sejak 1 Januari 2026, prosedur SP2DK diatur dalam PMK 111/2025. Wajib pajak diberi waktu 14 hari untuk menanggapi. Jika butuh waktu lebih, tenggat itu dapat diperpanjang paling lama 7 hari dengan pemberitahuan tertulis ke KPP penerbit, dan pemberitahuan itu harus diterima sebelum 14 hari berakhir.</p>\n<p>Untuk SP2DK yang dikirim lewat Coretax, hitungan dimulai sejak tanggal penerbitan. Jadi cek notifikasi akun Anda secara berkala.</p>\n<h3>Langkah yang kami lakukan saat klien menerima SP2DK</h3>\n<ol><li><b>Baca datanya, bukan hanya kesimpulannya.</b> Apa sumber data yang dipakai kantor pajak? Periode berapa? Angka berapa?</li><li><b>Rekonsiliasi.</b> Bandingkan data itu dengan pembukuan dan SPT. Sering kali selisihnya punya penjelasan wajar: transaksi yang dicatat di periode berbeda, retur, atau penerimaan yang bukan penghasilan.</li><li><b>Pisahkan yang benar dan yang tidak.</b> Jika memang ada yang belum dilaporkan, pembetulan SPT dengan sukarela adalah pilihan yang lebih murah. Jika tidak ada, siapkan bukti tertulis.</li><li><b>Tanggapi secara tertulis dan terdokumentasi.</b> Lewat Coretax, surat, atau dalam pertemuan yang hasilnya dituangkan dalam berita acara.</li></ol>\n<h3>Yang sebaiknya dihindari</h3>\n<p>Mengabaikan SP2DK membuat kantor pajak hanya berpegang pada datanya sendiri. Langkah berikutnya bisa berupa usulan pemeriksaan.</p>\n<p>Sebaliknya, terlalu cepat mengakui juga berisiko. Kami pernah melihat wajib pajak langsung membetulkan SPT sesuai angka di SP2DK, padahal setengah dari selisih itu adalah uang titipan pelanggan yang bukan penghasilan.</p>",
+  },
+  {
+    slug: "ppn-12-dpp-nilai-lain",
+    category: "PPN",
+    publishedAt: "2026-01-20",
+    readingMinutes: 4,
+    title: "PPN 12% dengan DPP 11/12: cara membacanya di faktur",
+    excerpt: "Tarifnya tertulis 12%, tapi PPN yang dibayar tetap setara 11% untuk sebagian besar barang dan jasa. Ini yang perlu dicek di faktur Anda.",
+    legalBasis: "UU PPN Pasal 7 ayat (1) s.t.d.t.d. UU HPP; PMK 131/2024; PER-1/PJ/2025.",
+    bodyHtml: "<p>Setahun sejak tarif PPN 12% berlaku, masih ada pengusaha yang bingung membaca fakturnya sendiri. Di faktur tertulis tarif 12%, tapi nilai PPN-nya tetap sama seperti era 11%. Bukan salah sistem. Begitulah mekanisme yang diatur PMK 131/2024.</p>\n<h3>Dua perlakuan berbeda</h3>\n<p><b>Barang mewah</b> yang terkena PPnBM: PPN dihitung 12% dikali harga jual penuh.</p>\n<p><b>Barang dan jasa lainnya</b>: PPN tetap 12%, tetapi dikalikan dasar pengenaan pajak (DPP) nilai lain sebesar 11/12 dari harga jual atau penggantian. Hasil akhirnya setara 11%.</p>\n<div class=\"ar-box\"><b>Contoh</b><p>Harga jasa Rp100.000.000.</p><ul><li>DPP nilai lain: 11/12 &times; Rp100.000.000 = Rp91.666.667</li><li>PPN: 12% &times; Rp91.666.667 = <b>Rp11.000.000</b></li></ul></div>\n<p>Di faktur, transaksi seperti ini memakai kode transaksi 04.</p>\n<h3>Masa transisi sudah lewat</h3>\n<p>Pada awal 2025, DJP sempat memberi kelonggaran. Sampai 31 Maret 2025, faktur dengan tarif 11% atas harga jual penuh masih diterima. Sejak 1 April 2025, faktur wajib memakai format baru. Jika sistem penagihan Anda masih mencetak tarif 11%, itu perlu segera disesuaikan.</p>\n<h3>Yang sering terlewat</h3>\n<p>Invoice komersial dan faktur pajak harus bercerita sama. Kami cukup sering menemukan invoice yang mencantumkan \"PPN 12%\" lalu menghitungnya atas harga penuh, sementara faktur pajaknya memakai DPP 11/12. Pelanggan membayar sesuai invoice, sehingga ada selisih Rp1 juta untuk setiap Rp100 juta transaksi. Selisih semacam ini mudah memicu sengketa dengan pelanggan, dan menjadi temuan saat ekualisasi.</p>\n<p>Cara paling aman: tampilkan DPP nilai lain di invoice, persis seperti di faktur.</p>\n<p>Cek juga faktur dari pemasok. Pajak masukan Anda hanya sebesar PPN yang benar di faktur mereka.</p>",
+  },
+  {
+    slug: "coretax-aktivasi",
+    category: "Coretax",
+    publishedAt: "2026-01-13",
+    readingMinutes: 4,
+    title: "Aktivasi Coretax dan kode otorisasi: dua langkah yang sering tertunda",
+    excerpt: "Tanpa aktivasi dan kode otorisasi, SPT tidak bisa ditandatangani. Lakukan sekarang, bukan seminggu sebelum batas lapor.",
+    legalBasis: "PMK 81/2024; panduan aktivasi akun Coretax DJP.",
+    bodyHtml: "<p>Tahun ini adalah musim lapor SPT Tahunan pertama lewat Coretax. Dari klien yang kami dampingi, hambatan terbesar bukan pada pengisian SPT. Hambatannya ada di dua langkah awal: aktivasi akun dan pembuatan kode otorisasi.</p>\n<h3>Langkah 1: aktivasi akun</h3>\n<ol><li>Buka coretaxdjp.pajak.go.id, pilih Aktivasi Akun Wajib Pajak.</li><li>Masukkan NIK atau NPWP, lalu lengkapi alamat email dan nomor telepon yang aktif.</li><li>Lakukan verifikasi identitas dan setujui pernyataan.</li><li>Kata sandi sementara dikirim ke email. Masuk, lalu ganti kata sandi dan buat passphrase.</li></ol>\n<p>Untuk badan, prosesnya serupa dengan NPWP badan. Pastikan pengurus yang menjadi penanggung jawab sudah terdaftar dengan NIK yang benar.</p>\n<h3>Langkah 2: kode otorisasi</h3>\n<p>Kode otorisasi DJP berfungsi sebagai tanda tangan elektronik. Tanpanya, SPT dan bukti potong tidak bisa ditandatangani dan dikirim.</p>\n<p>Caranya: menu Portal Saya, pilih Permintaan Kode Otorisasi/Sertifikat Elektronik, isi ID penandatangan dan passphrase, lalu kirim. Cek statusnya di Profil Saya. Jika sudah VALID, kode otorisasi siap dipakai.</p>\n<h3>Masalah yang paling sering muncul</h3>\n<ul><li><b>Email atau nomor telepon lama.</b> Kata sandi tidak pernah sampai. Perbarui data kontak sebelum aktivasi.</li><li><b>Lupa passphrase.</b> Passphrase berbeda dengan kata sandi, dan dipakai setiap kali menandatangani. Simpan di tempat yang aman.</li><li><b>NIK belum padan.</b> Jika NIK belum terhubung dengan data kependudukan, aktivasi akan gagal dan perlu dipadankan lebih dulu.</li></ul>\n<p>Untuk perusahaan, kami sarankan satu orang di bagian keuangan memegang catatan siapa saja yang sudah aktivasi dan punya kode otorisasi. Hal kecil ini menghemat banyak waktu saat tenggat sudah dekat.</p>",
   },
 ];
 
 export function getArticle(slug: string) {
   return articles.find((a) => a.slug === slug);
+}
+
+/** Inline SVG cover (16:9) drawn with the site fonts. */
+export function articleCover(slug: string) {
+  return articleCovers[slug] ?? "";
+}
+
+/** WebP export of the cover, used as the Open Graph image. */
+export function articleOgImage(slug: string) {
+  return `/images/articles/${slug}.webp`;
+}
+
+/** Same category first, then the newest from other categories. */
+export function relatedArticles(article: Article, count = 3) {
+  const others = articles.filter((a) => a.slug !== article.slug);
+  return [...others.filter((a) => a.category === article.category), ...others.filter((a) => a.category !== article.category)].slice(0, count);
+}
+
+export function articleWhatsappMessage(article: Pick<Article, "title">) {
+  return `Halo TaxPlus, saya membaca artikel "${article.title}" dan ingin konsultasi.`;
+}
+
+/** Fields shown on article cards (no body), plus the cover markup. */
+export function articleCardData({ slug, category, title, excerpt, publishedAt, readingMinutes }: Article) {
+  return { slug, category, title, excerpt, publishedAt, readingMinutes, cover: articleCover(slug) };
 }
