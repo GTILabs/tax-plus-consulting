@@ -1,40 +1,42 @@
 import Link from "next/link";
-import { FloatingActions } from "@/components/layout/FloatingActions";
+import { GatePanels } from "@/components/layout/GatePanels";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { SiteNav } from "@/components/layout/SiteNav";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { Mark, PageHero } from "@/components/sections/PageHero";
 import { routes } from "@/modules/content/navigation";
 
 export default function NotFound() {
   return (
     <>
-      <SiteNav />
-      <main className="pg-art">
-        <header className="xh">
-          <div className="gwrap">
-            <span className="xeb">404</span>
-            <h1>Halaman tidak ditemukan.</h1>
-            <p>Alamat yang Anda buka tidak ada atau sudah dipindahkan.</p>
-          </div>
-        </header>
-        <section className="xs">
-          <div className="gwrap">
-            <div className="post">
-              <div className="cta3" style={{ marginTop: 0 }}>
-                <h4>Mencari sesuatu?</h4>
-                <p>Mulai dari beranda, lihat layanan kami, atau baca artikel terbaru.</p>
-                <Link href={routes.home}>
-                  <span>Kembali ke beranda</span>
-                </Link>{" "}
-                <Link href={routes.services}>
-                  <span>Lihat layanan</span>
-                </Link>
-              </div>
+      <SiteHeader />
+      <main id="app">
+        <PageHero
+          crumbs={[{ label: "404" }]}
+          kicker="Halaman tidak ditemukan"
+          title={
+            <>
+              Alamat ini
+              <br />
+              <Mark>tidak tersedia.</Mark>
+            </>
+          }
+          sub="Halaman yang Anda buka tidak ada atau sudah dipindahkan. Mulai dari beranda, atau lihat layanan kami."
+          actions={
+            <div className="ctas">
+              <Link className="btn btn-gold" href={routes.home}>
+                Kembali ke beranda
+              </Link>
+              <Link className="btn btn-line" href={routes.services} style={{ color: "#fff", borderColor: "rgba(255,255,255,.55)" }}>
+                Lihat layanan
+              </Link>
             </div>
-          </div>
-        </section>
+          }
+        />
       </main>
+      <GatePanels />
       <SiteFooter />
-      <FloatingActions />
+      <WhatsAppFloat messages={{}} />
     </>
   );
 }

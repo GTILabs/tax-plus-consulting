@@ -1,8 +1,17 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, Source_Serif_4 } from "next/font/google";
 import { site, socialProfiles } from "@/modules/content/site";
 import "./globals.css";
+
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+const sans = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -42,13 +51,13 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id">
+    <html lang="id" className={`${serif.variable} ${sans.variable}`}>
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
         />
-        <div className="site">{children}</div>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

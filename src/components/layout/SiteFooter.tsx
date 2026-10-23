@@ -1,74 +1,115 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SocialLinks } from "@/components/sections/SocialLinks";
-import { ReviewButton } from "@/components/ui/ReviewButton";
-import { Stars } from "@/components/ui/icons";
+import { MemberLogos } from "@/components/sections/MemberLogos";
+import { Icon, type IconName } from "@/components/ui/icons";
 import { routes, serviceLinks } from "@/modules/content/navigation";
-import { mailtoLink, site, whatsappLink } from "@/modules/content/site";
+import { DEFAULT_WA_MESSAGE, licenses, site, socialProfiles, whatsappLink } from "@/modules/content/site";
 
-export function SiteFooter() {
+const legalChips = [
+  { label: "Izin Praktik A", value: licenses.practiceA },
+  { label: "Izin Praktik B", value: licenses.practiceB },
+  { label: "Kuasa Hukum Pengadilan Pajak", value: licenses.taxCourt },
+  { label: "Anggota IKPI", value: licenses.ikpiMember },
+];
+
+/** Cached so pages stay prerendered; refreshed with the default cache lifetime. */
+async function currentYear() {
+  "use cache";
+  return new Date().getFullYear();
+}
+
+export async function SiteFooter() {
+  const year = await currentYear();
   return (
-    <footer className="gft">
-      <div className="gwrap">
-        <div className="g">
+    <footer className="site">
+      <div className="in">
+        <div className="cols">
           <div>
-            <Image src="/images/logo-white.png" alt="TaxPlus Consulting" width={360} height={115} style={{ width: "auto" }} />
-            <p>{site.footerBlurb}</p>
-            <SocialLinks />
+            <Image src="/images/logo.png" alt="TaxPlus Consulting" width={360} height={115} style={{ width: "auto" }} />
+            <div className="ft-tag">
+              <span>Kantor konsultan pajak di Bandung.</span>
+              <em>&ldquo;{site.tagline}&rdquo;</em>
+            </div>
+            <div className="member">
+              <span className="m-lbl">Member of</span>
+              <MemberLogos />
+            </div>
           </div>
           <div>
-            <h5>Layanan</h5>
-            <ul>
-              {serviceLinks.map((s) => (
-                <li key={s.slug}>
-                  <Link href={routes.service(s.slug)}>{s.name}</Link>
-                </li>
-              ))}
-            </ul>
+            <h4>Layanan</h4>
+            {serviceLinks.map((s) => (
+              <Link key={s.slug} href={routes.service(s.slug)}>
+                {s.name}
+              </Link>
+            ))}
           </div>
           <div>
-            <h5>Perusahaan</h5>
-            <ul>
-              <li><Link href={routes.about}>Tentang Kami</Link></li>
-              <li><Link href={routes.specialization}>Spesialisasi</Link></li>
-              <li><Link href={routes.articles}>Artikel</Link></li>
-              <li><Link href={routes.career}>Karier</Link></li>
-              <li><Link href={routes.faq}>FAQ Pajak</Link></li>
-              <li><Link href={routes.forms}>Formulir Pajak</Link></li>
-              <li><Link href={routes.legal}>Legalitas</Link></li>
-            </ul>
+            <h4>Perusahaan</h4>
+            <Link href={routes.about}>Tentang Kami</Link>
+            <Link href={routes.career}>Karier</Link>
+            <Link href={routes.articles}>Artikel</Link>
+            <Link href={routes.contact}>Kontak</Link>
           </div>
           <div>
-            <h5>Kontak</h5>
-            <ul>
+            <h4>Kontak</h4>
+            <ul className="ft-ct">
               <li>
-                {site.contact.addressLines.map((line, i) => (
-                  <span key={line}>
-                    {i > 0 && <br />}
-                    {line}
-                  </span>
-                ))}
+                <span className="fi">
+                  <Icon name="pin" size={18} strokeWidth={1.8} />
+                </span>
+                <span>{site.contact.addressShort}</span>
               </li>
-              <li><a href={whatsappLink()}>{site.contact.whatsappDisplay}</a></li>
-              <li><a href={mailtoLink()}>{site.contact.email}</a></li>
+              <li>
+                <span className="fi">
+                  <Icon name="chat" size={18} strokeWidth={1.8} />
+                </span>
+                <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer">
+                  {site.contact.whatsappDisplay}
+                </a>
+              </li>
+              <li>
+                <span className="fi">
+                  <Icon name="mail" size={18} strokeWidth={1.8} />
+                </span>
+                <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+              </li>
+              <li>
+                <span className="fi">
+                  <Icon name="clock" size={18} strokeWidth={1.8} />
+                </span>
+                <span>{site.contact.hours}</span>
+              </li>
             </ul>
+            <div className="ft-soc">
+              {socialProfiles.map((p) => (
+                <a key={p.id} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={`${p.label} TaxPlus`}>
+                  <Icon name={p.id as IconName} size={18} strokeWidth={1.8} />
+                </a>
+              ))}
+              <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp TaxPlus">
+                <Icon name="chat" size={18} strokeWidth={1.8} />
+              </a>
+            </div>
           </div>
         </div>
-        <div className="rvft">
-          <div>
-            <b>Sudah pernah kami bantu?</b>
-            <span>
-              <Stars className="st" />
-              Ceritakan pengalaman Anda di Google. Dua kalimat sudah sangat membantu.
-            </span>
+      </div>
+      <div className="legal2">
+        <div className="in l2">
+          <div className="l2-left">
+            <span>&copy; {year} TaxPlus Consulting</span>
+            <span className="dot" />
+            <span>Seluruh hak dilindungi</span>
+            <span className="dot" />
+            <Link href={routes.privacy}>Kebijakan Privasi</Link>
           </div>
-          <div>
-            <ReviewButton className="b" />
+          <div className="l2-right">
+            {legalChips.map((c) => (
+              <span key={c.label} className="lc">
+                <small>{c.label}</small>
+                {c.value}
+              </span>
+            ))}
           </div>
-        </div>
-        <div className="bot">
-          <span>&copy; 2026 TaxPlus Consulting. Seluruh hak cipta dilindungi.</span>
-          <span>Izin Praktik Konsultan Pajak A &amp; B &middot; Kuasa Hukum Pengadilan Pajak &middot; Anggota Tetap IKPI</span>
         </div>
       </div>
     </footer>
