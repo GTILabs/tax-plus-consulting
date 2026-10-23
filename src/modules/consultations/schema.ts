@@ -1,30 +1,28 @@
 import { z } from "zod";
 import { DEFAULT_TOPIC, TOPIC_SLUGS } from "./topics";
 
-export const BUSINESS_SECTORS = [
-  "Industri hiburan / kreator",
-  "Manajemen talent / agensi",
-  "F&B / restoran",
-  "Fashion / retail",
-  "Kesehatan / klinik",
-  "Kontraktor / properti",
-  "Orang pribadi",
-  "Lainnya",
-] as const;
+const optionalText = (max: number, message: string) =>
+  z
+    .string()
+    .trim()
+    .max(max, message)
+    .optional()
+    .transform((v) => v || undefined);
 
+/** Form "Konsultasi gratis": Nama, Perusahaan, Email, WhatsApp, Kebutuhan, Pesan. */
 export const consultationSchema = z.object({
-  topic: z.enum(TOPIC_SLUGS, { error: "Pilih kebutuhan Anda." }).default(DEFAULT_TOPIC),
   name: z.string().trim().min(2, "Isi nama lengkap Anda.").max(100, "Nama terlalu panjang."),
+  company: optionalText(150, "Nama perusahaan terlalu panjang."),
+  email: z
+    .union([z.literal(""), z.email("Isi alamat email yang valid.").max(200)])
+    .optional()
+    .transform((v) => v || undefined),
   whatsapp: z
     .string()
     .trim()
     .regex(/^\+?[0-9\s-]{9,20}$/, "Isi nomor WhatsApp yang valid, contoh 0812-3456-7890."),
-  sector: z.enum(BUSINESS_SECTORS, { error: "Pilih sektor usaha." }),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Ceritakan singkat masalahnya (minimal 10 karakter).")
-    .max(2000, "Maksimal 2000 karakter."),
+  topic: z.enum(TOPIC_SLUGS, { error: "Pilih kebutuhan Anda." }).default(DEFAULT_TOPIC),
+  message: optionalText(2000, "Maksimal 2000 karakter."),
 });
 
 export type ConsultationInput = z.infer<typeof consultationSchema>;

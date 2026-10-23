@@ -18,14 +18,17 @@ export async function saveConsultationRequest(input: ConsultationInput) {
 /** Pre-filled WhatsApp message so the visitor can follow up with the office directly. */
 export function createWhatsappHandoff(input: ConsultationInput) {
   const message = [
-    "Halo TaxPlus, saya ingin menjadwalkan konsultasi.",
+    "Halo TaxPlus, saya ingin konsultasi gratis.",
     "",
-    `Kebutuhan: ${topicLabel(input.topic)}`,
     `Nama: ${input.name}`,
+    input.company && `Perusahaan: ${input.company}`,
+    input.email && `Email: ${input.email}`,
     `WhatsApp: ${input.whatsapp}`,
-    `Jenis usaha: ${input.sector}`,
-    `Masalah: ${input.message}`,
-  ].join("\n");
+    `Kebutuhan: ${topicLabel(input.topic)}`,
+    input.message && `Pesan: ${input.message}`,
+  ]
+    .filter((line) => typeof line === "string")
+    .join("\n");
 
   return whatsappLink(message);
 }

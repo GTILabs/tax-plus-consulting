@@ -2,15 +2,18 @@ import { index, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-co
 
 export const consultationStatus = pgEnum("consultation_status", ["new", "contacted", "closed"]);
 
-/** Consultation requests submitted through the homepage contact form. */
+/** Consultation requests submitted through the "Konsultasi gratis" form. */
 export const consultationRequests = pgTable(
   "consultation_requests",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull(),
+    company: text("company"),
+    email: text("email"),
     whatsapp: text("whatsapp").notNull(),
-    sector: text("sector").notNull(),
-    message: text("message").notNull(),
+    /** Only filled by the previous form version. */
+    sector: text("sector"),
+    message: text("message"),
     /** Topic slug from src/modules/consultations/topics.ts. */
     topic: text("topic").notNull().default("umum"),
     status: consultationStatus("status").notNull().default("new"),
