@@ -66,8 +66,9 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/formulir-pajak`    | Tax form downloads                                                   |
 
 Assets still awaited from Pak Kalam (brief, "Aset yang ditunggu"): set `heroVideo` in `src/app/(site)/page.tsx`
-for the hero video, add IKPI / Ikatan Advokat Indonesia logos in `src/components/sections/MemberLogos.tsx`, client
-logos in `clientLogos` (`src/modules/content/company.ts`) and staff photos. Article Open Graph images are WebP exports
+for the hero video, client logos in `clientLogos` (`src/modules/content/company.ts`) and staff photos. The IKPI and
+Ikatan Advokat Indonesia logos in `public/images/members/` come from public sources (ikpi.or.id, seeklogo.com); swap
+them for official high-resolution files when available. Article Open Graph images are WebP exports
 of the SVG covers in `public/images/articles/`.
 
 ## API
