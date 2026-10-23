@@ -1,209 +1,192 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/layout/Breadcrumb";
-import { ConsultLink } from "@/components/sections/ConsultLink";
-import { ContactOptions } from "@/components/sections/ContactOptions";
-import { Accordion } from "@/components/ui/Accordion";
-import { Check, Cross } from "@/components/ui/icons";
+import { FaqList, faqJsonLd, JsonLd } from "@/components/sections/AboutSection";
+import { CtaBand } from "@/components/sections/CtaBand";
+import { FlowSection } from "@/components/sections/FlowSection";
+import { HeroButtons, Mark, PageHero } from "@/components/sections/PageHero";
+import { SectionHead } from "@/components/sections/SectionHead";
+import { OtherServices } from "@/components/sections/ServiceCards";
+import { Cross, Tick } from "@/components/ui/icons";
+import { credentials } from "@/modules/content/company";
 import { routes } from "@/modules/content/navigation";
-import { getService, services } from "@/modules/content/services";
+import { getService, services, serviceWhatsappMessage } from "@/modules/content/services";
 import { whatsappLink } from "@/modules/content/site";
+
+/** Hero background per service (team photos until dedicated ones arrive). */
+const heroPhotos: Record<string, string> = {
+  "tax-compliance": "/images/photos/team/team-03.jpg",
+  "tax-accounting": "/images/photos/team/team-05.jpg",
+  "tax-management": "/images/photos/team/team-07.jpg",
+  "tax-audit": "/images/photos/team/team-09.jpg",
+  "tax-litigation": "/images/photos/team/team-08.jpg",
+};
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
-export async function generateMetadata(props: PageProps<"/layanan/[slug]">): Promise<Metadata> {
-  const { slug } = await props.params;
-  const service = getService(slug);
+export async function generateMetadata({ params }: PageProps<"/layanan/[slug]">): Promise<Metadata> {
+  const service = getService((await params).slug);
   if (!service) return {};
   return {
-    title: `${service.name} — ${service.subtitle}`,
+    title: `${service.name}: ${service.subtitle}`,
     description: service.intro,
-    alternates: { canonical: routes.service(slug) },
+    alternates: { canonical: routes.service(service.slug) },
   };
 }
 
-export default async function ServicePage(props: PageProps<"/layanan/[slug]">) {
-  const { slug } = await props.params;
-  const service = getService(slug);
+export default async function ServicePage({ params }: PageProps<"/layanan/[slug]">) {
+  const service = getService((await params).slug);
   if (!service) notFound();
+
+  const waMessage = serviceWhatsappMessage(service);
+  const [first, ...rest] = service.name.split(" ");
+  const isLitigation = service.slug === "tax-litigation";
 
   return (
     <>
-      <Breadcrumb items={[{ label: "Layanan", href: routes.services }, { label: service.name }]} />
-      <div className="pg-svc">
-        <header className="hero">
-          <div className="wrap">
-            <span className="eyebrow">{service.eyebrow}</span>
-            <h1>{service.name}</h1>
-            <p className="idn">{service.subtitle}</p>
-            <p>{service.intro}</p>
-            <div className="acts">
-              <a
-                className="btn btn-y"
-                href={whatsappLink(`Halo TaxPlus, saya ingin konsultasi tentang ${service.name}.`)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Konsultasi gratis 15 menit
-              </a>
-              <ConsultLink className="btn btn-o" topic={service.slug}>
-                Isi formulir konsultasi
-              </ConsultLink>
-            </div>
-          </div>
-        </header>
+      <JsonLd data={faqJsonLd(service.faqs)} />
+      {/* 1. Hero */}
+      <PageHero
+        crumbs={[{ label: "Layanan", href: routes.services }, { label: service.name }]}
+        kicker={service.subtitle}
+        title={
+          <>
+            {first} <Mark>{rest.join(" ")}</Mark>
+          </>
+        }
+        sub={service.intro}
+        photo={heroPhotos[service.slug]}
+        actions={<HeroButtons waMessage={waMessage} />}
+      />
 
-        <section className="blk">
-          <div className="wrap">
-            <h2>Untuk Anda jika&hellip;</h2>
-            <div className="forme">
-              {service.forMe.map((item) => (
-                <div className="fm" key={item.title}>
-                  <b>{item.title}</b>
-                  {item.text}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="blk tint">
-          <div className="wrap">
-            <h2>Termasuk &amp; tidak termasuk</h2>
-            <p className="sub">Jelas sejak awal, supaya tidak ada kejutan di tengah jalan.</p>
-            <div className="two">
-              <div className="box inc">
-                <h4>Termasuk</h4>
-                <ul>
-                  {service.included.map((text) => (
-                    <li key={text}>
-                      <span className="mk"><Check /></span>
-                      <span>{text}</span>
-                    </li>
-                  ))}
-                </ul>
+      {/* 2. Cakupan layanan */}
+      <section>
+        <div className="in">
+          <SectionHead title="Yang kami kerjakan" sub="Cakupan pekerjaan yang kami tangani untuk Anda." />
+          <div className="cak">
+            {service.scope.map((c, i) => (
+              <div key={c.title} className="ck">
+                <span className="ck-n">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{c.title}</h3>
+                <p>{c.text}</p>
               </div>
-              <div className="box exc">
-                <h4>Tidak termasuk</h4>
-                <ul>
-                  {service.excluded.map((text) => (
-                    <li key={text}>
-                      <span className="mk"><Cross /></span>
-                      <span>{text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="blk">
-          <div className="wrap">
-            <h2>Prosesnya</h2>
-            <p className="sub">Dengan tenggat nyata di setiap tahap.</p>
-            <div className="steps">
-              {service.steps.map((step, i) => (
-                <div className="stp" key={step.title}>
-                  <div className="n">{String(i + 1).padStart(2, "0")}</div>
-                  <div>
-                    <h4>{step.title}</h4>
-                    <p>{step.text}</p>
-                  </div>
-                  <div className="dl">{step.timing}</div>
-                </div>
+      {/* 3. Untuk siapa */}
+      <section className="soft">
+        <div className="in svc-split">
+          <article className="about-box">
+            <span className="eyebrow">Untuk siapa</span>
+            <h2>Layanan ini cocok bila Anda</h2>
+            <ul className="ticks big">
+              {service.forWhom.map((x) => (
+                <li key={x}>
+                  <Tick />
+                  {x}
+                </li>
               ))}
-            </div>
-          </div>
-        </section>
+            </ul>
+          </article>
+          <aside className="cta-card">
+            <span className="pre-s">Konsultasi awal</span>
+            <h3>Gratis 15 menit untuk {service.name}</h3>
+            <p>Ceritakan kondisi Anda. Kami jelaskan langkah dan perkiraan ruang lingkupnya.</p>
+            <a className="btn btn-gold" href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer">
+              Chat WhatsApp
+            </a>
+            <span className="cc-small">Dibalas di hari kerja yang sama</span>
+          </aside>
+        </div>
+      </section>
 
-        <section className="blk tint">
-          <div className="wrap">
-            <h2>Yang Anda terima</h2>
-            <div className="deliv">
-              {service.deliverables.map((item) => (
-                <div className="dv" key={item.title}>
-                  <b>{item.title}</b>
-                  <span>{item.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="blk">
-          <div className="wrap">
-            <div className="case">
-              <div className="lbl">Contoh kasus</div>
-              <h4>{service.caseStudy.title}</h4>
-              <div className="g">
-                <div><b>Situasi</b><p>{service.caseStudy.situation}</p></div>
-                <div><b>Yang kami lakukan</b><p>{service.caseStudy.action}</p></div>
-                <div><b>Hasil</b><p>{service.caseStudy.result}</p></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="blk tint">
-          <div className="wrap">
-            <div className="cred">
-              <h3>{service.whyUs.title}</h3>
-              <p>{service.whyUs.text}</p>
-              <div className="row">
-                {service.whyUs.credentials.map((c) => (
-                  <div className="c" key={c.label}>
-                    {c.label}
-                    {c.detail && <span style={{ whiteSpace: "pre-line" }}>{c.detail}</span>}
-                  </div>
+      {/* 4. Termasuk & tidak termasuk */}
+      <section>
+        <div className="in">
+          <SectionHead title="Termasuk & tidak termasuk" sub="Ruang lingkup jelas sejak awal, tanpa biaya tak terduga." />
+          <div className="scope">
+            <div className="sc in-c">
+              <h3>
+                <span className="sc-i">
+                  <Tick color="currentColor" />
+                </span>
+                Termasuk dalam layanan
+              </h3>
+              <ul>
+                {service.included.map((x) => (
+                  <li key={x}>
+                    <span className="sc-b">
+                      <Tick color="currentColor" />
+                    </span>
+                    {x}
+                  </li>
                 ))}
-              </div>
+              </ul>
+            </div>
+            <div className="sc ex-c">
+              <h3>
+                <span className="sc-i">
+                  <Cross />
+                </span>
+                Tidak termasuk
+              </h3>
+              <ul>
+                {service.excluded.map((x) => (
+                  <li key={x}>
+                    <span className="sc-b">
+                      <Cross />
+                    </span>
+                    {x}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        </section>
+          <p className="note-it c">Ruang lingkup final dituangkan dalam surat penawaran dan perjanjian kerja.</p>
+        </div>
+      </section>
 
-        <section className="blk">
-          <div className="wrap">
-            <h2>Pertanyaan yang sering muncul</h2>
-            <Accordion
-              items={service.faqs}
-              itemClassName="fq"
-              answerClassName="ans"
-            />
-          </div>
-        </section>
+      {/* 5. Cara kerja khusus layanan */}
+      <FlowSection steps={service.steps} sub={`Langkah kerja ${service.name} beserta estimasi waktunya.`} waMessage={waMessage} />
 
-        <section className="blk tint">
-          <div className="wrap">
-            <div className="cta2">
-              <div>
-                <h3>Ceritakan dulu masalahnya</h3>
-                <p>15 menit, tanpa biaya. Kami tidak menawarkan paket sebelum tahu kondisi Anda.</p>
-              </div>
-              <div className="opts">
-                <ContactOptions topic={service.slug} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="blk">
-          <div className="wrap">
-            <h2 style={{ fontSize: 22, marginBottom: 18 }}>Layanan terkait</h2>
-            <div className="rel">
-              {service.related.map((rel) => (
-                <Link className="rl" key={rel.slug} href={routes.service(rel.slug)}>
-                  {getService(rel.slug)!.name}
-                  <span>{rel.text}</span>
-                </Link>
+      {/* 6. Ditangani oleh + FAQ */}
+      <section>
+        <div className="in about-faq">
+          <article className="about-box">
+            <span className="eyebrow">Ditangani oleh</span>
+            <h2>Partner berizin, bukan staf junior.</h2>
+            <p>
+              {isLitigation
+                ? "Sengketa ditangani langsung oleh Kalam Al-Iqbal, pemegang Izin Kuasa Hukum Pengadilan Pajak 1507/PP/IKH/2023 dan advokat."
+                : "Pekerjaan diawasi langsung oleh partner TaxPlus yang memegang izin praktik konsultan pajak."}
+            </p>
+            <div className="about-facts">
+              {credentials.slice(0, isLitigation ? 2 : 1).map((c) => (
+                <span key={c.title}>
+                  <b style={{ fontSize: 15, fontFamily: "var(--f-body)" }}>{c.title}</b>
+                  {c.number}
+                </span>
               ))}
             </div>
+          </article>
+          <div className="faq-col">
+            <h3>Seputar {service.name}</h3>
+            <FaqList items={service.faqs} />
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* 7. Layanan lainnya + pita CTA */}
+      <section className="soft">
+        <div className="in">
+          <SectionHead title="Layanan lainnya" sub="Butuh pendampingan di tahap lain? Kami siap." />
+          <OtherServices current={service.slug} />
+        </div>
+      </section>
+      <CtaBand title={`Butuh pendampingan ${service.name}?`} waMessage={waMessage} />
     </>
   );
 }
