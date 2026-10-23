@@ -1,3 +1,4 @@
+import { BackToTop } from "@/components/layout/BackToTop";
 import { GatePanels } from "@/components/layout/GatePanels";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -20,6 +21,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <main id="app">{children}</main>
       <GatePanels />
       <SiteFooter />
+      <BackToTop />
       <WhatsAppFloat messages={waMessages} />
     </>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { GatePanels } from "@/components/layout/GatePanels";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -36,6 +37,7 @@ export default function NotFound() {
       </main>
       <GatePanels />
       <SiteFooter />
+      <BackToTop />
       <WhatsAppFloat messages={{}} />
     </>
   );
