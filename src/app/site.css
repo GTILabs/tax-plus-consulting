@@ -664,3 +664,8 @@ footer.site .cols>div:first-child img{mix-blend-mode:multiply}
 .to-top:hover{background:var(--gold);color:var(--navy)}
 @media (max-width:520px){.to-top{bottom:calc(84px + env(safe-area-inset-bottom,0px));right:calc(19px + env(safe-area-inset-right,0px))}}
 @media (prefers-reduced-motion:reduce){.to-top{transition:none}}
+/* Our Team: 8 portraits, 4 per row (2 on phones) */
+.staff-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.staff-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+.st-ph img{height:100%;object-fit:cover;object-position:top}
+.p-list+.hl-wrap{margin-top:64px}

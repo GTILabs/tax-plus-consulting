@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Tick } from "@/components/ui/icons";
-import { partners, pioneer, staffRoles, type Person } from "@/modules/content/company";
+import { partners, pioneer, staff, type Person } from "@/modules/content/company";
 import { routes } from "@/modules/content/navigation";
 import { HighlightTitle } from "./SectionHead";
 
@@ -37,15 +37,12 @@ function StaffGrid() {
     <>
       <HighlightTitle small>Our Team</HighlightTitle>
       <div className="staff-grid">
-        {staffRoles.map((r) => (
-          <div key={r} className="st-card">
-            <div className="st-ph" aria-hidden="true">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-              </svg>
+        {staff.map((m) => (
+          <div key={m.photo} className="st-card">
+            <div className="st-ph">
+              <Image src={m.photo} alt={`Foto ${m.role} TaxPlus Consulting`} width={640} height={800} sizes="(max-width: 760px) 50vw, 270px" />
             </div>
-            <div className="st-role">{r}</div>
+            <div className="st-role">{m.role}</div>
           </div>
         ))}
       </div>

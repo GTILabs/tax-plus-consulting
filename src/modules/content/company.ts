@@ -141,8 +141,20 @@ export const partners: Person[] = [
   },
 ];
 
-/** "Our Team": roles only, no names. Roles are still examples (brief); photos pending. */
-export const staffRoles = ["Tax Supervisor", "Senior Tax Staff", "Tax Staff", "Accounting Staff", "Admin & Finance"];
+/**
+ * "Our Team": portrait 4:5 + role only, no names (brief). Order and roles from the
+ * "STRUKTUR ORGANISASI" document on the TaxPlus Google Drive (photos cropped to 4:5).
+ */
+export const staff: { role: string; photo: string }[] = [
+  { role: "Finance & Legal", photo: "/images/photos/staff/staff-01.webp" },
+  { role: "Head of Accounting", photo: "/images/photos/staff/staff-02.webp" },
+  { role: "Head of Tax", photo: "/images/photos/staff/staff-03.webp" },
+  { role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-04.webp" },
+  { role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-05.webp" },
+  { role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-06.webp" },
+  { role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-07.webp" },
+  { role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-08.webp" },
+];
 
 export const companyLegal = [
   { icon: "doc", label: "Akta Pendirian", value: "No. 01, 18 Agustus 2022", note: "Notaris Diana Roselina, S.H., M.Kn" },
