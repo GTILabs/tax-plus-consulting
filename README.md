@@ -4,8 +4,10 @@ Company profile website for TaxPlus Consulting, a licensed tax consultancy in Ba
 [Next.js](https://nextjs.org) App Router application: the public site and its API live in one project, as described
 in the [CMS handoff](docs/company-cms-chat-summary.md).
 
-The pages are converted from the single-file staging design in
-[`docs/design/TaxPlus-Web.html`](docs/design/TaxPlus-Web.html).
+The design follows the approved prototype (`taxplus-website-prototipe.html`) and the IT brief
+(`Brief_Website_TaxPlus_untuk_Tim_IT.pdf`): its CSS is the theme in `src/app/site.css`, its copy lives in
+`src/modules/content`. The "Termasuk & tidak termasuk" and per-service process copy still come from the staging
+design in [`docs/design/TaxPlus-Web.html`](docs/design/TaxPlus-Web.html) until Pak Kalam confirms them.
 
 ## Stack
 
@@ -49,16 +51,24 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Routes
 
-| Path               | Page                                                     |
-| ------------------ | -------------------------------------------------------- |
-| `/`                | Homepage with consultation form                          |
-| `/tentang-kami`    | About, licenses and company legality (`#legalitas`)      |
-| `/layanan`         | Services hub                                             |
-| `/layanan/[slug]`  | `tax-compliance`, `tax-accounting`, `tax-management`, `tax-audit`, `tax-litigation` |
-| `/spesialisasi`    | Industry specialization                                  |
-| `/artikel`         | Article index                                            |
-| `/artikel/[slug]`  | Article detail                                           |
-| `/karier`          | Careers                                                  |
+| Path                 | Page                                                                 |
+| -------------------- | -------------------------------------------------------------------- |
+| `/`                  | Homepage (13 sections) with the consultation form                    |
+| `/layanan`           | Services hub                                                         |
+| `/layanan/[slug]`    | `tax-compliance`, `tax-accounting`, `tax-management`, `tax-audit`, `tax-litigation` |
+| `/tentang-kami`      | Profile, credentials, team, company legality (`#legalitas`)          |
+| `/artikel`           | Article list with category filter                                    |
+| `/artikel/[slug]`    | Article detail (18 articles)                                         |
+| `/karier`            | Careers                                                              |
+| `/kontak`            | Contact cards, consultation form, map                                |
+| `/kebijakan-privasi` | Privacy policy (draft, pending review)                               |
+| `/faq`               | Tax FAQ migrated from the old site                                   |
+| `/formulir-pajak`    | Tax form downloads                                                   |
+
+Assets still awaited from Pak Kalam (brief, "Aset yang ditunggu"): set `heroVideo` in `src/app/(site)/page.tsx`
+for the hero video, add IKPI / Ikatan Advokat Indonesia logos in `src/components/sections/MemberLogos.tsx`, client
+logos in `clientLogos` (`src/modules/content/company.ts`) and staff photos. Article Open Graph images are WebP exports
+of the SVG covers in `public/images/articles/`.
 
 ## API
 
@@ -70,8 +80,8 @@ Open [http://localhost:3000](http://localhost:3000).
 | `GET`  | `/api/articles/[slug]`   | Full article, including `bodyHtml`                                  |
 | `POST` | `/api/consultations`     | Validate a consultation request and return a WhatsApp hand-off link |
 
-`POST /api/consultations` accepts `{ topic, name, whatsapp, sector, message }` (`topic` is a slug from
-`src/modules/consultations/topics.ts`, default `umum`; link to the form with `/?topik=<slug>#kontak`), stores it in the `consultation_requests` table
+`POST /api/consultations` accepts `{ name, company?, email?, whatsapp, topic, message? }` (`topic` is a slug from
+`src/modules/consultations/topics.ts`; pre-select it with `/kontak?topik=<slug>`), stores it in the `consultation_requests` table
 and responds with `201 { data: { id, saved: true, whatsappUrl } }`. If the database is unavailable it still returns the
 WhatsApp hand-off as `200 { data: { saved: false, whatsappUrl } }`. Invalid input returns `422 { fieldErrors }`, a
 malformed body `400`.
@@ -100,12 +110,13 @@ src/
 ├── app/
 │   ├── (site)/            # Public pages sharing the nav + footer layout
 │   ├── api/               # Route handlers
-│   ├── site.css           # Design stylesheet ported from the staging HTML
+│   ├── site.css           # Theme ported from the approved prototype
 │   ├── robots.ts, sitemap.ts, not-found.tsx
 ├── components/
-│   ├── layout/            # Nav, breadcrumb, footer
-│   ├── sections/, home/   # Page sections and the consultation form
-│   └── ui/                # Icons, accordion, staging-only helpers
+│   ├── layout/            # Header, gate panels, footer, floating WhatsApp
+│   ├── sections/          # Page sections shared across pages
+│   ├── articles/, consultation/, faq/
+│   └── ui/                # Icons, staging-only helpers
 ├── lib/db/                # Drizzle client, schema and helpers
 └── modules/
     ├── content/           # Typed site, navigation, services and article content

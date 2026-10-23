@@ -1,12 +1,11 @@
 /**
  * Permanent redirects from the old WordPress site (taxplus-consulting.co.id)
  * so indexed URLs and external links keep working after the switch.
- * Paths that exist unchanged in the new site (/layanan/*, /spesialisasi,
- * /artikel, /faq, /tentang-kami) need no entry.
+ * Paths that exist unchanged in the new site (/layanan/*, /artikel, /faq,
+ * /tentang-kami, /kontak) need no entry.
  */
 const pages: [string, string][] = [
   ["/about", "/tentang-kami"],
-  ["/kontak", "/#kontak"],
   ["/karir", "/karier"],
   ["/services", "/layanan"],
   ["/legalitas", "/tentang-kami#legalitas"],
@@ -18,10 +17,18 @@ const pages: [string, string][] = [
   ["/tax-litigation-services", "/layanan/tax-litigation"],
 ];
 
+/** Pages and articles of the previous version of this site that the prototype redesign replaced. */
+const replaced: [string, string][] = [
+  ["/spesialisasi", "/layanan"],
+  ["/artikel/sp2dk-apa-yang-harus-dilakukan", "/artikel/sp2dk-14-hari"],
+  ["/artikel/pt-cv-tidak-lagi-pph-final-0-5-persen", "/artikel/umkm-pt-cv-pembukuan"],
+  ["/artikel/pajak-endorse-dan-royalti", "/artikel"],
+];
+
 const posts: [string, string][] = [
-  ["/menerima-sp2dk-ini-yang-harus-anda-lakukan-dalam-14-hari", "/artikel/sp2dk-apa-yang-harus-dilakukan"],
-  ["/pt-dan-cv-tidak-lagi-dapat-pph-final-05-apa-gantinya", "/artikel/pt-cv-tidak-lagi-pph-final-0-5-persen"],
-  ["/pajak-endorse-dan-royalti-tiga-hal-yang-paling-sering-terlewat", "/artikel/pajak-endorse-dan-royalti"],
+  ["/menerima-sp2dk-ini-yang-harus-anda-lakukan-dalam-14-hari", "/artikel/sp2dk-14-hari"],
+  ["/pt-dan-cv-tidak-lagi-dapat-pph-final-05-apa-gantinya", "/artikel/umkm-pt-cv-pembukuan"],
+  ["/pajak-endorse-dan-royalti-tiga-hal-yang-paling-sering-terlewat", "/artikel"],
   // Local-SEO posts were not migrated; send readers to the matching page.
   ["/konsultan-pajak-bandung", "/"],
   ["/jasa-lapor-spt-bandung", "/layanan/tax-compliance"],
@@ -41,7 +48,7 @@ const forms: [string, string][] = [
 // Next.js matches the encoded request path, so non-ASCII characters (the en dash) must be percent-encoded.
 const encodePath = (path: string) => path.split("/").map(encodeURIComponent).join("/");
 
-export const legacyRedirects = [...pages, ...posts, ...forms].map(([source, destination]) => ({
+export const legacyRedirects = [...pages, ...replaced, ...posts, ...forms].map(([source, destination]) => ({
   source: encodePath(source),
   destination,
   permanent: true,

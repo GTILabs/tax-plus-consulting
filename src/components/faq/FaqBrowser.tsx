@@ -1,7 +1,7 @@
 "use client";
 
 import { useDeferredValue, useState } from "react";
-import { Accordion } from "@/components/ui/Accordion";
+import { FaqList } from "@/components/sections/AboutSection";
 import type { FaqCategory } from "@/modules/content/faqs";
 
 const normalize = (text: string) =>
@@ -64,13 +64,14 @@ export function FaqBrowser({ categories }: { categories: FaqCategory[] }) {
       {visible.map((c) => (
         <section key={`${c.id}-${deferredQuery}`} id={c.id} className="faqb-group" aria-labelledby={`${c.id}-title`}>
           <h2 id={`${c.id}-title`}>{c.title}</h2>
-          <Accordion items={c.faqs} itemClassName="fq" answerClassName="ans" />
+          <FaqList items={c.faqs} />
         </section>
       ))}
 
       {total === 0 && (
         <div className="faqb-empty">
           <b>Tidak ada pertanyaan yang cocok.</b>
+          <br />
           Coba kata lain, atau tanyakan langsung lewat konsultasi gratis 15 menit.
         </div>
       )}
