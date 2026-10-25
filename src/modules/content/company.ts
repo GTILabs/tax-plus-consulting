@@ -112,7 +112,7 @@ export const partners: Person[] = [
   {
     name: "Adv. Budi Indratno, S.H., S.E., M.Ak., BKP, CTL, C-Med",
     role: "Partner",
-    photo: { src: "/images/photos/partners/budi-indratno.jpg", width: 270, height: 374 },
+    photo: { src: "/images/photos/partners/budi-indratno.webp", width: 460, height: 688 },
     initials: "BI",
     profile:
       "Praktisi perpajakan dan akuntansi dengan pengalaman lebih dari 27 tahun. Pernah menjabat Kepala Departemen Pajak dan Akuntansi di PT Agansa Primatama.",
@@ -127,7 +127,7 @@ export const partners: Person[] = [
   {
     name: "Nazmi Muslim, S.E., M.Ak., BKP",
     role: "Partner",
-    photo: { src: "/images/photos/partners/nazmi-muslim.jpg", width: 250, height: 357 },
+    photo: { src: "/images/photos/partners/nazmi-muslim.webp", width: 900, height: 1350 },
     initials: "NM",
     profile:
       "Berkarier di bidang perpajakan sejak 2007, termasuk di Sinarmas dan PT Nindya Karya (Persero). Berpengalaman di sektor kontraktor, dari kepatuhan sampai pemeriksaan, keberatan, dan banding.",
