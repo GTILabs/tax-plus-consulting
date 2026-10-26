@@ -1,13 +1,13 @@
 import Image from "next/image";
 
 /**
- * Logos from public sources: IKPI from ikpi.or.id/ikpi.svg, Ikatan Advokat
- * Indonesia from seeklogo.com (ikadin.or.id only serves a 72 px version).
+ * Logos from public sources: IKPI from ikpi.or.id/ikpi.svg, Asosiasi Advokat
+ * Indonesia (AAI) from seeklogo.com (aai.or.id is not reachable).
  * Replace with the high-resolution files from Pak Kalam when they arrive.
  */
 const members: { name: string; logo?: { src: string; width: number; height: number } }[] = [
   { name: "IKPI", logo: { src: "/images/members/ikpi.png", width: 232, height: 154 } },
-  { name: "Ikatan Advokat Indonesia", logo: { src: "/images/members/ikadin.png", width: 320, height: 322 } },
+  { name: "Asosiasi Advokat Indonesia", logo: { src: "/images/members/aai.png", width: 320, height: 321 } },
 ];
 
 export function MemberLogos({ big = false }: { big?: boolean }) {

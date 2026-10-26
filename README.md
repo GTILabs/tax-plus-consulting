@@ -67,7 +67,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Assets still awaited from Pak Kalam (brief, "Aset yang ditunggu"): set `heroVideo` in `src/app/(site)/page.tsx`
 for the hero video, and client logos in `clientLogos` (`src/modules/content/company.ts`). The IKPI and
-Ikatan Advokat Indonesia logos in `public/images/members/` come from public sources (ikpi.or.id, seeklogo.com); swap
+Asosiasi Advokat Indonesia (AAI) logos in `public/images/members/` come from public sources (ikpi.or.id, seeklogo.com); swap
 them for official high-resolution files when available. Article Open Graph images are WebP exports
 of the SVG covers in `public/images/articles/`.
 
