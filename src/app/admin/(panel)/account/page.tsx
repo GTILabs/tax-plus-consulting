@@ -1,5 +1,6 @@
 import { ActionForm } from "@/components/admin/ActionForm";
 import { PageHead } from "@/components/admin/PageHead";
+import { PasswordInput } from "@/components/admin/PasswordInput";
 import { changePassword, updateProfile } from "@/modules/admin/actions";
 import { MIN_PASSWORD_LENGTH } from "@/modules/admin/password";
 import { roleLabel } from "@/modules/admin/roles";
@@ -30,16 +31,16 @@ export default async function AccountPage() {
         <ActionForm action={changePassword} submitLabel="Simpan kata sandi">
           <div className="adm-field">
             <label htmlFor="current">Kata sandi saat ini</label>
-            <input id="current" name="current" type="password" autoComplete="current-password" required />
+            <PasswordInput id="current" name="current" autoComplete="current-password" required />
           </div>
           <div className="adm-field">
             <label htmlFor="password">Kata sandi baru</label>
-            <input id="password" name="password" type="password" minLength={MIN_PASSWORD_LENGTH} autoComplete="new-password" required />
+            <PasswordInput id="password" name="password" minLength={MIN_PASSWORD_LENGTH} autoComplete="new-password" required />
             <span className="hint">Minimal {MIN_PASSWORD_LENGTH} karakter.</span>
           </div>
           <div className="adm-field">
             <label htmlFor="confirm">Ulangi kata sandi baru</label>
-            <input id="confirm" name="confirm" type="password" autoComplete="new-password" required />
+            <PasswordInput id="confirm" name="confirm" autoComplete="new-password" required />
           </div>
         </ActionForm>
       </div>
