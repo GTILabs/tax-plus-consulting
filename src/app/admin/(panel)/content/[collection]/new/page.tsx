@@ -20,6 +20,7 @@ export default async function NewEntryPage({ params }: PageProps<"/admin/content
         singular={def.singular}
         fields={def.fields}
         drafts={!!def.drafts}
+        canDelete={false}
         initial={{ id: null, data: emptyData(def.fields), status: def.drafts ? "draft" : "published" }}
       />
     </>

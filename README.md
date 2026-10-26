@@ -41,7 +41,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `bun run db:migrate`  | Apply pending migrations (uses `DATABASE_URL_UNPOOLED`) |
 | `bun run db:studio`   | Browse the database with Drizzle Studio |
 | `bun run cms:seed`    | Fill empty CMS collections/settings from `scripts/seed-data` (`--force` replaces) |
-| `bun run admin:create <email> [name]` | Create a CMS admin, or reset its password (`ADMIN_PASSWORD` env) |
+| `bun run admin:create <email> [name]` | Create a super admin, or reset a password (`ADMIN_PASSWORD` env) |
 
 ## Environment variables
 
@@ -98,7 +98,12 @@ malformed body `400`.
 ## CMS
 
 The admin lives at `/admin` (email + password, sessions in the `admin_sessions` table; `src/proxy.ts` only does an
-optimistic redirect, every page and Server Action re-checks the session).
+optimistic redirect, every page and Server Action re-checks the session and the role).
+
+- **Roles** (`src/modules/admin/roles.ts`): *Super admin* (everything, incl. users), *Admin* (content, settings,
+  consultations) and *User* (add and edit content; no delete, settings, consultations or users).
+- **Users** are invited from Pengguna (name, email, phone, role): they get an activation link valid for 8 hours and
+  set their own password. `bun run admin:create` only bootstraps a super admin.
 
 - **Collections and settings** are declared in `src/modules/cms/collections.ts`. Each one is a list of field
   definitions (`src/modules/cms/fields.ts`) that generates the admin form, the Zod validation and the data type the
@@ -117,6 +122,7 @@ Sent through Resend (`src/lib/email`), after the response so forms stay fast:
 
 - **New consultation** → the office email in CMS settings (Umum & kontak), reply-to the visitor.
 - **Confirmation** → the visitor, when they left an email (at most 3 per address per day).
+- **Invitation** → the invited user, with an activation link valid for 8 hours.
 - **Password reset** → the admin's own email, from "Lupa kata sandi?" on the login page; the link is valid for
   1 hour and works once.
 

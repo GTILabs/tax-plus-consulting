@@ -1,5 +1,6 @@
 /**
- * Creates (or resets the password of) a CMS admin.
+ * Creates an active super admin, or resets the password of an existing account.
+ * Everyone else is invited from the admin (Pengguna).
  *
  *   ADMIN_PASSWORD='…' bun scripts/create-admin.ts email@example.com "Nama Lengkap"
  */
@@ -20,11 +21,11 @@ if (!email.includes("@") || password.length < MIN_PASSWORD_LENGTH) {
 const passwordHash = await hashPassword(password);
 const [existing] = await db.select().from(schema.adminUsers).where(eq(schema.adminUsers.email, email));
 if (existing) {
-  await db.update(schema.adminUsers).set({ passwordHash }).where(eq(schema.adminUsers.id, existing.id));
+  await db.update(schema.adminUsers).set({ passwordHash, activatedAt: existing.activatedAt ?? new Date() }).where(eq(schema.adminUsers.id, existing.id));
   await db.delete(schema.adminSessions).where(eq(schema.adminSessions.userId, existing.id));
   console.log(`Password reset for ${email}; existing sessions signed out.`);
 } else {
-  await db.insert(schema.adminUsers).values({ email, name, passwordHash });
-  console.log(`Admin created: ${name} <${email}>`);
+  await db.insert(schema.adminUsers).values({ email, name, passwordHash, role: "super_admin", activatedAt: new Date() });
+  console.log(`Super admin created: ${name} <${email}>`);
 }
 await pool.end();

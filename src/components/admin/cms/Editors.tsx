@@ -53,12 +53,14 @@ export function EntryEditor({
   singular,
   fields,
   drafts,
+  canDelete,
   initial,
 }: {
   collection: string;
   singular: string;
   fields: readonly Field[];
   drafts: boolean;
+  canDelete: boolean;
   initial: { id: string | null; data: Data; status: "draft" | "published" };
 }) {
   const router = useRouter();
@@ -101,6 +103,7 @@ export function EntryEditor({
         )}
         {!state.message && state.dirty && <span className="adm-muted adm-dirty">Ada perubahan yang belum disimpan</span>}
         {initial.id &&
+          canDelete &&
           (confirmDelete ? (
             <>
               <span className="adm-muted">Hapus {singular} ini?</span>

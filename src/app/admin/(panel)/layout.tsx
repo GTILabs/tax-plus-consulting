@@ -3,11 +3,12 @@ import Link from "next/link";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { logout } from "@/modules/admin/actions";
 import { adminNav } from "@/modules/admin/nav";
+import { roleLabel } from "@/modules/admin/roles";
 import { requireAdmin } from "@/modules/admin/session";
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdmin();
-  const groups = adminNav();
+  const groups = adminNav(admin.role);
   return (
     <div className="adm-shell">
       <aside className="adm-side">
@@ -24,7 +25,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
       <div className="adm-main">
         <header className="adm-top">
           <span className="who">
-            Masuk sebagai <b>{admin.name}</b>
+            Masuk sebagai <b>{admin.name}</b> · {roleLabel(admin.role)}
           </span>
           <a className="adm-btn ghost sm" href="/" target="_blank" rel="noopener noreferrer">
             Lihat situs

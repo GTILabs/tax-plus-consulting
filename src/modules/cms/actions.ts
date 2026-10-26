@@ -71,7 +71,7 @@ export async function saveEntry(input: { collection: string; id: string | null; 
 }
 
 export async function deleteEntry(collection: string, id: string) {
-  await requireAdmin();
+  await requireAdmin("content.delete");
   if (!isCollectionKey(collection)) return;
   await getDb()
     .delete(cmsEntries)
@@ -95,7 +95,7 @@ export async function moveEntry(collection: string, id: string, direction: -1 | 
 }
 
 export async function saveSettings(input: { key: string; data: unknown }): Promise<SaveResult> {
-  const admin = await requireAdmin();
+  const admin = await requireAdmin("settings");
   if (!isSettingsKey(input.key)) return { ok: false, error: "Pengaturan tidak dikenal." };
   const def = settings[input.key];
   const parsed = schemaFor(def.fields).safeParse(input.data);

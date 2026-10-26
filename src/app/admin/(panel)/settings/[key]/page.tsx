@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps<"/admin/settings/[k
 }
 
 export default async function SettingsPage({ params }: PageProps<"/admin/settings/[key]">) {
-  await requireAdmin();
+  await requireAdmin("settings");
   const { key } = await params;
   if (!isSettingsKey(key)) notFound();
   const def: SettingsDef = settings[key];

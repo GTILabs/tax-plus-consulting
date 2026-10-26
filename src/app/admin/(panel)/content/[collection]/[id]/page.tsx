@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { EntryEditor } from "@/components/admin/cms/Editors";
 import { PageHead } from "@/components/admin/PageHead";
+import { can } from "@/modules/admin/roles";
 import { requireAdmin } from "@/modules/admin/session";
 import { publicUrlFor } from "@/modules/cms/admin-links";
 import { collections, isCollectionKey, type CollectionDef } from "@/modules/cms/collections";
@@ -12,7 +13,7 @@ const UUID = /^[0-9a-f-]{36}$/i;
 export const metadata = { title: "Edit" };
 
 export default async function EditEntryPage({ params, searchParams }: PageProps<"/admin/content/[collection]/[id]">) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const { collection, id } = await params;
   if (!isCollectionKey(collection) || !UUID.test(id)) notFound();
   const def: CollectionDef = collections[collection];
@@ -38,6 +39,7 @@ export default async function EditEntryPage({ params, searchParams }: PageProps<
         singular={def.singular}
         fields={def.fields}
         drafts={!!def.drafts}
+        canDelete={can(admin.role, "content.delete")}
         initial={{ id: entry.id, data, status: entry.status }}
       />
     </>

@@ -4,13 +4,15 @@ import { PageHead } from "@/components/admin/PageHead";
 import { Icon } from "@/components/ui/icons";
 import { getDb } from "@/lib/db";
 import { cmsEntries, consultationRequests } from "@/lib/db/schema";
+import { can } from "@/modules/admin/roles";
 import { requireAdmin } from "@/modules/admin/session";
 import { collections, settings } from "@/modules/cms/collections";
 
 export const metadata = { title: "Dasbor" };
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: PageProps<"/admin">) {
   const admin = await requireAdmin();
+  const { akses } = await searchParams;
   const db = getDb();
   const [counts, [{ newRequests }]] = await Promise.all([
     db
@@ -23,14 +25,21 @@ export default async function DashboardPage() {
   return (
     <>
       <PageHead title={`Halo, ${admin.name.split(" ")[0]}`} sub="Perubahan yang disimpan di sini langsung tampil di situs, tanpa deploy ulang." />
-      <Link href="/admin/consultations?status=new" className={newRequests ? "adm-card adm-inbox has-new" : "adm-card adm-inbox"}>
-        <Icon name="mail" size={26} />
-        <span>
-          <b>{newRequests ? `${newRequests} permintaan konsultasi baru` : "Tidak ada permintaan konsultasi baru"}</b>
-          <small>Dari form Konsultasi gratis. Buka untuk membalas lewat WhatsApp.</small>
-        </span>
-        <span aria-hidden="true">→</span>
-      </Link>
+      {akses === "ditolak" && (
+        <p className="adm-msg err" role="alert" style={{ marginBottom: 18 }}>
+          Role Anda tidak punya akses ke halaman itu.
+        </p>
+      )}
+      {can(admin.role, "consultations") && (
+        <Link href="/admin/consultations?status=new" className={newRequests ? "adm-card adm-inbox has-new" : "adm-card adm-inbox"}>
+          <Icon name="mail" size={26} />
+          <span>
+            <b>{newRequests ? `${newRequests} permintaan konsultasi baru` : "Tidak ada permintaan konsultasi baru"}</b>
+            <small>Dari form Konsultasi gratis. Buka untuk membalas lewat WhatsApp.</small>
+          </span>
+          <span aria-hidden="true">→</span>
+        </Link>
+      )}
       <h2 style={{ marginTop: 28 }}>Konten</h2>
       <div className="adm-grid">
         {Object.values(collections).map((c) => {
@@ -45,16 +54,20 @@ export default async function DashboardPage() {
           );
         })}
       </div>
-      <h2 style={{ marginTop: 30 }}>Pengaturan</h2>
-      <div className="adm-grid">
-        {Object.values(settings).map((s) => (
-          <Link key={s.key} href={`/admin/settings/${s.key}`} className="adm-card adm-stat">
-            <Icon name={s.icon} size={22} />
-            <span>{s.label}</span>
-            <small>{s.description}</small>
-          </Link>
-        ))}
-      </div>
+      {can(admin.role, "settings") && (
+        <>
+          <h2 style={{ marginTop: 30 }}>Pengaturan</h2>
+          <div className="adm-grid">
+            {Object.values(settings).map((s) => (
+              <Link key={s.key} href={`/admin/settings/${s.key}`} className="adm-card adm-stat">
+                <Icon name={s.icon} size={22} />
+                <span>{s.label}</span>
+                <small>{s.description}</small>
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 }

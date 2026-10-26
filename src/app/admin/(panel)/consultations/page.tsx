@@ -14,7 +14,7 @@ const dateFmt = new Intl.DateTimeFormat("id-ID", { dateStyle: "medium", timeStyl
 const PAGE_SIZE = 50;
 
 export default async function ConsultationsPage({ searchParams }: PageProps<"/admin/consultations">) {
-  await requireAdmin();
+  await requireAdmin("consultations");
   const { status: statusParam, page: pageParam } = await searchParams;
   const status = consultationStatus.enumValues.find((s) => s === statusParam);
   const page = Math.max(1, Number(pageParam) || 1);

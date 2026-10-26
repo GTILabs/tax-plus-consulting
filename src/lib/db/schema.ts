@@ -25,13 +25,21 @@ export const consultationRequests = pgTable(
 export type ConsultationRequest = typeof consultationRequests.$inferSelect;
 export type NewConsultationRequest = typeof consultationRequests.$inferInsert;
 
-/** CMS admins. Emails are stored lowercase; passwords as scrypt hashes (src/modules/admin/password.ts). */
+export const adminRole = pgEnum("admin_role", ["super_admin", "admin", "user"]);
+
+/**
+ * CMS users. Emails are stored lowercase; passwords as scrypt hashes (src/modules/admin/password.ts).
+ * An invited user has no password until they open the activation link.
+ */
 export const adminUsers = pgTable("admin_users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
-  passwordHash: text("password_hash").notNull(),
+  phone: text("phone"),
+  role: adminRole("role").notNull().default("user"),
+  passwordHash: text("password_hash"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  activatedAt: timestamp("activated_at", { withTimezone: true }),
   lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
 });
 
@@ -49,11 +57,14 @@ export const adminSessions = pgTable(
   (t) => [index("admin_sessions_user_id_idx").on(t.userId)],
 );
 
-/** One-time password reset links. Only the SHA-256 of the emailed token is stored. */
+export const adminTokenKind = pgEnum("admin_token_kind", ["reset", "invite"]);
+
+/** One-time links emailed to admins (password reset, invitation). Only the SHA-256 of the token is stored. */
 export const adminPasswordResets = pgTable(
   "admin_password_resets",
   {
     id: text("id").primaryKey(),
+    kind: adminTokenKind("kind").notNull().default("reset"),
     userId: uuid("user_id")
       .notNull()
       .references(() => adminUsers.id, { onDelete: "cascade" }),

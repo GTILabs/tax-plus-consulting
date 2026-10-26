@@ -15,7 +15,7 @@ const UUID = /^[0-9a-f-]{36}$/i;
 const dateFmt = new Intl.DateTimeFormat("id-ID", { dateStyle: "full", timeStyle: "short", timeZone: "Asia/Jakarta" });
 
 export default async function ConsultationPage({ params }: PageProps<"/admin/consultations/[id]">) {
-  await requireAdmin();
+  await requireAdmin("consultations");
   const { id } = await params;
   if (!UUID.test(id)) notFound();
   const [[r], services] = await Promise.all([

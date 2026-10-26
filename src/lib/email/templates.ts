@@ -105,3 +105,18 @@ export function passwordResetEmail(d: { name: string; resetUrl: string; siteUrl:
     text: `${intro}\n\n${d.resetUrl}\n\nBila Anda tidak meminta ini, abaikan email ini.`,
   };
 }
+
+export function inviteEmail(d: { name: string; invitedBy: string; role: string; activateUrl: string; hours: number; siteUrl: string }) {
+  const intro = `Halo ${d.name.split(" ")[0]}, ${d.invitedBy} mengundang Anda mengelola situs TaxPlus Consulting sebagai ${d.role}. Buat kata sandi Anda lewat tautan berikut. Tautan berlaku ${d.hours} jam dan hanya bisa dipakai sekali.`;
+  return {
+    subject: "Undangan admin situs TaxPlus Consulting",
+    html: layout({
+      siteUrl: d.siteUrl,
+      heading: "Anda diundang menjadi pengelola situs",
+      intro,
+      button: { href: d.activateUrl, label: "Aktifkan akun" },
+      footer: `Bila tautan sudah kedaluwarsa, minta ${d.invitedBy} mengirim ulang undangan. Bila Anda tidak merasa diundang, abaikan email ini.`,
+    }),
+    text: `${intro}\n\n${d.activateUrl}`,
+  };
+}
