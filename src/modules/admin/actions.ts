@@ -11,7 +11,7 @@ import { sendEmail } from "@/lib/email/send";
 import { inviteEmail, passwordResetEmail } from "@/lib/email/templates";
 import { siteUrl } from "@/modules/content/site";
 import { hashPassword, MIN_PASSWORD_LENGTH, verifyPassword } from "./password";
-import { isRole, roleLabel, type Role } from "./roles";
+import { canDeleteUser, isRole, roleLabel, type Role } from "./roles";
 import { createSession, destroyOtherSessions, destroySession, requireAdmin } from "./session";
 import { closeTokens, findToken, issueToken, recentLinks } from "./tokens";
 
@@ -124,11 +124,12 @@ export async function updateAdminUser(_: FormState, formData: FormData): Promise
 }
 
 export async function deleteAdminUser(formData: FormData) {
-  const admin = await requireAdmin("users");
+  const admin = await requireAdmin("users.view");
   const id = String(formData.get("id") ?? "");
-  if (!id || id === admin.id || (await otherSuperAdmins(id)) === 0) return;
+  const [target] = id ? await getDb().select({ id: adminUsers.id, role: adminUsers.role }).from(adminUsers).where(eq(adminUsers.id, id)).limit(1) : [];
+  if (!target || !canDeleteUser(admin, target) || (await otherSuperAdmins(id)) === 0) return;
   await getDb().delete(adminUsers).where(eq(adminUsers.id, id));
-  refresh();
+  redirect("/admin/users");
 }
 
 const profileSchema = z.object({ name: nameSchema, phone: phoneSchema.or(z.literal("")) });

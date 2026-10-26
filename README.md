@@ -101,7 +101,7 @@ The admin lives at `/admin` (email + password, sessions in the `admin_sessions` 
 optimistic redirect, every page and Server Action re-checks the session and the role).
 
 - **Roles** (`src/modules/admin/roles.ts`): *Super admin* (everything, incl. users), *Admin* (content, settings,
-  consultations) and *User* (add and edit content; no delete, settings, consultations or users).
+  consultations, deleting User accounts) and *User* (add and edit content; no delete, settings, consultations or users).
 - **Users** are invited from Pengguna (name, email, phone, role): they get an activation link valid for 8 hours and
   set their own password. `bun run admin:create` only bootstraps a super admin.
 

@@ -25,7 +25,7 @@ export function adminNav(role: Role): AdminNavGroup[] {
     {
       title: "Akses",
       items: [
-        ...(can(role, "users") ? [{ href: "/admin/users", label: "Pengguna", icon: "team" as const }] : []),
+        ...(can(role, "users.view") ? [{ href: "/admin/users", label: "Pengguna", icon: "team" as const }] : []),
         { href: "/admin/account", label: "Akun saya", icon: "id" },
       ],
     },
