@@ -14,9 +14,9 @@ export function MemberLogos({ big = false }: { big?: boolean }) {
   return (
     <div className="m-row" style={big ? { justifyContent: "center" } : undefined}>
       {members.map((m) => (
-        <span key={m.name} className={big ? "m-logo big" : "m-logo"} role="img" aria-label={`Logo ${m.name}`}>
+        <span key={m.name} className={big ? "m-logo big" : "m-logo"}>
           {m.logo ? (
-            <Image src={m.logo.src} alt="" width={m.logo.width} height={m.logo.height} unoptimized />
+            <Image src={m.logo.src} alt={`Logo ${m.name}`} width={m.logo.width} height={m.logo.height} unoptimized />
           ) : (
             <span className="m-ph">{m.name}</span>
           )}

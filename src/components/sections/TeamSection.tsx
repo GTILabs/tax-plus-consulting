@@ -10,7 +10,7 @@ function PersonCard({ person: p, className }: { person: Person; className: strin
     <div className={className}>
       {p.photo ? (
         <div className="ph">
-          <Image src={p.photo.src} alt={`Foto ${p.name}`} width={p.photo.width} height={p.photo.height} sizes="340px" />
+          <Image src={p.photo.src} alt={`Foto ${p.name.split(",")[0]}, ${p.role} TaxPlus Consulting`} width={p.photo.width} height={p.photo.height} sizes="340px" />
         </div>
       ) : (
         <div className="ph ini">{p.initials}</div>
