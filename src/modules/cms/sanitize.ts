@@ -1,5 +1,4 @@
-import "server-only";
-
+/* No "server-only" import: scripts/seed-cms.ts runs the same sanitizer outside Next. */
 import sanitizeHtml from "sanitize-html";
 import type { Field } from "./fields";
 

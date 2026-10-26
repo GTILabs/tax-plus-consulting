@@ -11,7 +11,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "admin:create": "bun scripts/create-admin.ts"
+    "admin:create": "bun scripts/create-admin.ts",
+    "cms:seed": "bun scripts/seed-cms.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
