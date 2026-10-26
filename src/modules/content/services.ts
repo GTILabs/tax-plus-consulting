@@ -69,15 +69,15 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Bagaimana data dikirim ke TaxPlus?",
-        answer: "Data dikirim melalui folder bersama atau email setiap bulan sesuai daftar yang kami berikan di awal kerja sama.",
+        answer: "Data dikirim melalui **folder bersama atau email** setiap bulan sesuai daftar yang kami berikan di awal kerja sama.",
       },
       {
         question: "Kalau ada pelaporan tahun lalu yang terlambat?",
-        answer: "Kami telaah dulu kewajiban yang tertunggak, lalu susun urutan pembetulan dan pelaporan susulannya.",
+        answer: "Kami telaah dulu **kewajiban yang tertunggak**, lalu susun **urutan pembetulan dan pelaporan susulannya**.",
       },
       {
         question: "Apakah bisa untuk klien di luar Bandung?",
-        answer: "Bisa. Sebagian besar pekerjaan kepatuhan dikerjakan secara daring.",
+        answer: "Bisa. Sebagian besar pekerjaan kepatuhan **dikerjakan secara daring**.",
       },
     ],
   },
@@ -123,15 +123,15 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Apakah memakai software tertentu?",
-        answer: "Kami menyesuaikan dengan software yang Anda pakai, atau menyarankan yang sesuai skala usaha.",
+        answer: "Kami **menyesuaikan dengan software yang Anda pakai**, atau menyarankan yang sesuai skala usaha.",
       },
       {
         question: "Berapa lama menyusun pembukuan yang tertinggal?",
-        answer: "Tergantung jumlah transaksi dan kelengkapan dokumen. Estimasinya kami sampaikan setelah penelaahan awal.",
+        answer: "Tergantung jumlah transaksi dan kelengkapan dokumen. Estimasinya kami sampaikan **setelah penelaahan awal**.",
       },
       {
         question: "Apakah laporan ini sama dengan laporan audit?",
-        answer: "Bukan. Laporan kami adalah laporan keuangan fiskal untuk kebutuhan perpajakan, bukan opini akuntan publik.",
+        answer: "Bukan. Laporan kami adalah **laporan keuangan fiskal untuk kebutuhan perpajakan**, bukan opini akuntan publik.",
       },
     ],
   },
@@ -177,13 +177,13 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Apa bedanya perencanaan pajak dengan penghindaran pajak?",
-        answer: "Perencanaan pajak memakai pilihan yang disediakan peraturan. Kami tidak menyarankan skema yang melanggar ketentuan.",
+        answer: "Perencanaan pajak memakai **pilihan yang disediakan peraturan**. Kami **tidak menyarankan skema yang melanggar ketentuan**.",
       },
       {
         question: "Kapan sebaiknya tax review dilakukan?",
-        answer: "Sebelum tutup buku, sebelum transaksi besar, atau ketika ada perubahan regulasi.",
+        answer: "**Sebelum tutup buku**, **sebelum transaksi besar**, atau ketika ada **perubahan regulasi**.",
       },
-      { question: "Apakah hasilnya tertulis?", answer: "Ya, dalam bentuk memo perpajakan beserta dasar hukumnya." },
+      { question: "Apakah hasilnya tertulis?", answer: "Ya, dalam bentuk **memo perpajakan beserta dasar hukumnya**." },
     ],
   },
   {
@@ -228,15 +228,15 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Saya baru menerima SP2DK, apa yang harus dilakukan?",
-        answer: "Jangan langsung membalas. Kirim salinannya kepada kami agar data dan batas waktunya kami telaah lebih dulu.",
+        answer: "**Jangan langsung membalas.** Kirim salinannya kepada kami agar data dan batas waktunya kami telaah lebih dulu.",
       },
       {
         question: "Apakah pendampingan bisa dimulai di tengah pemeriksaan?",
-        answer: "Bisa. Kami pelajari dokumen yang sudah diserahkan lalu lanjutkan pendampingannya.",
+        answer: "Bisa. Kami pelajari **dokumen yang sudah diserahkan** lalu lanjutkan pendampingannya.",
       },
       {
         question: "Siapa yang hadir saat pemeriksaan?",
-        answer: "Konsultan pajak berizin dari TaxPlus, bersama PIC dari perusahaan Anda.",
+        answer: "**Konsultan pajak berizin dari TaxPlus**, bersama **PIC dari perusahaan Anda**.",
       },
     ],
   },
@@ -282,15 +282,15 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Berapa batas waktu mengajukan keberatan?",
-        answer: "Tiga bulan sejak tanggal surat ketetapan dikirim. Segera hubungi kami agar ada cukup waktu menyusun dalil.",
+        answer: "**Tiga bulan sejak tanggal surat ketetapan dikirim.** Segera hubungi kami agar ada cukup waktu menyusun dalil.",
       },
       {
         question: "Apakah harus membayar dulu sebelum banding?",
-        answer: "Ketentuannya bergantung pada jenis ketetapan dan tahapannya. Kami jelaskan sesuai posisi kasus Anda.",
+        answer: "Ketentuannya bergantung pada **jenis ketetapan dan tahapannya**. Kami jelaskan sesuai posisi kasus Anda.",
       },
       {
         question: "Siapa yang bersidang di Pengadilan Pajak?",
-        answer: "Kalam Al-Iqbal, pemegang Izin Kuasa Hukum Pengadilan Pajak 1507/PP/IKH/2023.",
+        answer: "**Kalam Al-Iqbal**, pemegang **Izin Kuasa Hukum Pengadilan Pajak** 1507/PP/IKH/2023.",
       },
     ],
   },

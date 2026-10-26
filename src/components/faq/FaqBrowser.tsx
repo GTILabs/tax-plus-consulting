@@ -64,7 +64,7 @@ export function FaqBrowser({ categories }: { categories: FaqCategory[] }) {
       {visible.map((c) => (
         <section key={`${c.id}-${deferredQuery}`} id={c.id} className="faqb-group" aria-labelledby={`${c.id}-title`}>
           <h2 id={`${c.id}-title`}>{c.title}</h2>
-          <FaqList items={c.faqs} />
+          <FaqList items={c.faqs} openFirst={false} />
         </section>
       ))}
 

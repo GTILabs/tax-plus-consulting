@@ -62,24 +62,24 @@ export const credentials: { icon: CredentialIcon; title: string; text: string; i
 export const homeFaqs = [
   {
     question: "Kapan perusahaan perlu konsultan pajak?",
-    answer: "Ketika transaksi makin banyak, tidak ada staf pajak khusus, atau ada surat dari kantor pajak yang harus ditanggapi.",
+    answer: "Ketika **transaksi makin banyak**, **tidak ada staf pajak khusus**, atau ada **surat dari kantor pajak** yang harus ditanggapi.",
   },
   {
     question: "Bagaimana kerahasiaan data klien dijaga?",
-    answer: "Data hanya diakses tim yang menangani, disimpan di penyimpanan terkendali, dan dilindungi kewajiban kerahasiaan profesi.",
+    answer: "Data **hanya diakses tim yang menangani**, disimpan di penyimpanan terkendali, dan dilindungi **kewajiban kerahasiaan profesi**.",
   },
   {
     question: "Apakah melayani klien di luar Bandung?",
-    answer: "Ya. Pekerjaan kepatuhan dikerjakan daring, dan pendampingan tatap muka bisa diatur.",
+    answer: "Ya. Pekerjaan kepatuhan **dikerjakan daring**, dan **pendampingan tatap muka** bisa diatur.",
   },
   {
     question: "Berapa biaya jasa TaxPlus?",
     answer:
-      "Konsultasi awal 15 menit tidak dipungut biaya. Biaya jasa selanjutnya disesuaikan dengan ruang lingkup dan volume pekerjaan, dan disampaikan tertulis sebelum pekerjaan dimulai.",
+      "Konsultasi awal **15 menit tidak dipungut biaya**. Biaya jasa selanjutnya disesuaikan dengan ruang lingkup dan volume pekerjaan, dan **disampaikan tertulis sebelum pekerjaan dimulai**.",
   },
   {
     question: "Apakah bisa mendampingi pemeriksaan sampai sengketa?",
-    answer: "Bisa. Pimpinan kami memegang Izin Kuasa Hukum Pengadilan Pajak dan Kartu Advokat PERADI.",
+    answer: "Bisa. Pimpinan kami memegang **Izin Kuasa Hukum Pengadilan Pajak** dan **Kartu Advokat PERADI**.",
   },
 ];
 

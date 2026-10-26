@@ -684,3 +684,6 @@ footer.site .cols>div:first-child img{mix-blend-mode:multiply}
 .about-facts span{min-width:0;text-align:center;justify-items:center;border-top:3px solid var(--gold);padding:14px 6px}
 @media (max-width:560px){.about-box{padding:26px 20px 22px}.about-facts{gap:8px}.about-facts b{font-size:22px}}
 .about-facts b{font-size:28px}.about-facts b i{font-style:normal;color:var(--gold)}
+details summary{color:var(--navy)}
+details>p{background:#FFF8D6;border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0 6px;color:var(--ink);max-width:none}
+details>p strong{color:var(--navy)}
