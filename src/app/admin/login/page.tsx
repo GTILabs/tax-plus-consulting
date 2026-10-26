@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentAdmin } from "@/modules/admin/session";
 import { LoginForm } from "./LoginForm";
@@ -17,6 +18,9 @@ export default async function LoginPage({ searchParams }: PageProps<"/admin/logi
           Kelola konten situs TaxPlus Consulting.
         </p>
         <LoginForm next={typeof next === "string" ? next : "/admin"} />
+        <p className="adm-login-alt">
+          <Link href="/admin/forgot">Lupa kata sandi?</Link>
+        </p>
       </div>
     </div>
   );

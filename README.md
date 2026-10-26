@@ -53,6 +53,8 @@ Open [http://localhost:3000](http://localhost:3000).
 | `DATABASE_URL_UNPOOLED`| —                       | Neon direct connection string, used by migrations                                     |
 | `SHOW_STAGING_NOTES`   | `false`                 | `true` shows the design's editorial notes and placeholder blocks ("[Nama]", photos)   |
 | `BLOB_READ_WRITE_TOKEN`| —                       | Vercel Blob store `taxplus-cms` for CMS uploads (set by the Blob integration)          |
+| `RESEND_API_KEY`       | —                       | Resend key for emails (set by the Resend integration); without it emails are skipped   |
+| `EMAIL_FROM`           | `TaxPlus Consulting <noreply@taxplus-consulting.co.id>` | Sender address; its domain must be verified in Resend |
 
 ## Routes
 
@@ -108,6 +110,15 @@ optimistic redirect, every page and Server Action re-checks the session).
   (`src/modules/cms/read.ts`). Saving in the admin calls `updateTag`, so the change is live without a redeploy
   while pages stay prerendered.
 - `scripts/seed-data/` holds the approved launch content that `bun run cms:seed` loads into an empty database.
+
+## Email
+
+Sent through Resend (`src/lib/email`), after the response so forms stay fast:
+
+- **New consultation** → the office email in CMS settings (Umum & kontak), reply-to the visitor.
+- **Confirmation** → the visitor, when they left an email (at most 3 per address per day).
+- **Password reset** → the admin's own email, from "Lupa kata sandi?" on the login page; the link is valid for
+  1 hour and works once.
 
 ## Database
 

@@ -49,6 +49,21 @@ export const adminSessions = pgTable(
   (t) => [index("admin_sessions_user_id_idx").on(t.userId)],
 );
 
+/** One-time password reset links. Only the SHA-256 of the emailed token is stored. */
+export const adminPasswordResets = pgTable(
+  "admin_password_resets",
+  {
+    id: text("id").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => adminUsers.id, { onDelete: "cascade" }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("admin_password_resets_user_id_idx").on(t.userId)],
+);
+
 export const cmsStatus = pgEnum("cms_status", ["draft", "published"]);
 
 /**

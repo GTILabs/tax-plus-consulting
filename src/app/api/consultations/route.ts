@@ -1,6 +1,7 @@
+import { after } from "next/server";
 import { z } from "zod";
 import { consultationSchema } from "@/modules/consultations/schema";
-import { createWhatsappHandoff, saveConsultationRequest } from "@/modules/consultations/service";
+import { createWhatsappHandoff, saveConsultationRequest, sendConsultationEmails } from "@/modules/consultations/service";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -21,10 +22,12 @@ export async function POST(request: Request) {
   const whatsappUrl = await createWhatsappHandoff(parsed.data);
   try {
     const id = await saveConsultationRequest(parsed.data);
+    after(() => sendConsultationEmails(parsed.data, id, whatsappUrl));
     return Response.json({ data: { id, saved: true, whatsappUrl } }, { status: 201 });
   } catch (error) {
     // The WhatsApp hand-off still reaches the office, so don't block the visitor.
     console.error("Failed to save consultation request", error);
+    after(() => sendConsultationEmails(parsed.data, null, whatsappUrl));
     return Response.json({ data: { saved: false, whatsappUrl } });
   }
 }

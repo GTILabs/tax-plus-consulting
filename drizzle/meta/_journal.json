@@ -29,6 +29,13 @@
       "when": 1793053173902,
       "tag": "0003_cms_and_admin",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793056839226,
+      "tag": "0004_admin_password_resets",
+      "breakpoints": true
     }
   ]
 }

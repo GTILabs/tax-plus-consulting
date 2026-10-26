@@ -13,7 +13,7 @@ const SESSION_DAYS = 14;
 
 export type Admin = { id: string; email: string; name: string };
 
-const hashToken = (token: string) => createHash("sha256").update(token).digest("hex");
+export const hashToken = (token: string) => createHash("sha256").update(token).digest("hex");
 
 /** Starts a session for the admin and sets the httpOnly cookie. */
 export async function createSession(userId: string) {
