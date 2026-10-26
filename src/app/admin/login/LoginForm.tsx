@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/admin/PasswordInput";
 import { login, type FormState } from "@/modules/admin/actions";
 
 export function LoginForm({ next }: { next: string }) {
@@ -14,7 +15,7 @@ export function LoginForm({ next }: { next: string }) {
       </div>
       <div className="adm-field">
         <label htmlFor="password">Kata sandi</label>
-        <input id="password" name="password" type="password" autoComplete="current-password" required />
+        <PasswordInput id="password" name="password" autoComplete="current-password" required />
       </div>
       {state.error && (
         <p className="adm-msg err" role="alert">
