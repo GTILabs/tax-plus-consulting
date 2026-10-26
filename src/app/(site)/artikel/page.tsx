@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ArticleBrowser } from "@/components/articles/ArticleBrowser";
 import { Mark, PageHero } from "@/components/sections/PageHero";
 import { SocialSection } from "@/components/sections/SocialSection";
-import { articleCardData, articles } from "@/modules/content/articles";
+import { articleCardData } from "@/modules/content/articles";
+import { getArticles, getSite, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { DEFAULT_WA_MESSAGE, whatsappLink } from "@/modules/content/site";
 
 export const metadata: Metadata = {
   title: "Artikel Pajak",
@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.articles },
 };
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const [site, articles] = await Promise.all([getSite(), getArticles()]);
   return (
     <>
       <PageHero
@@ -30,7 +31,7 @@ export default function ArticlesPage() {
         photo="/images/photos/team/team-10.jpg"
         actions={
           <div className="ctas">
-            <a className="btn btn-gold" href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-gold" href={waLink(site)} target="_blank" rel="noopener noreferrer">
               Tanya lewat WhatsApp
             </a>
           </div>

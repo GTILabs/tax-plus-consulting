@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Mark, PageHero } from "@/components/sections/PageHero";
-import { taxForms } from "@/modules/content/forms";
+import { getSite, getTaxForms, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { whatsappLink } from "@/modules/content/site";
 
 export const metadata: Metadata = {
   title: "Formulir Pajak",
@@ -12,9 +11,10 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.forms },
 };
 
-const groups = [...new Set(taxForms.map((f) => f.group))];
-
-export default function TaxFormsPage() {
+export default async function TaxFormsPage() {
+  const [site, all] = await Promise.all([getSite(), getTaxForms()]);
+  const taxForms = all.flatMap((f) => (f.file ? [{ ...f, file: f.file }] : []));
+  const groups = [...new Set(taxForms.map((f) => f.group))];
   return (
     <>
       <PageHero
@@ -36,7 +36,7 @@ export default function TaxFormsPage() {
             pendaftaran, pelaporan, dan bukti potong umumnya dilakukan langsung di Coretax, dan sebagian format sudah
             berubah.{" "}
             <a
-              href={whatsappLink("Halo TaxPlus, saya ingin menanyakan formulir pajak.")}
+              href={waLink(site, "Halo TaxPlus, saya ingin menanyakan formulir pajak.")}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -52,7 +52,7 @@ export default function TaxFormsPage() {
                 {taxForms
                   .filter((f) => f.group === group)
                   .map((f) => (
-                    <li key={f.file}>
+                    <li key={f.file.url}>
                       <span className={`fbadge f-${f.format.toLowerCase()}`} aria-hidden="true">
                         {f.format}
                       </span>
@@ -60,17 +60,17 @@ export default function TaxFormsPage() {
                         <h3>{f.title}</h3>
                         <p>{f.description}</p>
                       </div>
-                      <a className="fdl" href={f.file} download>
+                      <a className="fdl" href={f.file.url} download>
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" />
                         </svg>
                         Unduh
                         <span className="sr-only">
                           {" "}
-                          {f.title} ({f.format}, {f.sizeKb} KB)
+                          {f.title} ({f.format}, {f.file.sizeKb} KB)
                         </span>
                         <small aria-hidden="true">
-                          {f.format} &middot; {f.sizeKb} KB
+                          {f.format} &middot; {f.file.sizeKb} KB
                         </small>
                       </a>
                     </li>

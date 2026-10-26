@@ -2,15 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { MemberLogos } from "@/components/sections/MemberLogos";
 import { Icon, type IconName } from "@/components/ui/icons";
-import { routes, serviceLinks } from "@/modules/content/navigation";
-import { DEFAULT_WA_MESSAGE, licenses, site, socialProfiles, whatsappLink } from "@/modules/content/site";
-
-const legalChips = [
-  { label: "Izin Praktik A", value: licenses.practiceA },
-  { label: "Izin Praktik B", value: licenses.practiceB },
-  { label: "Kuasa Hukum Pengadilan Pajak", value: licenses.taxCourt },
-  { label: "Anggota IKPI", value: licenses.ikpiMember },
-];
+import { getServices, getSite, waLink } from "@/modules/content/data";
+import { routes } from "@/modules/content/navigation";
 
 /** Cached so pages stay prerendered; refreshed with the default cache lifetime. */
 async function currentYear() {
@@ -19,7 +12,14 @@ async function currentYear() {
 }
 
 export async function SiteFooter() {
-  const year = await currentYear();
+  const [year, site, services] = await Promise.all([currentYear(), getSite(), getServices()]);
+  const { licenses } = site;
+  const legalChips = [
+    { label: "Izin Praktik A", value: licenses.practiceA },
+    { label: "Izin Praktik B", value: licenses.practiceB },
+    { label: "Kuasa Hukum Pengadilan Pajak", value: licenses.taxCourt },
+    { label: "Anggota IKPI", value: licenses.ikpiMember },
+  ].filter((c) => c.value);
   return (
     <footer className="site">
       <div className="in">
@@ -28,7 +28,7 @@ export async function SiteFooter() {
             <Image src="/images/logo.png" alt="TaxPlus Consulting" width={360} height={115} style={{ width: "auto" }} />
             <div className="ft-tag">
               <span>Kantor konsultan pajak di Bandung.</span>
-              <em>&ldquo;{site.tagline}&rdquo;</em>
+              {site.tagline && <em>&ldquo;{site.tagline}&rdquo;</em>}
             </div>
             <div className="member">
               <span className="m-lbl">Member of</span>
@@ -37,7 +37,7 @@ export async function SiteFooter() {
           </div>
           <div>
             <h4>Layanan</h4>
-            {serviceLinks.map((s) => (
+            {services.map((s) => (
               <Link key={s.slug} href={routes.service(s.slug)}>
                 {s.name}
               </Link>
@@ -63,7 +63,7 @@ export async function SiteFooter() {
                 <span className="fi">
                   <Icon name="chat" size={18} strokeWidth={1.8} />
                 </span>
-                <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer">
+                <a href={waLink(site)} target="_blank" rel="noopener noreferrer">
                   {site.contact.whatsappDisplay}
                 </a>
               </li>
@@ -81,12 +81,12 @@ export async function SiteFooter() {
               </li>
             </ul>
             <div className="ft-soc">
-              {socialProfiles.map((p) => (
+              {site.social.map((p) => (
                 <a key={p.id} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={`${p.label} TaxPlus`}>
                   <Icon name={p.id as IconName} size={18} strokeWidth={1.8} />
                 </a>
               ))}
-              <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp TaxPlus">
+              <a href={waLink(site)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp TaxPlus">
                 <Icon name="chat" size={18} strokeWidth={1.8} />
               </a>
             </div>

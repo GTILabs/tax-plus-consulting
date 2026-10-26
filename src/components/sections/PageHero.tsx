@@ -2,15 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { routes } from "@/modules/content/navigation";
-import { FREE_CONSULT_WA_MESSAGE, whatsappLink } from "@/modules/content/site";
+import { getSite, waLink } from "@/modules/content/data";
 
 type Crumb = { label: string; href?: string };
 
 /** Hero buttons: yellow WhatsApp consultation + white outline "Hubungi kami". */
-export function HeroButtons({ waMessage = FREE_CONSULT_WA_MESSAGE }: { waMessage?: string }) {
+export async function HeroButtons({ waMessage }: { waMessage?: string }) {
+  const site = await getSite();
   return (
     <div className="ctas">
-      <a className="btn btn-gold" href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer">
+      <a className="btn btn-gold" href={waLink(site, waMessage ?? site.messages.freeConsult)} target="_blank" rel="noopener noreferrer">
         Konsultasi awal gratis &middot; 15 menit
       </a>
       <Link className="btn btn-line" href={routes.contact} style={{ color: "#fff", borderColor: "rgba(255,255,255,.55)" }}>

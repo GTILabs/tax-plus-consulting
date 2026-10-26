@@ -8,7 +8,7 @@ export type ArticleCardData = Pick<Article, "slug" | "category" | "title" | "exc
   cover: ArticleCoverData;
 };
 
-/** 16:9 WebP cover; the wrapper takes the cover's background so it can letterbox in taller boxes. */
+/** Article cover; the wrapper takes the cover's background so it can letterbox in taller boxes. */
 export function ArticleCover({
   cover,
   alt,
@@ -24,7 +24,7 @@ export function ArticleCover({
 }) {
   return (
     <div className={className} style={{ background: cover.background }}>
-      <Image src={cover.src} alt={alt} width={1200} height={675} sizes={sizes} preload={preload} />
+      <Image src={cover.src} alt={alt} width={cover.width} height={cover.height} sizes={sizes} preload={preload} />
     </div>
   );
 }

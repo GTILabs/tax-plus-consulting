@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { articles } from "@/modules/content/articles";
+import { getArticles, getServices } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { services } from "@/modules/content/services";
-import { site } from "@/modules/content/site";
+import { siteUrl } from "@/modules/content/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, articles] = await Promise.all([getServices(), getArticles()]);
   const paths = [
     routes.home,
     routes.about,
@@ -18,5 +18,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     routes.forms,
     routes.privacy,
   ];
-  return paths.map((path) => ({ url: `${site.url}${path === "/" ? "" : path}` }));
+  return paths.map((path) => ({ url: `${siteUrl}${path === "/" ? "" : path}` }));
 }

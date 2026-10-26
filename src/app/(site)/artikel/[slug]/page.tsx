@@ -2,30 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleCard, ArticleCover } from "@/components/articles/ArticleCard";
-import { JsonLd } from "@/components/sections/AboutSection";
+import { JsonLd } from "@/components/sections/Faq";
 import { SectionHead } from "@/components/sections/SectionHead";
 import { formatArticleDate } from "@/modules/content/article-meta";
-import {
-  ARTICLE_AUTHOR,
-  articleCardData,
-  articleCover,
-  articleOgImage,
-  articles,
-  articleWhatsappMessage,
-  getArticle,
-  relatedArticles,
-} from "@/modules/content/articles";
+import { ARTICLE_AUTHOR, articleCardData, articleWhatsappMessage, relatedArticles } from "@/modules/content/articles";
+import { getArticle, getArticles, getSite, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { site, whatsappLink } from "@/modules/content/site";
+import { SITE_NAME, siteUrl } from "@/modules/content/site";
 
-export function generateStaticParams() {
-  return articles.map((a) => ({ slug: a.slug }));
+export async function generateStaticParams() {
+  return (await getArticles()).map((a) => ({ slug: a.slug }));
 }
 
+/** Uploaded covers are absolute Blob URLs; launch covers live under /public. */
+const absolute = (src: string) => (src.startsWith("/") ? `${siteUrl}${src}` : src);
+
 export async function generateMetadata({ params }: PageProps<"/artikel/[slug]">): Promise<Metadata> {
-  const article = getArticle((await params).slug);
+  const article = await getArticle((await params).slug);
   if (!article) return {};
-  const image = { url: articleOgImage(article.slug), width: 1200, height: 675, alt: article.title };
+  const image = { url: article.cover.src, width: article.cover.width, height: article.cover.height, alt: article.title };
   return {
     title: article.title,
     description: article.excerpt,
@@ -43,7 +38,7 @@ export async function generateMetadata({ params }: PageProps<"/artikel/[slug]">)
 }
 
 export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]">) {
-  const article = getArticle((await params).slug);
+  const [article, all, site] = await Promise.all([getArticle((await params).slug), getArticles(), getSite()]);
   if (!article) notFound();
 
   const jsonLd = {
@@ -52,10 +47,10 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
     headline: article.title,
     description: article.excerpt,
     datePublished: article.publishedAt,
-    image: `${site.url}${articleOgImage(article.slug)}`,
-    author: { "@type": "Organization", name: site.name, url: site.url },
-    publisher: { "@type": "Organization", name: site.name, logo: { "@type": "ImageObject", url: `${site.url}/images/logo.png` } },
-    mainEntityOfPage: `${site.url}${routes.article(article.slug)}`,
+    image: absolute(article.cover.src),
+    author: { "@type": "Organization", name: SITE_NAME, url: siteUrl },
+    publisher: { "@type": "Organization", name: SITE_NAME, logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo.png` } },
+    mainEntityOfPage: `${siteUrl}${routes.article(article.slug)}`,
   };
 
   return (
@@ -85,12 +80,14 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
         </div>
       </header>
       <div className="in">
-        <ArticleCover cover={articleCover(article.slug)} alt={article.title} sizes="(max-width: 920px) 100vw, 880px" className="ar-cover cov" preload />
+        <ArticleCover cover={article.cover} alt={article.title} sizes="(max-width: 920px) 100vw, 880px" className="ar-cover cov" preload />
         <article className="ar-wrap ar-body">
           <div dangerouslySetInnerHTML={{ __html: article.bodyHtml }} />
-          <p className="ar-ref">
-            <b>Dasar hukum:</b> {article.legalBasis}
-          </p>
+          {article.legalBasis && (
+            <p className="ar-ref">
+              <b>Dasar hukum:</b> {article.legalBasis}
+            </p>
+          )}
           <p className="ar-note">
             Artikel ini bersifat informasi umum dan bukan pendapat hukum atas kasus tertentu. Ketentuan dapat berubah;
             hubungi kami untuk menilai situasi Anda.
@@ -100,7 +97,7 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
               <h4>Punya kasus serupa?</h4>
               <p>Konsultasi awal 15 menit tanpa biaya.</p>
             </div>
-            <a className="btn btn-gold" href={whatsappLink(articleWhatsappMessage(article))} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-gold" href={waLink(site, articleWhatsappMessage(article))} target="_blank" rel="noopener noreferrer">
               Tanya lewat WhatsApp
             </a>
           </div>
@@ -110,7 +107,7 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
         <div className="in">
           <SectionHead title="Artikel terkait" sub="Bacaan lanjutan dari tim kami." />
           <div className="art-grid">
-            {relatedArticles(article).map((a) => (
+            {relatedArticles(article, all).map((a) => (
               <ArticleCard key={a.slug} article={articleCardData(a)} />
             ))}
           </div>

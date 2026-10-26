@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { FaqBrowser } from "@/components/faq/FaqBrowser";
-import { faqJsonLd, JsonLd } from "@/components/sections/AboutSection";
+import { faqJsonLd, JsonLd } from "@/components/sections/Faq";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Mark, PageHero } from "@/components/sections/PageHero";
-import { faqCategories } from "@/modules/content/faqs";
+import { getFaqCategories } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
 
 export const metadata: Metadata = {
@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.faq },
 };
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const faqCategories = await getFaqCategories();
   return (
     <>
       <JsonLd data={faqJsonLd(faqCategories.flatMap((c) => c.faqs))} />

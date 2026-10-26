@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { FaqList, faqJsonLd, JsonLd } from "@/components/sections/AboutSection";
+import { FaqList, faqJsonLd, JsonLd } from "@/components/sections/Faq";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FlowSection } from "@/components/sections/FlowSection";
 import { HeroButtons, Mark, PageHero } from "@/components/sections/PageHero";
 import { SectionHead } from "@/components/sections/SectionHead";
 import { OtherServices } from "@/components/sections/ServiceCards";
 import { Cross, Tick } from "@/components/ui/icons";
-import { credentials } from "@/modules/content/company";
+import { getHome, getService, getServices, getSite, serviceWhatsappMessage, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { getService, services, serviceWhatsappMessage } from "@/modules/content/services";
-import { whatsappLink } from "@/modules/content/site";
 
 /** Hero background per service (team photos until dedicated ones arrive). */
 const heroPhotos: Record<string, string> = {
@@ -21,12 +19,12 @@ const heroPhotos: Record<string, string> = {
   "tax-litigation": "/images/photos/team/team-08.jpg",
 };
 
-export function generateStaticParams() {
-  return services.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  return (await getServices()).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/layanan/[slug]">): Promise<Metadata> {
-  const service = getService((await params).slug);
+  const service = await getService((await params).slug);
   if (!service) return {};
   return {
     title: `${service.name}: ${service.subtitle}`,
@@ -36,7 +34,7 @@ export async function generateMetadata({ params }: PageProps<"/layanan/[slug]">)
 }
 
 export default async function ServicePage({ params }: PageProps<"/layanan/[slug]">) {
-  const service = getService((await params).slug);
+  const [service, site, { credentials }] = await Promise.all([getService((await params).slug), getSite(), getHome()]);
   if (!service) notFound();
 
   const waMessage = serviceWhatsappMessage(service);
@@ -56,7 +54,7 @@ export default async function ServicePage({ params }: PageProps<"/layanan/[slug]
           </>
         }
         sub={service.intro}
-        photo={heroPhotos[service.slug]}
+        photo={heroPhotos[service.slug] ?? "/images/photos/team/team-03.jpg"}
         actions={<HeroButtons waMessage={waMessage} />}
       />
 
@@ -95,7 +93,7 @@ export default async function ServicePage({ params }: PageProps<"/layanan/[slug]
             <span className="pre-s">Konsultasi awal</span>
             <h3>Gratis 15 menit untuk {service.name}</h3>
             <p>Ceritakan kondisi Anda. Kami jelaskan langkah dan perkiraan ruang lingkupnya.</p>
-            <a className="btn btn-gold" href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-gold" href={waLink(site, waMessage)} target="_blank" rel="noopener noreferrer">
               Chat WhatsApp
             </a>
             <span className="cc-small">Dibalas di hari kerja yang sama</span>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Mark, PageHero } from "@/components/sections/PageHero";
 import { routes } from "@/modules/content/navigation";
-import { site } from "@/modules/content/site";
+import { getSite } from "@/modules/content/data";
 
 export const metadata: Metadata = {
   title: "Kebijakan Privasi",
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 };
 
 /* Draft for review by Pak Kalam before launch (brief: "Halaman Kebijakan Privasi tersedia"). */
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const site = await getSite();
   const { contact } = site;
   return (
     <>

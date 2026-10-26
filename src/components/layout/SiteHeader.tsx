@@ -4,15 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { mainMenu, routes, serviceLinks } from "@/modules/content/navigation";
-import { FREE_CONSULT_WA_MESSAGE, whatsappLink } from "@/modules/content/site";
+import { mainMenu, routes } from "@/modules/content/navigation";
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
 /** Sticky white header: logo left, menu right, yellow "Konsultasi gratis" (WhatsApp). On phones the menu folds into "Menu". */
-export function SiteHeader() {
+export function SiteHeader({
+  services,
+  consultHref,
+}: {
+  services: { slug: string; name: string; description: string }[];
+  consultHref: string;
+}) {
   const pathname = usePathname();
   // The mobile menu remembers the page it was opened on, so navigating closes it.
   const [openOn, setOpenOn] = useState<string | null>(null);
@@ -52,7 +57,7 @@ export function SiteHeader() {
               <div className="dd" key={item.href}>
                 {link}
                 <div className="dd-menu">
-                  {serviceLinks.map((s) => (
+                  {services.map((s) => (
                     <Link key={s.slug} href={routes.service(s.slug)}>
                       {s.name}
                       <small>{s.description}</small>
@@ -64,7 +69,7 @@ export function SiteHeader() {
           })}
           <a
             className="btn btn-gold cta-top"
-            href={whatsappLink(FREE_CONSULT_WA_MESSAGE)}
+            href={consultHref}
             target="_blank"
             rel="noopener noreferrer"
           >

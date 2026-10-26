@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ConsultationField, ConsultationFieldErrors } from "@/modules/consultations/schema";
-import { CONSULTATION_TOPICS, DEFAULT_TOPIC, isTopicSlug } from "@/modules/consultations/topics";
-import { DEFAULT_WA_MESSAGE, whatsappLink } from "@/modules/content/site";
+import type { Topic } from "@/modules/consultations/topics";
 
 type Status =
   | { kind: "idle" }
@@ -15,7 +14,7 @@ type Status =
  * "Konsultasi gratis" form. The request is stored, then turned into a complete
  * WhatsApp message the visitor sends to the office.
  */
-export function ConsultationForm() {
+export function ConsultationForm({ topics, whatsappHref }: { topics: Topic[]; whatsappHref: string }) {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [errors, setErrors] = useState<ConsultationFieldErrors>({});
   const topicRef = useRef<HTMLSelectElement>(null);
@@ -23,8 +22,8 @@ export function ConsultationForm() {
   // Pre-select "Kebutuhan" from `?topik=` links.
   useEffect(() => {
     const fromUrl = new URLSearchParams(window.location.search).get("topik");
-    if (isTopicSlug(fromUrl) && topicRef.current) topicRef.current.value = fromUrl;
-  }, []);
+    if (fromUrl && topics.some((t) => t.slug === fromUrl) && topicRef.current) topicRef.current.value = fromUrl;
+  }, [topics]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -111,8 +110,8 @@ export function ConsultationForm() {
       </div>
       <label>
         Kebutuhan
-        <select name="topic" ref={topicRef} defaultValue={DEFAULT_TOPIC} {...a11y("topic")}>
-          {CONSULTATION_TOPICS.map((t) => (
+        <select name="topic" ref={topicRef} defaultValue={topics[0]?.slug} {...a11y("topic")}>
+          {topics.map((t) => (
             <option key={t.slug} value={t.slug}>
               {t.label}
             </option>
@@ -131,7 +130,7 @@ export function ConsultationForm() {
       {status.kind === "error" ? (
         <p className="formnote err" role="alert">
           {status.message}{" "}
-          <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer">
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
             Buka WhatsApp
           </a>
         </p>

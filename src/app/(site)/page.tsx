@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArticleCard } from "@/components/articles/ArticleCard";
-import { AboutBox, FaqList, faqJsonLd, JsonLd } from "@/components/sections/AboutSection";
+import { AboutBox } from "@/components/sections/AboutSection";
+import { FaqList, faqJsonLd, JsonLd } from "@/components/sections/Faq";
 import { ConsultSection } from "@/components/sections/ConsultSection";
 import { FlowSection } from "@/components/sections/FlowSection";
 import { InstagramSection } from "@/components/sections/InstagramSection";
@@ -14,10 +15,9 @@ import { TeamSection } from "@/components/sections/TeamSection";
 import { WhySection } from "@/components/sections/WhySection";
 import { Icon, SolidStar } from "@/components/ui/icons";
 import { showStagingContent } from "@/components/ui/StagingNote";
-import { articleCardData, articles } from "@/modules/content/articles";
-import { homeFaqs } from "@/modules/content/company";
+import { articleCardData } from "@/modules/content/articles";
+import { getArticles, getHome, getSite, waLink, type Site } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { FREE_CONSULT_WA_MESSAGE, licenses, site, whatsappLink } from "@/modules/content/site";
 
 export const metadata = {
   alternates: { canonical: routes.home },
@@ -29,7 +29,7 @@ export const metadata = {
  */
 const heroVideo: { src: string; poster: string } | null = null;
 
-function HeroVideo() {
+function HeroVideo({ site }: { site: Site }) {
   return (
     <section className="hero hero-vid">
       <div className="vbg" aria-hidden="true">
@@ -58,12 +58,12 @@ function HeroVideo() {
           Teliti dalam angka, <strong>tegas dalam pembelaan.</strong>
         </p>
         <div className="ctas">
-          <a className="btn btn-gold" href={whatsappLink(FREE_CONSULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-gold" href={waLink(site, site.messages.freeConsult)} target="_blank" rel="noopener noreferrer">
             Konsultasi awal gratis &middot; 15 menit
           </a>
           <a
             className="btn btn-line"
-            href={whatsappLink("Halo TaxPlus, saya ingin meminta panduan pajak gratis.")}
+            href={waLink(site, "Halo TaxPlus, saya ingin meminta panduan pajak gratis.")}
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: "#fff", borderColor: "rgba(255,255,255,.55)" }}
@@ -84,7 +84,7 @@ function HeroVideo() {
             <span className="lic-t">
               <small>Izin Praktik Konsultan Pajak A &amp; B</small>
               <b>
-                {licenses.practiceA} &middot; {licenses.practiceB}
+                {site.licenses.practiceA} &middot; {site.licenses.practiceB}
               </b>
             </span>
           </div>
@@ -94,7 +94,7 @@ function HeroVideo() {
             </span>
             <span className="lic-t">
               <small>Izin Kuasa Hukum Pengadilan Pajak</small>
-              <b>{licenses.taxCourt}</b>
+              <b>{site.licenses.taxCourt}</b>
             </span>
           </div>
         </div>
@@ -121,12 +121,14 @@ function StatValue({ value }: { value: string }) {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [site, home, articles] = await Promise.all([getSite(), getHome(), getArticles()]);
+  const { homeFaqs } = home;
   return (
     <>
       <JsonLd data={faqJsonLd(homeFaqs)} />
       {/* 1. Hero video */}
-      <HeroVideo />
+      <HeroVideo site={site} />
       {/* 2. Angka */}
       <div className="in">
         <div className="stats">

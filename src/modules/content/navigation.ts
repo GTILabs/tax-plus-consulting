@@ -1,13 +1,3 @@
-export const serviceLinks = [
-  { slug: "tax-compliance", name: "Tax Compliance", description: "Kepatuhan pajak bulanan dan tahunan" },
-  { slug: "tax-accounting", name: "Tax Accounting", description: "Pembukuan dan laporan keuangan fiskal" },
-  { slug: "tax-management", name: "Tax Management", description: "Perencanaan dan efisiensi pajak" },
-  { slug: "tax-audit", name: "Tax Audit", description: "Pendampingan SP2DK dan pemeriksaan" },
-  { slug: "tax-litigation", name: "Tax Litigation", description: "Keberatan, banding, gugatan, dan PK" },
-] as const;
-
-export type ServiceSlug = (typeof serviceLinks)[number]["slug"];
-
 export const routes = {
   home: "/",
   about: "/tentang-kami",

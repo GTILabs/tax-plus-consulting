@@ -1,9 +1,10 @@
 import { Icon } from "@/components/ui/icons";
-import { mapsEmbedUrl, mapsLink, site, whatsappLink } from "@/modules/content/site";
+import { getSite, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
 /** "Lokasi kantor": Google Maps embed + navy office panel. */
-export function LocationSection() {
+export async function LocationSection() {
+  const site = await getSite();
   const { contact } = site;
   return (
     <section className="soft loc">
@@ -12,7 +13,7 @@ export function LocationSection() {
         <div className="loc-box">
           <div className="map">
             <iframe
-              src={mapsEmbedUrl}
+              src={site.mapsEmbedUrl}
               title="Peta lokasi kantor TaxPlus Consulting"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -41,7 +42,7 @@ export function LocationSection() {
             <div className="loc-btns">
               <a
                 className="btn btn-gold"
-                href={whatsappLink("Halo TaxPlus, saya ingin membuat janji temu di kantor.")}
+                href={waLink(site, "Halo TaxPlus, saya ingin membuat janji temu di kantor.")}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -50,7 +51,7 @@ export function LocationSection() {
               <a
                 className="btn btn-line"
                 style={{ color: "#fff", borderColor: "rgba(255,255,255,.4)" }}
-                href={mapsLink}
+                href={site.googleReviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >

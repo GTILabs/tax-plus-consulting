@@ -2,9 +2,9 @@ import "server-only";
 
 import { getDb } from "@/lib/db";
 import { consultationRequests } from "@/lib/db/schema";
-import { whatsappLink } from "@/modules/content/site";
+import { getServices, getSite, waLink } from "@/modules/content/data";
 import type { ConsultationInput } from "./schema";
-import { topicLabel } from "./topics";
+import { consultationTopics, topicLabel } from "./topics";
 
 /** Stores a validated consultation request and returns its id. */
 export async function saveConsultationRequest(input: ConsultationInput) {
@@ -16,7 +16,8 @@ export async function saveConsultationRequest(input: ConsultationInput) {
 }
 
 /** Pre-filled WhatsApp message so the visitor can follow up with the office directly. */
-export function createWhatsappHandoff(input: ConsultationInput) {
+export async function createWhatsappHandoff(input: ConsultationInput) {
+  const [site, services] = await Promise.all([getSite(), getServices()]);
   const message = [
     "Halo TaxPlus, saya ingin konsultasi gratis.",
     "",
@@ -24,11 +25,11 @@ export function createWhatsappHandoff(input: ConsultationInput) {
     input.company && `Perusahaan: ${input.company}`,
     input.email && `Email: ${input.email}`,
     `WhatsApp: ${input.whatsapp}`,
-    `Kebutuhan: ${topicLabel(input.topic)}`,
+    `Kebutuhan: ${topicLabel(consultationTopics(services), input.topic)}`,
     input.message && `Pesan: ${input.message}`,
   ]
     .filter((line) => typeof line === "string")
     .join("\n");
 
-  return whatsappLink(message);
+  return waLink(site, message);
 }

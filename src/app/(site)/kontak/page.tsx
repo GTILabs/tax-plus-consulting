@@ -5,17 +5,24 @@ import { Mark, PageHero } from "@/components/sections/PageHero";
 import { SocialSection } from "@/components/sections/SocialSection";
 import { Icon } from "@/components/ui/icons";
 import { routes } from "@/modules/content/navigation";
-import { DEFAULT_WA_MESSAGE, mapsLink, site, whatsappLink } from "@/modules/content/site";
+import { getSite, waLink } from "@/modules/content/data";
 
-export const metadata: Metadata = {
-  title: "Kontak",
-  description:
-    "Hubungi TaxPlus Consulting di Bojongsoang, Kabupaten Bandung. Konsultasi awal 15 menit tanpa biaya lewat WhatsApp +62 821-2935-0026 atau datang ke kantor.",
-  alternates: { canonical: routes.contact },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { contact } = await getSite();
+  return {
+    title: "Kontak",
+    description: `Hubungi TaxPlus Consulting di Bojongsoang, Kabupaten Bandung. Konsultasi awal 15 menit tanpa biaya lewat WhatsApp ${contact.whatsappDisplay} atau datang ke kantor.`,
+    alternates: { canonical: routes.contact },
+  };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const site = await getSite();
   const { contact } = site;
+  const [emailUser, emailDomain] = contact.email.split("@");
+  // "Senin–Jumat, sampai pukul 17.00 WIB" → day range in bold, time below.
+  const [hoursDays, ...hoursRest] = contact.hours.split(", ");
+  const hoursTime = hoursRest.join(", ");
   return (
     <>
       <PageHero
@@ -35,7 +42,7 @@ export default function ContactPage() {
       <section className="soft">
         <div className="in">
           <div className="ccards cc2">
-            <a className="cc" href={mapsLink} target="_blank" rel="noopener noreferrer">
+            <a className="cc" href={site.googleReviewUrl} target="_blank" rel="noopener noreferrer">
               <span className="cc-ic">
                 <Icon name="pin" size={26} />
               </span>
@@ -44,7 +51,7 @@ export default function ContactPage() {
               <span className="cc-d">Kec. Bojongsoang, Kab. Bandung, Jawa Barat 40287</span>
               <span className="cc-go">Buka peta &rarr;</span>
             </a>
-            <a className="cc" href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer">
+            <a className="cc" href={waLink(site)} target="_blank" rel="noopener noreferrer">
               <span className="cc-ic">
                 <Icon name="chat" size={26} />
               </span>
@@ -59,9 +66,9 @@ export default function ContactPage() {
               </span>
               <span className="lg-k">Email</span>
               <b className="cc-mail">
-                info.taxplusconsulting
+                {emailUser}
                 <wbr />
-                @gmail.com
+                {emailDomain && `@${emailDomain}`}
               </b>
               <span className="cc-d">Untuk dokumen dan penawaran</span>
               <span className="cc-go">Kirim email &rarr;</span>
@@ -71,8 +78,8 @@ export default function ContactPage() {
                 <Icon name="clock" size={26} />
               </span>
               <span className="lg-k">Jam operasional</span>
-              <b>Senin&ndash;Jumat</b>
-              <span className="cc-d">Sampai pukul 17.00 WIB</span>
+              <b>{hoursDays}</b>
+              {hoursTime && <span className="cc-d">{hoursTime.charAt(0).toUpperCase() + hoursTime.slice(1)}</span>}
               <span className="cc-go muted">Di luar jam kerja, tinggalkan pesan WhatsApp</span>
             </div>
           </div>

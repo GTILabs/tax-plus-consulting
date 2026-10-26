@@ -20,6 +20,3 @@ export const instagramPosts: InstagramPost[] = [
   { code: "DeYT6cFgeNh", title: "Sebelum dan Sesudah Kenal TaxPlus", date: "2026-10-11" },
   { code: "DeQXih1AZEe", title: "Ini Semua Gara-Gara TaxPlus", date: "2026-10-08" },
 ];
-
-export const instagramPostUrl = (code: string) => `https://www.instagram.com/p/${code}/`;
-export const instagramImage = (code: string) => `/images/instagram/${code}.webp`;

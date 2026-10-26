@@ -1,8 +1,9 @@
 import { Icon } from "@/components/ui/icons";
-import { credentials } from "@/modules/content/company";
+import { getHome } from "@/modules/content/data";
 
 /** "Mengapa TaxPlus?": four credential cards, each with its license number and issuer. */
-export function WhySection() {
+export async function WhySection() {
+  const { credentials } = await getHome();
   return (
     <section className="why2">
       <div className="in">

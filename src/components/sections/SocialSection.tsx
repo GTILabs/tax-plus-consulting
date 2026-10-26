@@ -1,13 +1,14 @@
 import { Icon, type IconName } from "@/components/ui/icons";
-import { DEFAULT_WA_MESSAGE, mapsLink, site, socialProfiles, whatsappLink } from "@/modules/content/site";
+import { getSite, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
 /** "Ikuti kami": social media cards. */
-export function SocialSection() {
+export async function SocialSection() {
+  const site = await getSite();
   const cards: { name: string; handle: string; url: string; icon: IconName }[] = [
-    ...socialProfiles.map((p) => ({ name: p.label, handle: p.handle, url: p.url, icon: p.id as IconName })),
-    { name: "WhatsApp", handle: site.contact.whatsappDisplay, url: whatsappLink(DEFAULT_WA_MESSAGE), icon: "chat" },
-    { name: "Google", handle: `${site.rating.score} dari ulasan Google`, url: mapsLink, icon: "star" },
+    ...site.social.map((p) => ({ name: p.label, handle: p.handle, url: p.url, icon: p.id as IconName })),
+    { name: "WhatsApp", handle: site.contact.whatsappDisplay, url: waLink(site), icon: "chat" },
+    { name: "Google", handle: `${site.rating.score} dari ulasan Google`, url: site.googleReviewUrl, icon: "star" },
   ];
   return (
     <section className="sos">

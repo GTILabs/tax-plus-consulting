@@ -1,10 +1,10 @@
 import { Icon } from "@/components/ui/icons";
-import { sectors } from "@/modules/content/company";
-import { site, whatsappLink } from "@/modules/content/site";
+import { getSectors, getSite, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
 /** "Kami paham sektor Anda" (navy): client count + button left, sector cards right. */
-export function SectorSection() {
+export async function SectorSection() {
+  const [site, sectors] = await Promise.all([getSite(), getSectors()]);
   return (
     <section className="dark">
       <div className="in sek-wrap">
@@ -15,7 +15,7 @@ export function SectorSection() {
           <a
             className="btn btn-gold"
             style={{ marginTop: 22 }}
-            href={whatsappLink("Halo TaxPlus, saya ingin konsultasi pajak untuk sektor usaha saya.")}
+            href={waLink(site, "Halo TaxPlus, saya ingin konsultasi pajak untuk sektor usaha saya.")}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -24,7 +24,7 @@ export function SectorSection() {
         </div>
         <div className="sek-grid">
           {sectors.map((s) => (
-            <div key={s.icon} className={s.featured ? "sek top" : "sek"}>
+            <div key={s.name} className={s.featured ? "sek top" : "sek"}>
               <span className="sic">
                 <Icon name={s.icon} size={26} />
               </span>

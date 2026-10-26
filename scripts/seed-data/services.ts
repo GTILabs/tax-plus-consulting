@@ -1,9 +1,9 @@
-import type { ServiceSlug } from "./navigation";
+/* Seed data for the services collection. Edit services in the CMS, not here. */
 
 export type ServiceIcon = "compliance" | "accounting" | "management" | "audit" | "litigation";
 
 export type Service = {
-  slug: ServiceSlug;
+  slug: string;
   name: string;
   icon: ServiceIcon;
   /** Kicker in the hero and subtitle on cards. */
@@ -295,11 +295,3 @@ export const services: Service[] = [
     ],
   },
 ];
-
-export function getService(slug: string) {
-  return services.find((s) => s.slug === slug);
-}
-
-export function serviceWhatsappMessage(service: Pick<Service, "name">) {
-  return `Halo TaxPlus, saya ingin konsultasi ${service.name}.`;
-}

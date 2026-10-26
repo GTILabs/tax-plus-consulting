@@ -1,6 +1,7 @@
-import { articles } from "@/modules/content/articles";
+import { getArticles } from "@/modules/content/data";
 
-export function GET() {
+export async function GET() {
+  const articles = await getArticles();
   return Response.json({
     data: articles.map(({ slug, category, title, excerpt, publishedAt, readingMinutes }) => ({
       slug,

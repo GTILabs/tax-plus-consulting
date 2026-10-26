@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/icons";
 import { routes } from "@/modules/content/navigation";
-import { services, type Service } from "@/modules/content/services";
+import { getServices, type Service } from "@/modules/content/data";
 
 /** Four square cards + Tax Litigation full width (two columns with its four stages). */
-export function ServiceBoxes() {
+export async function ServiceBoxes() {
+  const services = await getServices();
   return (
     <div className="svc-big">
       {services.map((s, i) => (i === services.length - 1 ? <WideService key={s.slug} service={s} /> : (
@@ -60,7 +61,8 @@ function WideService({ service: s }: { service: Service }) {
 }
 
 /** "Cakupan tiap layanan": numbered rows with sub-service pills. */
-export function ServiceRows() {
+export async function ServiceRows() {
+  const services = await getServices();
   return (
     <div className="srows">
       {services.map((s, i) => (
@@ -90,7 +92,8 @@ export function ServiceRows() {
 }
 
 /** "Layanan lainnya": four small cards with the icon centered. */
-export function OtherServices({ current }: { current: string }) {
+export async function OtherServices({ current }: { current: string }) {
+  const services = await getServices();
   return (
     <div className="svc-big mini">
       {services

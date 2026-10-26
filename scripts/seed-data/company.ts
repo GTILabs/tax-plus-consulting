@@ -202,4 +202,4 @@ export const recruitmentSteps = [
   { title: "Bergabung", text: "Orientasi dan pendampingan di minggu pertama." },
 ];
 
-export const APPLICATION_SUBJECT = "Lamaran - [Posisi] - [Nama]";
+export const APPLICATION_SUBJECT = "Lamaran – [Posisi] – [Nama]";

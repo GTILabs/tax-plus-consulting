@@ -1,6 +1,7 @@
-import { services } from "@/modules/content/services";
+import { getServices } from "@/modules/content/data";
 
-export function GET() {
+export async function GET() {
+  const services = await getServices();
   return Response.json({
     data: services.map(({ slug, name, subtitle, intro, scope }) => ({
       slug,

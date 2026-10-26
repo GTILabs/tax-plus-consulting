@@ -2,18 +2,17 @@
 
 import { usePathname } from "next/navigation";
 import { WhatsAppIcon } from "@/components/ui/icons";
-import { DEFAULT_WA_MESSAGE, whatsappLink } from "@/modules/content/site";
 
 /**
  * Green floating "Chat WhatsApp" button (icon only on phones). The opening
- * message follows the page: `messages` maps a pathname (service, article) to its text.
+ * message follows the page: `links` maps a pathname (service, article) to its WhatsApp link.
  */
-export function WhatsAppFloat({ messages }: { messages: Record<string, string> }) {
+export function WhatsAppFloat({ links, fallback }: { links: Record<string, string>; fallback: string }) {
   const pathname = usePathname();
   return (
     <a
       className="wa-float"
-      href={whatsappLink(messages[pathname] ?? DEFAULT_WA_MESSAGE)}
+      href={links[pathname] ?? fallback}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat WhatsApp TaxPlus"

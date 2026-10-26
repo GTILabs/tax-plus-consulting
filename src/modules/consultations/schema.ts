@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DEFAULT_TOPIC, TOPIC_SLUGS } from "./topics";
+import { GENERAL_TOPIC } from "./topics";
 
 const optionalText = (max: number, message: string) =>
   z
@@ -21,7 +21,13 @@ export const consultationSchema = z.object({
     .string()
     .trim()
     .regex(/^\+?[0-9\s-]{9,20}$/, "Isi nomor WhatsApp yang valid, contoh 0812-3456-7890."),
-  topic: z.enum(TOPIC_SLUGS, { error: "Pilih kebutuhan Anda." }).default(DEFAULT_TOPIC),
+  /** A service slug or "umum"; services are managed in the CMS, so any well-formed slug is accepted. */
+  topic: z
+    .string({ error: "Pilih kebutuhan Anda." })
+    .trim()
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Pilih kebutuhan Anda.")
+    .max(80)
+    .default(GENERAL_TOPIC.slug),
   message: optionalText(2000, "Maksimal 2000 karakter."),
 });
 

@@ -1,5 +1,6 @@
 /**
- * Copies the content that used to live in src/modules/content into the CMS tables.
+ * Fills the CMS tables with the launch content in scripts/seed-data (a fresh database
+ * starts with the same site that was approved before the CMS existed).
  * Safe to re-run: a collection that already has entries, and settings that already
  * exist, are left untouched (pass --force to replace them).
  *
@@ -9,16 +10,16 @@ import { eq } from "drizzle-orm";
 import { collections, settings, type CollectionKey, type SettingsKey } from "../src/modules/cms/collections";
 import { schemaFor } from "../src/modules/cms/fields";
 import { sanitizeData } from "../src/modules/cms/sanitize";
-import { coverBackgrounds } from "../src/modules/content/article-covers";
-import { articles } from "../src/modules/content/articles";
-import * as company from "../src/modules/content/company";
-import { faqCategories } from "../src/modules/content/faqs";
-import { taxForms } from "../src/modules/content/forms";
-import { instagramImage, instagramPostUrl, instagramPosts } from "../src/modules/content/instagram";
-import { featuredReviews } from "../src/modules/content/reviews";
-import { services } from "../src/modules/content/services";
-import { DEFAULT_WA_MESSAGE, FREE_CONSULT_WA_MESSAGE, licenses, mapsEmbedUrl, site } from "../src/modules/content/site";
 import { db, pool, schema } from "./db";
+import { coverBackgrounds } from "./seed-data/article-covers";
+import { articles } from "./seed-data/articles";
+import * as company from "./seed-data/company";
+import { faqCategories } from "./seed-data/faqs";
+import { taxForms } from "./seed-data/forms";
+import { instagramPosts } from "./seed-data/instagram";
+import { featuredReviews } from "./seed-data/reviews";
+import { services } from "./seed-data/services";
+import { DEFAULT_WA_MESSAGE, FREE_CONSULT_WA_MESSAGE, licenses, mapsEmbedUrl, site } from "./seed-data/site";
 
 const force = process.argv.includes("--force");
 
@@ -58,7 +59,7 @@ const seeds: { [K in CollectionKey]: Seed[] } = {
   ],
   reviews: featuredReviews.map((r) => ({ data: { ...r } })),
   instagram: instagramPosts.map((p) => ({
-    data: { url: instagramPostUrl(p.code), title: p.title, date: p.date, image: { src: instagramImage(p.code), width: 480, height: 640 } },
+    data: { url: `https://www.instagram.com/p/${p.code}/`, title: p.title, date: p.date, image: { src: `/images/instagram/${p.code}.webp`, width: 480, height: 640 } },
   })),
   taxForms: taxForms.map((f) => ({
     data: {

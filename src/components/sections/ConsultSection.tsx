@@ -1,8 +1,11 @@
 import { ConsultationForm } from "@/components/consultation/ConsultationForm";
+import { consultationTopics } from "@/modules/consultations/topics";
+import { getServices, getSite, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
 /** "Konsultasi gratis" (navy): text left, form right. */
-export function ConsultSection() {
+export async function ConsultSection() {
+  const [site, services] = await Promise.all([getSite(), getServices()]);
   return (
     <section className="dark" id="konsultasi">
       <div className="in split">
@@ -17,7 +20,7 @@ export function ConsultSection() {
             Untuk kebutuhan mendesak, seperti SP2DK dengan batas waktu dekat, langsung hubungi kami lewat WhatsApp.
           </p>
         </div>
-        <ConsultationForm />
+        <ConsultationForm topics={consultationTopics(services)} whatsappHref={waLink(site)} />
       </div>
     </section>
   );

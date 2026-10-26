@@ -5,9 +5,9 @@ Company profile website for TaxPlus Consulting, a licensed tax consultancy in Ba
 in the [CMS handoff](docs/company-cms-chat-summary.md).
 
 The design follows the approved prototype (`taxplus-website-prototipe.html`) and the IT brief
-(`Brief_Website_TaxPlus_untuk_Tim_IT.pdf`): its CSS is the theme in `src/app/site.css`, its copy lives in
-`src/modules/content`. The "Termasuk & tidak termasuk" and per-service process copy still come from the staging
-design in [`docs/design/TaxPlus-Web.html`](docs/design/TaxPlus-Web.html) until Pak Kalam confirms them.
+(`Brief_Website_TaxPlus_untuk_Tim_IT.pdf`): its CSS is the theme in `src/app/site.css`. All content (articles,
+services, FAQ, team, reviews, Instagram posts, forms, jobs, contact details, ...) is managed in the built-in CMS at
+`/admin` and stored in Postgres; see [CMS](#cms).
 
 ## Stack
 
@@ -24,6 +24,8 @@ bun install
 vercel link            # once, to connect this folder to the Vercel project
 vercel env pull .env.local
 bun run db:migrate
+bun run cms:seed        # first time only: fills the CMS with the launch content
+ADMIN_PASSWORD='…' bun run admin:create you@example.com "Your Name"
 bun dev
 ```
 
@@ -38,6 +40,8 @@ Open [http://localhost:3000](http://localhost:3000).
 | `bun run db:generate` | Generate a migration from `src/lib/db/schema.ts` |
 | `bun run db:migrate`  | Apply pending migrations (uses `DATABASE_URL_UNPOOLED`) |
 | `bun run db:studio`   | Browse the database with Drizzle Studio |
+| `bun run cms:seed`    | Fill empty CMS collections/settings from `scripts/seed-data` (`--force` replaces) |
+| `bun run admin:create <email> [name]` | Create a CMS admin, or reset its password (`ADMIN_PASSWORD` env) |
 
 ## Environment variables
 
@@ -48,6 +52,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `DATABASE_URL`         | —                       | Neon pooled connection string, used by the app                                         |
 | `DATABASE_URL_UNPOOLED`| —                       | Neon direct connection string, used by migrations                                     |
 | `SHOW_STAGING_NOTES`   | `false`                 | `true` shows the design's editorial notes and placeholder blocks ("[Nama]", photos)   |
+| `BLOB_READ_WRITE_TOKEN`| —                       | Vercel Blob store `taxplus-cms` for CMS uploads (set by the Blob integration)          |
 
 ## Routes
 
@@ -64,9 +69,10 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/kebijakan-privasi` | Privacy policy (draft, pending review)                               |
 | `/faq`               | Tax FAQ migrated from the old site                                   |
 | `/formulir-pajak`    | Tax form downloads                                                   |
+| `/admin`             | CMS (login required, not indexed)                                    |
 
 Assets still awaited from Pak Kalam (brief, "Aset yang ditunggu"): set `heroVideo` in `src/app/(site)/page.tsx`
-for the hero video, and client logos in `clientLogos` (`src/modules/content/company.ts`). The IKPI and
+for the hero video, and add client logos in the CMS (Konten → Logo klien). The IKPI and
 Asosiasi Advokat Indonesia (AAI) logos in `public/images/members/` come from public sources (ikpi.or.id, seeklogo.com); swap
 them for official high-resolution files when available. Article Open Graph images are WebP exports
 of the SVG covers in `public/images/articles/`.
@@ -81,11 +87,27 @@ of the SVG covers in `public/images/articles/`.
 | `GET`  | `/api/articles/[slug]`   | Full article, including `bodyHtml`                                  |
 | `POST` | `/api/consultations`     | Validate a consultation request and return a WhatsApp hand-off link |
 
-`POST /api/consultations` accepts `{ name, company?, email?, whatsapp, topic, message? }` (`topic` is a slug from
-`src/modules/consultations/topics.ts`; pre-select it with `/kontak?topik=<slug>`), stores it in the `consultation_requests` table
+`POST /api/consultations` accepts `{ name, company?, email?, whatsapp, topic, message? }` (`topic` is a service slug
+or `umum`; pre-select it with `/kontak?topik=<slug>`), stores it in the `consultation_requests` table
 and responds with `201 { data: { id, saved: true, whatsappUrl } }`. If the database is unavailable it still returns the
 WhatsApp hand-off as `200 { data: { saved: false, whatsappUrl } }`. Invalid input returns `422 { fieldErrors }`, a
 malformed body `400`.
+
+## CMS
+
+The admin lives at `/admin` (email + password, sessions in the `admin_sessions` table; `src/proxy.ts` only does an
+optimistic redirect, every page and Server Action re-checks the session).
+
+- **Collections and settings** are declared in `src/modules/cms/collections.ts`. Each one is a list of field
+  definitions (`src/modules/cms/fields.ts`) that generates the admin form, the Zod validation and the data type the
+  site reads. Adding a field there is enough to make it editable.
+- **Storage:** one row per item in `cms_entries` (`data` is JSON), one row per settings group in `cms_settings`.
+  Rich text is sanitized on save (`src/modules/cms/sanitize.ts`). Uploads go to Vercel Blob; photos are resized to
+  2000 px and converted to WebP in the browser first.
+- **Reading:** pages call the getters in `src/modules/content/data.ts`, built on `"use cache"` + `cacheTag`
+  (`src/modules/cms/read.ts`). Saving in the admin calls `updateTag`, so the change is live without a redeploy
+  while pages stay prerendered.
+- `scripts/seed-data/` holds the approved launch content that `bun run cms:seed` loads into an empty database.
 
 ## Database
 
@@ -110,22 +132,27 @@ every push to `main` deploys to production, and every other branch or pull reque
 src/
 ├── app/
 │   ├── (site)/            # Public pages sharing the nav + footer layout
+│   ├── admin/             # CMS: login, dashboard, collections, settings, users
 │   ├── api/               # Route handlers
 │   ├── site.css           # Theme ported from the approved prototype
 │   ├── robots.ts, sitemap.ts, not-found.tsx
 ├── components/
-│   ├── layout/            # Header, gate panels, footer, floating WhatsApp
+│   ├── admin/             # CMS form inputs, rich text editor, uploads
+│   ├── layout/            # Site shell: header, gate panels, footer, floating WhatsApp
 │   ├── sections/          # Page sections shared across pages
 │   ├── articles/, consultation/, faq/
 │   └── ui/                # Icons, staging-only helpers
 ├── lib/db/                # Drizzle client, schema and helpers
-└── modules/
-    ├── content/           # Typed site, navigation, services and article content
-    └── consultations/     # Consultation validation, persistence and hand-off
+├── modules/
+│   ├── admin/             # Auth: passwords, sessions, user actions, admin nav
+│   ├── cms/               # Field engine, collections, cached reads, Server Actions
+│   ├── content/           # Content getters for pages (data.ts), routes, link helpers
+│   └── consultations/     # Consultation validation, persistence and hand-off
+└── proxy.ts               # Redirects /admin to the login page without a session cookie
+scripts/                   # create-admin, seed-cms and the launch content (seed-data/)
 ```
 
 ## Next steps
 
-Content lives in typed modules under `src/modules/content`, shaped so it can seed the CMS planned in the handoff
-document. The CMS is single-site. Next slices: Auth.js with roles, an admin dashboard (starting with consultation
-requests), then articles and pages in the database, media storage and revisions.
+Consultation requests get an inbox in the admin next. Later: roles (editor vs. admin), revisions, and scheduled
+publishing for articles.

@@ -7,7 +7,7 @@ import { SectionHead } from "@/components/sections/SectionHead";
 import { TeamSection } from "@/components/sections/TeamSection";
 import { WhySection } from "@/components/sections/WhySection";
 import { Icon } from "@/components/ui/icons";
-import { aboutPromises, companyLegal } from "@/modules/content/company";
+import { getAbout } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
 
 export const metadata: Metadata = {
@@ -17,7 +17,8 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.about },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { aboutPromises, companyLegal } = await getAbout();
   return (
     <>
       <PageHero

@@ -1,8 +1,8 @@
 "use client";
 
 import { useDeferredValue, useState } from "react";
-import { FaqList } from "@/components/sections/AboutSection";
-import type { FaqCategory } from "@/modules/content/faqs";
+import { FaqList } from "@/components/sections/Faq";
+export type FaqCategory = { id: string; title: string; faqs: { question: string; answer: string }[] };
 
 const normalize = (text: string) =>
   text

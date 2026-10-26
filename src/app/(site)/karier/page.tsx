@@ -3,9 +3,9 @@ import { FlowSteps } from "@/components/sections/FlowSection";
 import { Mark, PageHero } from "@/components/sections/PageHero";
 import { SectionHead } from "@/components/sections/SectionHead";
 import { Icon } from "@/components/ui/icons";
-import { APPLICATION_SUBJECT, careerPerks, jobOpenings, recruitmentSteps } from "@/modules/content/company";
+import { getCareer, getJobs, getSite, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
-import { mailtoLink, site, whatsappLink } from "@/modules/content/site";
+import { mailtoLink } from "@/modules/content/site";
 
 export const metadata: Metadata = {
   title: "Karier",
@@ -14,8 +14,10 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.career },
 };
 
-export default function CareerPage() {
-  const applyHref = mailtoLink(APPLICATION_SUBJECT);
+export default async function CareerPage() {
+  const [site, career, jobOpenings] = await Promise.all([getSite(), getCareer(), getJobs()]);
+  const { careerPerks, recruitmentSteps, applicationSubject } = career;
+  const applyHref = mailtoLink(site.contact.email, applicationSubject || undefined);
   return (
     <>
       <PageHero
@@ -60,20 +62,25 @@ export default function CareerPage() {
       <section className="soft" id="lowongan">
         <div className="in">
           <SectionHead title="Posisi tersedia" sub="Lamar sekarang, kami hubungi kandidat yang sesuai." />
+          {jobOpenings.length === 0 && (
+            <p className="lead" style={{ textAlign: "center", margin: "0 auto" }}>
+              Belum ada posisi terbuka saat ini. Lamaran terbuka tetap bisa dikirim lewat email di bawah.
+            </p>
+          )}
           <div className="jobs">
             {jobOpenings.map((j) => (
               <article key={j.title} className="job">
                 <div>
                   <div className="job-tags">
-                    <span className="pill">{j.type}</span>
-                    <span className="pill">{j.location}</span>
+                    {j.type && <span className="pill">{j.type}</span>}
+                    {j.location && <span className="pill">{j.location}</span>}
                   </div>
                   <h3>{j.title}</h3>
                   <p>{j.text}</p>
                 </div>
                 <a
                   className="btn btn-navy"
-                  href={whatsappLink(`Halo TaxPlus, saya ingin melamar posisi ${j.title}.`)}
+                  href={waLink(site, `Halo TaxPlus, saya ingin melamar posisi ${j.title}.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -100,17 +107,19 @@ export default function CareerPage() {
                 </a>
               </div>
             </div>
-            <div className="ap-sub">
-              <span className="ap-k">Format subjek email</span>
-              <code>Lamaran &ndash; [Posisi] &ndash; [Nama]</code>
-            </div>
+            {applicationSubject && (
+              <div className="ap-sub">
+                <span className="ap-k">Format subjek email</span>
+                <code>{applicationSubject}</code>
+              </div>
+            )}
             <div className="ap-act">
               <a className="btn btn-gold" href={applyHref}>
                 Kirim email
               </a>
               <a
                 className="btn ap-wa"
-                href={whatsappLink("Halo TaxPlus, saya ingin bertanya tentang lowongan.")}
+                href={waLink(site, "Halo TaxPlus, saya ingin bertanya tentang lowongan.")}
                 target="_blank"
                 rel="noopener noreferrer"
               >

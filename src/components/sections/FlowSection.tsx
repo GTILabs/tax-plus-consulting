@@ -1,6 +1,5 @@
 import { Icon, Tick, type IconName } from "@/components/ui/icons";
-import { servicePromises, workSteps } from "@/modules/content/company";
-import { FREE_CONSULT_WA_MESSAGE, whatsappLink } from "@/modules/content/site";
+import { getHome, getSite, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
 type Step = { title: string; text: string; timing?: string };
@@ -46,16 +45,17 @@ export function FlowSteps({ steps, icons = false }: { steps: Step[]; icons?: boo
 }
 
 /** Navy bar with the three service promises and a button. */
-export function PromiseBar({ waMessage = FREE_CONSULT_WA_MESSAGE }: { waMessage?: string }) {
+export async function PromiseBar({ waMessage }: { waMessage?: string }) {
+  const [site, home] = await Promise.all([getSite(), getHome()]);
   return (
     <div className="promise">
-      {servicePromises.map((p) => (
+      {home.servicePromises.map((p) => (
         <div key={p}>
           <Tick color="currentColor" />
           {p}
         </div>
       ))}
-      <a className="btn btn-gold" href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer">
+      <a className="btn btn-gold" href={waLink(site, waMessage ?? site.messages.freeConsult)} target="_blank" rel="noopener noreferrer">
         Mulai dari langkah 1
       </a>
     </div>
@@ -66,7 +66,7 @@ export function PromiseBar({ waMessage = FREE_CONSULT_WA_MESSAGE }: { waMessage?
  * "Cara kerja" (yellow): the general four steps by default, or a service's own
  * steps with time estimates.
  */
-export function FlowSection({
+export async function FlowSection({
   steps,
   sub,
   waMessage,
@@ -75,6 +75,7 @@ export function FlowSection({
   sub?: string;
   waMessage?: string;
 }) {
+  const workSteps = steps ? [] : (await getHome()).workSteps;
   return (
     <section className="flow">
       <div className="in">

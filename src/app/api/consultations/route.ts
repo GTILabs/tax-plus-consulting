@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const whatsappUrl = createWhatsappHandoff(parsed.data);
+  const whatsappUrl = await createWhatsappHandoff(parsed.data);
   try {
     const id = await saveConsultationRequest(parsed.data);
     return Response.json({ data: { id, saved: true, whatsappUrl } }, { status: 201 });
