@@ -16,10 +16,10 @@ export function WhySection() {
           {credentials.map((c, i) => (
             <article key={c.title} className="w2">
               <div className="w2-top">
+                <span className="w2-n">{String(i + 1).padStart(2, "0")}</span>
                 <span className="w2-ico">
                   <Icon name={c.icon} size={30} strokeWidth={1.6} />
                 </span>
-                <span className="w2-n">{String(i + 1).padStart(2, "0")}</span>
               </div>
               <h3>{c.title}</h3>
               <p>{c.text}</p>

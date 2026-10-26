@@ -688,3 +688,7 @@ details summary{color:var(--navy)}
 details>p{background:#FFF8D6;border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0 6px;color:var(--ink);max-width:none}
 details>p strong{color:var(--navy)}
 .vbg.blur img{filter:blur(10px);transform:scale(1.08)}.vbg.blur+.vshade{background:rgba(8,22,52,.74)}
+.w2{align-items:center;text-align:center}
+.w2-top{flex-direction:column;gap:12px}
+.w2-n{font-size:13px;letter-spacing:.2em;color:var(--gold)}
+.w2 dl{align-self:stretch}
