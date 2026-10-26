@@ -95,7 +95,7 @@ export type Person = {
 export const pioneer: Person = {
   name: "Kalam Al-Iqbal, S.Ak., S.H., M.Ak., BKP",
   role: "Pioneer & Managing Partner",
-  photo: { src: "/images/photos/kalam-al-iqbal.jpg", width: 900, height: 1200 },
+  photo: { src: "/images/photos/kalam-al-iqbal.webp", width: 900, height: 1200 },
   initials: "KA",
   profile:
     "Lebih dari 10 tahun menangani kepatuhan dan sengketa pajak, dengan latar pendidikan perpajakan, akuntansi, dan hukum.",
