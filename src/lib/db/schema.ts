@@ -1,4 +1,4 @@
-import { index, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { index, integer, jsonb, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 
 export const consultationStatus = pgEnum("consultation_status", ["new", "contacted", "closed"]);
 
@@ -24,3 +24,63 @@ export const consultationRequests = pgTable(
 
 export type ConsultationRequest = typeof consultationRequests.$inferSelect;
 export type NewConsultationRequest = typeof consultationRequests.$inferInsert;
+
+/** CMS admins. Emails are stored lowercase; passwords as scrypt hashes (src/modules/admin/password.ts). */
+export const adminUsers = pgTable("admin_users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  name: text("name").notNull(),
+  passwordHash: text("password_hash").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
+});
+
+/** Admin sessions. The id is the SHA-256 of the cookie token, so a leaked table can't be replayed. */
+export const adminSessions = pgTable(
+  "admin_sessions",
+  {
+    id: text("id").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => adminUsers.id, { onDelete: "cascade" }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("admin_sessions_user_id_idx").on(t.userId)],
+);
+
+export const cmsStatus = pgEnum("cms_status", ["draft", "published"]);
+
+/**
+ * One row per item of a CMS collection (articles, services, team, ...). `data` holds
+ * the fields, validated by the collection's schema in src/modules/cms/collections.
+ */
+export const cmsEntries = pgTable(
+  "cms_entries",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    collection: text("collection").notNull(),
+    slug: text("slug"),
+    status: cmsStatus("status").notNull().default("published"),
+    sort: integer("sort").notNull().default(0),
+    data: jsonb("data").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedBy: uuid("updated_by").references(() => adminUsers.id, { onDelete: "set null" }),
+  },
+  (t) => [
+    uniqueIndex("cms_entries_collection_slug_idx").on(t.collection, t.slug),
+    index("cms_entries_collection_sort_idx").on(t.collection, t.sort),
+  ],
+);
+
+/** Single-record CMS settings (contact details, homepage blocks, ...), keyed by name. */
+export const cmsSettings = pgTable("cms_settings", {
+  key: text("key").primaryKey(),
+  data: jsonb("data").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedBy: uuid("updated_by").references(() => adminUsers.id, { onDelete: "set null" }),
+});
+
+export type AdminUser = typeof adminUsers.$inferSelect;
+export type CmsEntry = typeof cmsEntries.$inferSelect;
