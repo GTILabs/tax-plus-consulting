@@ -4,25 +4,39 @@ import { site } from "@/modules/content/site";
 export function AboutBox() {
   return (
     <article className="about-box">
-      <span className="eyebrow">Tentang TaxPlus</span>
-      <h2>Kantor Konsultan Pajak di Bandung</h2>
+      <span className="ab-badge">Tentang TaxPlus</span>
+      <h2>
+        Kantor Konsultan Pajak
+        <br />
+        <span className="ab-mark">di Bandung</span>
+      </h2>
       <p>
         <strong>TaxPlus Consulting</strong> adalah kantor konsultan pajak di Bojongsoang, Kabupaten Bandung, yang
         berdiri sejak {site.founded} dan dipimpin oleh Kalam Al-Iqbal, S.Ak., S.H., M.Ak., BKP, pemegang Izin Praktik
         Konsultan Pajak tingkat A dan B serta Izin Kuasa Hukum Pengadilan Pajak.
       </p>
       <p>
-        Kami mendampingi perusahaan, UMKM, dan orang pribadi, termasuk figur publik, dari sektor hiburan dan media,
-        properti, manufaktur, kesehatan, ritel, hingga logistik. Layanan kami mencakup kepatuhan pajak, pembukuan dan
-        laporan keuangan fiskal, perencanaan pajak, pendampingan pemeriksaan, serta keberatan dan banding di Pengadilan
-        Pajak.
+        Kami mendampingi <strong>perusahaan, UMKM, dan orang pribadi</strong>, termasuk figur publik, dari sektor
+        hiburan dan media, properti, manufaktur, kesehatan, ritel, hingga logistik.
+      </p>
+      <p>
+        Layanan kami mencakup{" "}
+        <strong>
+          kepatuhan pajak, pembukuan dan laporan keuangan fiskal, perencanaan pajak, pendampingan pemeriksaan, serta
+          keberatan dan banding
+        </strong>{" "}
+        di Pengadilan Pajak.
       </p>
       <div className="about-facts">
         <span>
           <b>2022</b>berdiri
         </span>
         <span>
-          <b>{site.stats.clients}</b>klien
+          <b>
+            {site.stats.clients.replace("+", "")}
+            <i>+</i>
+          </b>
+          klien
         </span>
         <span>
           <b>5</b>lini layanan

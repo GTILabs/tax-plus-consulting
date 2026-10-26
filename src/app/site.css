@@ -678,3 +678,9 @@ footer.site .cols>div:first-child img{mix-blend-mode:multiply}
 .stat b .st-num{font-size:inherit;color:inherit}.stat b i{font-style:normal;color:var(--gold)}
 .stat .st-stars{display:inline-flex;gap:1px;color:var(--gold)}.st-stars svg{width:16px;height:16px}
 .stat .st-lbl{color:var(--ink);font-weight:600;font-size:14px}
+.ab-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:14px}
+.about-box h2{line-height:1.2}.about-box h2::after{content:"";display:block;width:62px;height:4px;border-radius:2px;background:var(--gold);margin-top:18px}
+.ab-mark{font-style:italic;white-space:nowrap;background:linear-gradient(transparent 58%,var(--gold) 58%,var(--gold) 90%,transparent 90%);padding:0 .08em}
+.about-facts span{min-width:0;text-align:center;justify-items:center;border-top:3px solid var(--gold);padding:14px 6px}
+@media (max-width:560px){.about-box{padding:26px 20px 22px}.about-facts{gap:8px}.about-facts b{font-size:22px}}
+.about-facts b{font-size:28px}.about-facts b i{font-style:normal;color:var(--gold)}
