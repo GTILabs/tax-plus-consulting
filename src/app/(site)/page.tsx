@@ -11,7 +11,7 @@ import { ServiceBoxes } from "@/components/sections/ServiceCards";
 import { SocialSection } from "@/components/sections/SocialSection";
 import { TeamSection } from "@/components/sections/TeamSection";
 import { WhySection } from "@/components/sections/WhySection";
-import { Icon } from "@/components/ui/icons";
+import { Icon, SolidStar } from "@/components/ui/icons";
 import { showStagingContent } from "@/components/ui/StagingNote";
 import { articleCardData, articles } from "@/modules/content/articles";
 import { homeFaqs } from "@/modules/content/company";
@@ -108,6 +108,18 @@ function HeroVideo() {
   );
 }
 
+/** "10+" with the plus in yellow. */
+function StatValue({ value }: { value: string }) {
+  return value.endsWith("+") ? (
+    <span className="st-num">
+      {value.slice(0, -1)}
+      <i>+</i>
+    </span>
+  ) : (
+    value
+  );
+}
+
 export default function HomePage() {
   return (
     <>
@@ -118,16 +130,36 @@ export default function HomePage() {
       <div className="in">
         <div className="stats">
           <div className="stat">
-            <b>{site.stats.years}</b>
-            <span>tahun pengalaman</span>
+            <span className="st-ic">
+              <Icon name="calendar" size={18} />
+            </span>
+            <b>
+              <StatValue value={site.stats.years} />
+            </b>
+            <span className="st-lbl">tahun pengalaman pimpinan</span>
           </div>
           <div className="stat">
-            <b>{site.stats.clients}</b>
-            <span>klien dilayani</span>
+            <span className="st-ic">
+              <Icon name="team" size={18} />
+            </span>
+            <b>
+              <StatValue value={site.stats.clients} />
+            </b>
+            <span className="st-lbl">klien dilayani</span>
           </div>
           <div className="stat">
-            <b>{site.rating.score}</b>
-            <span>rating Google dari {site.rating.count} ulasan</span>
+            <span className="st-ic">
+              <Icon name="star" size={18} />
+            </span>
+            <b>
+              {site.rating.score}
+              <span className="st-stars" aria-label="5 dari 5 bintang">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <SolidStar key={n} />
+                ))}
+              </span>
+            </b>
+            <span className="st-lbl">rating Google dari {site.rating.count} ulasan</span>
           </div>
         </div>
       </div>

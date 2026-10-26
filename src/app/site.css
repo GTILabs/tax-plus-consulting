@@ -671,3 +671,10 @@ footer.site .cols>div:first-child img{mix-blend-mode:multiply}
 .p-list+.hl-wrap{margin-top:64px}
 .st-role{font-weight:600;color:var(--muted);font-size:13.5px}.st-name{display:block;font-weight:700;color:var(--navy);font-size:15px;line-height:1.3;margin-bottom:4px;font-family:var(--f-head)}
 @media (max-width:560px){.st-name{font-size:14px}}
+.stats{border-top:3px solid var(--gold)}
+.stat{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:22px 18px 20px}
+.stat .st-ic{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center}
+.stat b{display:flex;align-items:center;justify-content:center;gap:8px;font-size:40px;line-height:1.1}
+.stat b .st-num{font-size:inherit;color:inherit}.stat b i{font-style:normal;color:var(--gold)}
+.stat .st-stars{display:inline-flex;gap:1px;color:var(--gold)}.st-stars svg{width:16px;height:16px}
+.stat .st-lbl{color:var(--ink);font-weight:600;font-size:14px}
