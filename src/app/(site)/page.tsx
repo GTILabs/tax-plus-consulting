@@ -3,6 +3,7 @@ import { ArticleCard } from "@/components/articles/ArticleCard";
 import { AboutBox, FaqList, faqJsonLd, JsonLd } from "@/components/sections/AboutSection";
 import { ConsultSection } from "@/components/sections/ConsultSection";
 import { FlowSection } from "@/components/sections/FlowSection";
+import { InstagramSection } from "@/components/sections/InstagramSection";
 import { LocationSection } from "@/components/sections/LocationSection";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { SectionHead } from "@/components/sections/SectionHead";
@@ -211,11 +212,13 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* 11. Konsultasi gratis */}
+      {/* 11. Dari Instagram kami */}
+      <InstagramSection />
+      {/* 12. Konsultasi gratis */}
       <ConsultSection />
-      {/* 12. Lokasi kantor */}
+      {/* 13. Lokasi kantor */}
       <LocationSection />
-      {/* 13. Ikuti kami */}
+      {/* 14. Ikuti kami */}
       <SocialSection />
     </>
   );
