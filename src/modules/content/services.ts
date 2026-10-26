@@ -276,7 +276,7 @@ export const services: Service[] = [
       { title: "Analisis kelayakan", text: "Kami sampaikan terbuka bila perkara ini lebih baik tidak dilanjutkan.", timing: "Sebelum langkah apa pun" },
       { title: "Keberatan ke DJP", text: "Diajukan atas SKP, diputus oleh Direktorat Jenderal Pajak.", timing: "3 bulan sejak SKP dikirim" },
       { title: "Banding ke Pengadilan Pajak", text: "Diajukan atas Keputusan Keberatan yang tidak memuaskan.", timing: "3 bulan sejak keputusan diterima" },
-      { title: "Gugatan ke Pengadilan Pajak", text: "Jalur terpisah untuk tindakan penagihan dan keputusan tertentu.", timing: "30 hari" },
+      { title: "Gugatan ke Pengadilan Pajak", text: "Jalur terpisah untuk tindakan penagihan dan keputusan tertentu.", timing: "14 hari (penagihan) · 30 hari (keputusan lain)" },
       { title: "Peninjauan Kembali ke Mahkamah Agung", text: "Upaya luar biasa atas Putusan Pengadilan Pajak, dengan alasan yang dibatasi undang-undang.", timing: "3 bulan" },
     ],
     faqs: [
