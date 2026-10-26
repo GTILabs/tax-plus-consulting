@@ -10,6 +10,7 @@ export const routes = {
   privacy: "/kebijakan-privasi",
   faq: "/faq",
   forms: "/formulir-pajak",
+  adminLogin: "/admin/login",
 } as const;
 
 /** Main menu (brief: Beranda · Layanan · Tentang Kami · Artikel · Karier · Kontak). */

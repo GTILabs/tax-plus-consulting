@@ -711,3 +711,9 @@ details>p strong{color:var(--navy)}
 }
 @media (max-width:560px){.ig-grid li{width:46vw}}
 @media (prefers-reduced-motion:reduce){.ig-post,.ig-post img{transition:none}.ig-post:hover,.ig-post:hover img{transform:none}}
+/* "Masuk" (CMS login) next to the header CTA */
+nav.main a.login-top{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:7px 14px;border:1.5px solid var(--line);border-radius:8px;color:var(--navy);font-size:14.5px}
+nav.main a.login-top:hover{border-color:var(--navy);background:var(--soft)}
+nav.main .cta-top{margin-left:8px}
+@media (min-width:901px) and (max-width:1120px){nav.main a{padding:8px 9px;font-size:14.5px}nav.main a.login-top{padding:7px 10px}}
+@media (max-width:900px){nav.main a.login-top{margin:8px 0 0;justify-content:center;padding:10px 14px}}

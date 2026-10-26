@@ -10,7 +10,7 @@ function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
-/** Sticky white header: logo left, menu right, yellow "Konsultasi gratis" (WhatsApp). On phones the menu folds into "Menu". */
+/** Sticky white header: logo left, menu right, "Masuk" (CMS login) and yellow "Konsultasi gratis" (WhatsApp). On phones the menu folds into "Menu". */
 export function SiteHeader({
   services,
   consultHref,
@@ -67,6 +67,13 @@ export function SiteHeader({
               </div>
             );
           })}
+          <Link className="login-top" href={routes.adminLogin} prefetch={false}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21a8 8 0 0 1 16 0" />
+            </svg>
+            Masuk
+          </Link>
           <a
             className="btn btn-gold cta-top"
             href={consultHref}
