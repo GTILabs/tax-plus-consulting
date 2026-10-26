@@ -1,9 +1,9 @@
-import { count, sql } from "drizzle-orm";
+import { count, eq, sql } from "drizzle-orm";
 import Link from "next/link";
 import { PageHead } from "@/components/admin/PageHead";
 import { Icon } from "@/components/ui/icons";
 import { getDb } from "@/lib/db";
-import { cmsEntries } from "@/lib/db/schema";
+import { cmsEntries, consultationRequests } from "@/lib/db/schema";
 import { requireAdmin } from "@/modules/admin/session";
 import { collections, settings } from "@/modules/cms/collections";
 
@@ -12,15 +12,26 @@ export const metadata = { title: "Dasbor" };
 export default async function DashboardPage() {
   const admin = await requireAdmin();
   const db = getDb();
-  const counts = await db
-    .select({ collection: cmsEntries.collection, total: count(), drafts: sql<number>`count(*) filter (where ${cmsEntries.status} = 'draft')`.mapWith(Number) })
-    .from(cmsEntries)
-    .groupBy(cmsEntries.collection);
+  const [counts, [{ newRequests }]] = await Promise.all([
+    db
+      .select({ collection: cmsEntries.collection, total: count(), drafts: sql<number>`count(*) filter (where ${cmsEntries.status} = 'draft')`.mapWith(Number) })
+      .from(cmsEntries)
+      .groupBy(cmsEntries.collection),
+    db.select({ newRequests: count() }).from(consultationRequests).where(eq(consultationRequests.status, "new")),
+  ]);
   const byKey = new Map(counts.map((c) => [c.collection, c]));
   return (
     <>
       <PageHead title={`Halo, ${admin.name.split(" ")[0]}`} sub="Perubahan yang disimpan di sini langsung tampil di situs, tanpa deploy ulang." />
-      <h2>Konten</h2>
+      <Link href="/admin/consultations?status=new" className={newRequests ? "adm-card adm-inbox has-new" : "adm-card adm-inbox"}>
+        <Icon name="mail" size={26} />
+        <span>
+          <b>{newRequests ? `${newRequests} permintaan konsultasi baru` : "Tidak ada permintaan konsultasi baru"}</b>
+          <small>Dari form Konsultasi gratis. Buka untuk membalas lewat WhatsApp.</small>
+        </span>
+        <span aria-hidden="true">→</span>
+      </Link>
+      <h2 style={{ marginTop: 28 }}>Konten</h2>
       <div className="adm-grid">
         {Object.values(collections).map((c) => {
           const n = byKey.get(c.key);

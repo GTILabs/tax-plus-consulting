@@ -6,7 +6,12 @@ export type AdminNavGroup = { title?: string; items: AdminNavItem[] };
 
 export function adminNav(): AdminNavGroup[] {
   return [
-    { items: [{ href: "/admin", label: "Dasbor", icon: "grid" }] },
+    {
+      items: [
+        { href: "/admin", label: "Dasbor", icon: "grid" },
+        { href: "/admin/consultations", label: "Konsultasi masuk", icon: "mail" },
+      ],
+    },
     {
       title: "Konten",
       items: Object.values(collections).map((c) => ({ href: `/admin/content/${c.key}`, label: c.label, icon: c.icon })),
