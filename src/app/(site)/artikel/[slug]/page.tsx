@@ -85,7 +85,7 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
         </div>
       </header>
       <div className="in">
-        <ArticleCover svg={articleCover(article.slug)} className="ar-cover cov" />
+        <ArticleCover cover={articleCover(article.slug)} alt={article.title} sizes="(max-width: 920px) 100vw, 880px" className="ar-cover cov" preload />
         <article className="ar-wrap ar-body">
           <div dangerouslySetInnerHTML={{ __html: article.bodyHtml }} />
           <p className="ar-ref">

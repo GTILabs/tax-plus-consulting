@@ -410,8 +410,8 @@ a.cc:hover{border-top-color:var(--gold);box-shadow:0 12px 28px rgba(13,35,84,.10
 .mband{padding-block:56px;border-top:1px solid var(--line)}
 .m-logo.big{width:180px;height:110px}
 .chip[data-cat]{cursor:pointer;transition:background .15s}.chip[data-cat]:hover{border-color:var(--navy)}
-.cov{display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--soft)}.cov svg{display:block;width:100%;height:100%}
-.af-img.cov{min-height:0;padding:0;aspect-ratio:auto;height:100%;display:flex;align-items:center}.a-img.cov{min-height:0;padding:0}
+.cov{display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--soft)}.cov img{display:block;width:100%;height:100%;object-fit:cover}
+.af-img.cov{min-height:0;padding:0;aspect-ratio:auto;height:100%;display:flex;align-items:center}.af-img.cov img{height:auto}.a-img.cov{min-height:0;padding:0}
 a.art,a.art-feat{color:inherit;text-decoration:none;transition:transform .2s,box-shadow .2s}a.art:hover,a.art-feat:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(13,35,84,.10)}
 .a-bd p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}.art .meta{margin-top:auto}.art{display:flex;flex-direction:column}.a-bd{flex:1}
 .art-count{text-align:center;color:var(--muted);font-size:14px;margin-top:14px}

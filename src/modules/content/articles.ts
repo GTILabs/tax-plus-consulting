@@ -1,5 +1,5 @@
 import type { ArticleCategory } from "./article-meta";
-import { articleCovers } from "./article-covers";
+import { coverBackgrounds } from "./article-covers";
 
 export type Article = {
   slug: string;
@@ -208,14 +208,15 @@ export function getArticle(slug: string) {
   return articles.find((a) => a.slug === slug);
 }
 
-/** Inline SVG cover (16:9) drawn with the site fonts. */
-export function articleCover(slug: string) {
-  return articleCovers[slug] ?? "";
-}
-
-/** WebP export of the cover, used as the Open Graph image. */
+/** WebP cover (1200×675), also used as the Open Graph image. */
 export function articleOgImage(slug: string) {
   return `/images/articles/${slug}.webp`;
+}
+
+export type ArticleCoverData = { src: string; background: string };
+
+export function articleCover(slug: string): ArticleCoverData {
+  return { src: articleOgImage(slug), background: coverBackgrounds[slug] ?? "var(--soft)" };
 }
 
 /** Same category first, then the newest from other categories. */
