@@ -30,6 +30,7 @@ export default function ContactPage() {
         }
         sub="Konsultasi awal 15 menit tanpa biaya. Datang ke kantor, atau cukup lewat WhatsApp."
         photo="/images/photos/office-reception.jpg"
+        blurPhoto
       />
       <section className="soft">
         <div className="in">
