@@ -291,7 +291,6 @@ footer a{text-decoration:none;display:block;padding:3px 0} footer a:hover{color:
 .lead-card.partner{border-top-color:var(--navy)}
 .lead-card.partner .role{color:var(--muted)}
 .lead-card.partner .ph{background:#fff}
-@media (min-width:721px){.lead-card.rev{grid-template-columns:1fr minmax(220px,340px)}.lead-card.rev .ph{order:2}}
 .loc h2{margin-bottom:26px}
 .loc-box{display:grid;grid-template-columns:1.6fr 1fr;border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(13,35,84,.12);background:#fff}
 @media (max-width:860px){.loc-box{grid-template-columns:1fr}}

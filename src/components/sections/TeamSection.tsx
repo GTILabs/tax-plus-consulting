@@ -53,7 +53,7 @@ function StaffGrid() {
   );
 }
 
-/** "Meet the Pioneer and Partner": full-width pioneer card, then partners alternating left/right. */
+/** "Meet the Pioneer and Partner": full-width pioneer card, then partners, photo on the left like the pioneer. */
 export function TeamSection({ full = false }: { full?: boolean }) {
   return (
     <section>
@@ -62,8 +62,8 @@ export function TeamSection({ full = false }: { full?: boolean }) {
         <PersonCard person={pioneer} className="lead-card" />
         <HighlightTitle small>Partner</HighlightTitle>
         <div className="p-list">
-          {partners.map((p, i) => (
-            <PersonCard key={p.name} person={p} className={i % 2 ? "lead-card partner rev" : "lead-card partner"} />
+          {partners.map((p) => (
+            <PersonCard key={p.name} person={p} className="lead-card partner" />
           ))}
         </div>
         {full ? (
