@@ -669,3 +669,5 @@ footer.site .cols>div:first-child img{mix-blend-mode:multiply}
 @media (max-width:760px){.staff-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
 .st-ph img{height:100%;object-fit:cover;object-position:top}
 .p-list+.hl-wrap{margin-top:64px}
+.st-role{font-weight:600;color:var(--muted);font-size:13.5px}.st-name{display:block;font-weight:700;color:var(--navy);font-size:15px;line-height:1.3;margin-bottom:4px;font-family:var(--f-head)}
+@media (max-width:560px){.st-name{font-size:14px}}

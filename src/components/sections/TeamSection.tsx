@@ -40,9 +40,12 @@ function StaffGrid() {
         {staff.map((m) => (
           <div key={m.photo} className="st-card">
             <div className="st-ph">
-              <Image src={m.photo} alt={`Foto ${m.role} TaxPlus Consulting`} width={640} height={800} sizes="(max-width: 760px) 50vw, 270px" />
+              <Image src={m.photo} alt={`Foto ${m.name}, ${m.role} TaxPlus Consulting`} width={640} height={800} sizes="(max-width: 760px) 50vw, 270px" />
             </div>
-            <div className="st-role">{m.role}</div>
+            <div className="st-role">
+              <span className="st-name">{m.name}</span>
+              {m.role}
+            </div>
           </div>
         ))}
       </div>
