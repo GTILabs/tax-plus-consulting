@@ -22,7 +22,9 @@ const panels = [
     title: "Karier",
     links: ["Lowongan kerja", "Program magang", "Kirim lamaran"],
     more: "Bergabung bersama kami",
-    photo: "/images/photos/team/team-01.jpg",
+    photo: "/images/photos/team/career-panel.webp",
+    /** Team on the right, navy fade from the left keeps the text readable. */
+    fade: true,
   },
 ];
 
@@ -31,7 +33,7 @@ export function GatePanels() {
   return (
     <nav className="gate" aria-label="Jelajahi TaxPlus">
       {panels.map((p, i) => (
-        <Link key={p.href} className="gp" href={p.href}>
+        <Link key={p.href} className={"fade" in p ? "gp gp-fade" : "gp"} href={p.href}>
           <span className={`gp-photo g${i + 1}`} aria-hidden="true">
             <Image src={p.photo} alt="" fill sizes="(max-width: 860px) 100vw, 34vw" />
           </span>

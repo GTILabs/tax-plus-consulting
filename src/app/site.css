@@ -693,3 +693,5 @@ details>p strong{color:var(--navy)}
 .w2-n{font-size:13px;letter-spacing:.2em;color:var(--gold)}
 .w2 dl{align-self:stretch}
 .lg{align-items:center;text-align:center}
+.gp-fade .gp-photo img{opacity:.85;object-position:85% center}
+.gp-fade::after{background:linear-gradient(90deg,rgba(6,16,40,.94) 0%,rgba(6,16,40,.7) 40%,rgba(6,16,40,.12) 100%),linear-gradient(0deg,rgba(6,16,40,.75) 0%,transparent 55%)}
