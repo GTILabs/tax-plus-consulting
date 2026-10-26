@@ -1,11 +1,12 @@
 import { and, asc, eq, isNull, max } from "drizzle-orm";
 import Link from "next/link";
 import { ActionForm } from "@/components/admin/ActionForm";
+import { DeleteUserButton } from "@/components/admin/DeleteUserButton";
 import { PageHead } from "@/components/admin/PageHead";
 import { getDb } from "@/lib/db";
 import { adminPasswordResets, adminUsers } from "@/lib/db/schema";
 import { inviteAdminUser } from "@/modules/admin/actions";
-import { can, roleLabel, ROLES } from "@/modules/admin/roles";
+import { can, canDeleteUser, roleLabel, ROLES } from "@/modules/admin/roles";
 import { requireAdmin } from "@/modules/admin/session";
 
 export const metadata = { title: "Pengguna" };
@@ -55,6 +56,7 @@ export default async function UsersPage() {
               <th>Role</th>
               <th>Status</th>
               <th>Terakhir masuk</th>
+              <th aria-label="Aksi" />
             </tr>
           </thead>
           <tbody>
@@ -84,6 +86,7 @@ export default async function UsersPage() {
                   <td className="adm-muted" style={{ whiteSpace: "nowrap" }}>
                     {u.lastLoginAt ? dateFmt.format(u.lastLoginAt) : "Belum pernah"}
                   </td>
+                  <td className="t-act">{canDeleteUser(admin, u) && <DeleteUserButton id={u.id} name={u.name} />}</td>
                 </tr>
               );
             })}

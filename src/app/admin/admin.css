@@ -60,7 +60,7 @@
 .adm-table img{display:block;width:48px;height:48px;object-fit:cover;border-radius:8px;background:var(--soft)}
 .adm-scroll{overflow-x:auto;border-radius:12px}
 .adm-empty{padding:36px;text-align:center;color:var(--muted)}
-.adm-pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--muted)}
+.adm-pill{display:inline-block;white-space:nowrap;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--muted)}
 .adm-pill.on{background:#E3F6EA;color:#17663A}
 .adm-pill.warn{background:#FFF4C2;color:#6B5200}
 .adm-pill.new{background:#E6ECFA;color:var(--navy)}
@@ -180,3 +180,4 @@
 .adm-role span{display:flex;flex-direction:column;gap:2px}
 .adm-role small{color:var(--muted);font-size:13px;line-height:1.4}
 .adm-small{font-size:12.5px;margin-top:4px}
+.adm-confirm{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:600;color:#B42318}
