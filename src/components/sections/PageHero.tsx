@@ -30,6 +30,7 @@ export function PageHero({
   title,
   sub,
   photo,
+  blurPhoto = false,
   actions,
 }: {
   crumbs: Crumb[];
@@ -37,12 +38,14 @@ export function PageHero({
   title: React.ReactNode;
   sub: string;
   photo?: string;
+  /** Blur a photo whose signage clashes with the title, until a text-free photo replaces it. */
+  blurPhoto?: boolean;
   /** Defaults to <HeroButtons />; pass `false` to hide. */
   actions?: React.ReactNode | false;
 }) {
   return (
     <section className="ph-hero">
-      <div className="vbg" aria-hidden="true">
+      <div className={blurPhoto ? "vbg blur" : "vbg"} aria-hidden="true">
         {photo ? (
           <Image src={photo} alt="" fill priority sizes="100vw" />
         ) : (

@@ -32,6 +32,7 @@ export default function AboutPage() {
         }
         sub="Kantor konsultan pajak di Bandung yang menangani kepatuhan, pemeriksaan, sampai sengketa pajak, dipimpin langsung oleh konsultan berizin dan advokat."
         photo="/images/photos/office-front.jpg"
+        blurPhoto
       />
       <section>
         <div className="in about-faq">

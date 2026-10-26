@@ -687,3 +687,4 @@ footer.site .cols>div:first-child img{mix-blend-mode:multiply}
 details summary{color:var(--navy)}
 details>p{background:#FFF8D6;border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0 6px;color:var(--ink);max-width:none}
 details>p strong{color:var(--navy)}
+.vbg.blur img{filter:blur(10px);transform:scale(1.08)}.vbg.blur+.vshade{background:rgba(8,22,52,.74)}
