@@ -146,8 +146,17 @@ nav.main a[aria-current="page"]{color:var(--navy);background:var(--soft)}
 ul.ticks{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
 ul.ticks li{padding-left:26px;position:relative}
 ul.ticks li svg{position:absolute;left:0;top:5px}
-.logos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:24px}
-.logo-slot{height:72px;border:1.5px dashed var(--line);border-radius:10px;display:grid;place-items:center;color:var(--muted);font-size:12.5px;text-align:center;padding:6px;background:#fff}
+/* client logos: endless sideways strip; the list is doubled so -50% loops seamlessly */
+.clients{padding-block:40px 48px;border-top:1px solid var(--line)}
+.cl-title{text-align:center;margin-bottom:22px}
+.cl-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.cl-track{display:flex;width:max-content;animation:cl-scroll var(--cl-duration,35s) linear infinite}
+.cl-marquee:hover .cl-track{animation-play-state:paused}
+.cl-list{display:flex;flex-shrink:0;align-items:center;justify-content:space-around;gap:56px;min-width:100vw;margin:0;padding:0 28px;list-style:none}
+.cl-item img{display:block;height:calc(var(--h,64)*1px);width:auto}
+@keyframes cl-scroll{to{transform:translateX(-50%)}}
+@media (max-width:700px){.cl-list{gap:40px;padding:0 20px}.cl-item img{height:calc(var(--h,64)*.8px)}}
+@media (prefers-reduced-motion:reduce){.cl-track{animation:none;width:auto}.cl-list[aria-hidden]{display:none}.cl-list{flex-wrap:wrap;justify-content:center;min-width:0;row-gap:24px}.cl-marquee{-webkit-mask-image:none;mask-image:none}}
 .review{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
 .review b{font-family:var(--f-head);font-size:34px;color:var(--navy)}
 .stars{display:flex;gap:2px;color:var(--gold)}

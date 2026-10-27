@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArticleCard } from "@/components/articles/ArticleCard";
+import { ClientLogos } from "@/components/sections/ClientLogos";
 import { AboutBox } from "@/components/sections/AboutSection";
 import { FaqList, faqJsonLd, JsonLd } from "@/components/sections/Faq";
 import { ConsultSection } from "@/components/sections/ConsultSection";
@@ -186,7 +187,8 @@ export default async function HomePage() {
       <WhySection />
       {/* 7. Meet the Pioneer and Partner */}
       <TeamSection />
-      {/* 8. Klien & ulasan */}
+      {/* 8. Klien & ulasan, with the moving client logos above it */}
+      <ClientLogos />
       <ReviewsSection />
       {/* 9. Tentang + FAQ */}
       <section>

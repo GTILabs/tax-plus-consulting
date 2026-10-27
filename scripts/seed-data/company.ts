@@ -169,8 +169,16 @@ export const aboutPromises = [
   { icon: "scale", title: "Didampingi sampai ruang sidang", text: "Sengketa tidak dialihkan ke pihak lain." },
 ] as const;
 
-/** Client logos that have been approved for display (brief: up to 10). Empty until provided. */
-export const clientLogos: { name: string; src: string }[] = [];
+/** Client logos approved for display, from the "Logo Klien" Drive folder (Oct 2026). */
+export const clientLogos: { name: string; src: string; width: number; height: number }[] = [
+  { name: "Rumah Sakit Humana Prima", src: "/images/clients/humana-prima.webp", width: 253, height: 200 },
+  { name: "SSOM Studio", src: "/images/clients/ssom-studio.webp", width: 384, height: 149 },
+  { name: "BNI", src: "/images/clients/bni.webp", width: 431, height: 126 },
+  { name: "Yaoyao", src: "/images/clients/yaoyao.webp", width: 200, height: 200 },
+  { name: "Chitose", src: "/images/clients/chitose.webp", width: 480, height: 147 },
+  { name: "Pasming Space", src: "/images/clients/pasming-space.webp", width: 441, height: 200 },
+  { name: "PT Hongyi Asset Manajemen", src: "/images/clients/hongyi-asset-manajemen.webp", width: 203, height: 200 },
+];
 
 /* Career page. Positions are maintained by the admin. */
 export const careerPerks = [

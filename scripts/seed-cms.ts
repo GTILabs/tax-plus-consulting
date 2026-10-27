@@ -72,7 +72,7 @@ const seeds: { [K in CollectionKey]: Seed[] } = {
   })),
   jobs: company.jobOpenings.map((j) => ({ data: { ...j } })),
   sectors: company.sectors.map((s) => ({ data: { ...s, featured: !!s.featured } })),
-  clientLogos: company.clientLogos.map((l) => ({ data: { name: l.name, logo: { src: l.src, width: 300, height: 150 } } })),
+  clientLogos: company.clientLogos.map((l) => ({ data: { name: l.name, logo: { src: l.src, width: l.width, height: l.height } } })),
 };
 
 const settingSeeds: { [K in SettingsKey]: Record<string, unknown> } = {

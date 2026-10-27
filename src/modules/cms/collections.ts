@@ -266,14 +266,14 @@ export const collections = {
     label: "Logo klien",
     singular: "logo klien",
     icon: "medal",
-    description: "Logo klien yang sudah disetujui untuk ditampilkan (maksimal 10).",
+    description: "Logo klien yang sudah disetujui. Tampil bergerak di beranda sebelum panel Klien & ulasan, sesuai urutan di sini.",
     titleField: "name",
     imageField: "logo",
     order: "manual",
     drafts: true,
     fields: [
       { type: "text", name: "name", label: "Nama klien", required: true },
-      { type: "image", name: "logo", label: "Logo", required: true, hint: "PNG transparan atau SVG." },
+      { type: "image", name: "logo", label: "Logo", required: true, hint: "PNG transparan atau latar putih, ruang kosong di sekeliling logo dipangkas." },
     ],
   },
 } as const satisfies Record<string, CollectionDef>;
