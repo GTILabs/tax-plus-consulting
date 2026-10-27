@@ -54,6 +54,9 @@ Open [http://localhost:3000](http://localhost:3000).
 | `SHOW_STAGING_NOTES`   | `false`                 | `true` shows the design's editorial notes and placeholder blocks ("[Nama]", photos)   |
 | `BLOB_READ_WRITE_TOKEN`| —                       | Vercel Blob store `taxplus-cms` for CMS uploads (set by the Blob integration)          |
 | `RESEND_API_KEY`       | —                       | Resend key for emails (set by the Resend integration); without it emails are skipped   |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | —             | GA4 web stream ID (`G-…`); tracking is off when empty                                  |
+| `GA4_PROPERTY_ID`      | —                       | Numeric GA4 property ID for the admin dashboard                                        |
+| `GA4_CREDENTIALS`      | —                       | Service account JSON key (raw or base64) with Viewer access on the property            |
 | `EMAIL_FROM`           | `TaxPlus Consulting <noreply@taxplus-consulting.co.id>` | Sender address; its domain must be verified in Resend |
 
 ## Routes
@@ -115,6 +118,15 @@ optimistic redirect, every page and Server Action re-checks the session and the 
   (`src/modules/cms/read.ts`). Saving in the admin calls `updateTag`, so the change is live without a redeploy
   while pages stay prerendered.
 - `scripts/seed-data/` holds the approved launch content that `bun run cms:seed` loads into an empty database.
+
+## Analytics
+
+- **Tracking:** GA4 loads on the public site (not the admin) when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set, with two
+  events: `whatsapp_click` (any wa.me link) and `generate_lead` (consultation form sent).
+- **Dashboard:** `/admin/analytics` (Admin and Super admin) reads the Google Analytics Data API with a service account
+  (`GA4_PROPERTY_ID`, `GA4_CREDENTIALS`; the account needs Viewer on the property): live users, KPIs against the
+  previous period, daily users, top pages, channels, sources, cities, devices and the two events. Reports are cached
+  for a few minutes.
 
 ## Email
 

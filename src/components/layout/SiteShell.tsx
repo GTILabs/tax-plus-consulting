@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { JsonLd } from "@/components/sections/Faq";
 import { articleWhatsappMessage } from "@/modules/content/articles";
 import { getArticles, getServices, getSite, serviceWhatsappMessage, waLink } from "@/modules/content/data";
@@ -41,6 +42,7 @@ export async function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <JsonLd data={organization} />
+      <GoogleAnalytics />
       <SiteHeader services={services.map((s) => ({ slug: s.slug, name: s.name, description: s.subtitle }))} consultHref={waLink(site, site.messages.freeConsult)} />
       <main id="app">{children}</main>
       <GatePanels />

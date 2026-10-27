@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { trackEvent } from "@/components/analytics/track";
 import type { ConsultationField, ConsultationFieldErrors } from "@/modules/consultations/schema";
 import type { Topic } from "@/modules/consultations/topics";
 
@@ -44,6 +45,7 @@ export function ConsultationForm({ topics, whatsappHref }: { topics: Topic[]; wh
         return;
       }
       if (!res.ok) throw new Error(json.error ?? "Request failed");
+      trackEvent("generate_lead", { topic: String(form.get("topic") ?? "") });
       setStatus({ kind: "done", name: String(form.get("name") ?? "").trim(), whatsappUrl: json.data.whatsappUrl });
     } catch {
       setStatus({ kind: "error", message: "Gagal mengirim. Coba lagi, atau langsung hubungi kami lewat WhatsApp." });

@@ -12,6 +12,7 @@ export function adminNav(role: Role): AdminNavGroup[] {
       items: [
         { href: "/admin", label: "Dasbor", icon: "grid" },
         ...(can(role, "consultations") ? [{ href: "/admin/consultations", label: "Konsultasi masuk", icon: "mail" as const }] : []),
+        ...(can(role, "analytics") ? [{ href: "/admin/analytics", label: "Analitik", icon: "trend" as const }] : []),
       ],
     },
     {
