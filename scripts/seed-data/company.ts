@@ -146,14 +146,14 @@ export const partners: Person[] = [
  * "STRUKTUR ORGANISASI" document on the TaxPlus Google Drive (photos cropped to 4:5).
  */
 export const staff: { name: string; role: string; photo: string }[] = [
-  { name: "Intan Aprilliyanti", role: "Finance & Legal", photo: "/images/photos/staff/staff-01.webp" },
+  { name: "Intan Aprilliyanti", role: "Finance & Legal", photo: "/images/photos/staff/intan-aprilliyanti.webp" },
   { name: "Muhammad Lutfy Fauzan", role: "Head of Accounting", photo: "/images/photos/staff/staff-02.webp" },
   { name: "Resa Septiani", role: "Head of Tax", photo: "/images/photos/staff/staff-03.webp" },
   { name: "Naura Syifa Annisa", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-04.webp" },
   { name: "Sean Clasica Rahma", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-05.webp" },
-  { name: "Dwi Agustina", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-06.webp" },
+  { name: "Dwi Agustina", role: "Tax & Accounting Staff", photo: "/images/photos/staff/dwi-agustina.webp" },
   { name: "Xeisha Neville Evangeline", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-07.webp" },
-  { name: "Haris Yoviana Iskandar Putra", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-08.webp" },
+  { name: "Haris Yoviana Iskandar Putra", role: "Tax & Accounting Staff", photo: "/images/photos/staff/haris-yoviana.webp" },
 ];
 
 export const companyLegal = [
