@@ -178,6 +178,11 @@ export const clientLogos: { name: string; src: string; width: number; height: nu
   { name: "Chitose", src: "/images/clients/chitose.webp", width: 480, height: 147 },
   { name: "Pasming Space", src: "/images/clients/pasming-space.webp", width: 441, height: 200 },
   { name: "PT Hongyi Asset Manajemen", src: "/images/clients/hongyi-asset-manajemen.webp", width: 203, height: 200 },
+  { name: "Petit Bite", src: "/images/clients/petit-bite.webp", width: 200, height: 200 },
+  { name: "CV Bhakti Putra Gemilang", src: "/images/clients/bhakti-putra-gemilang.webp", width: 199, height: 200 },
+  { name: "CV Abadi Daya Perkasa", src: "/images/clients/abadi-daya-perkasa.webp", width: 455, height: 200 },
+  { name: "CV Laju Gerak Pemuda", src: "/images/clients/laju-gerak-pemuda.webp", width: 356, height: 200 },
+  { name: "CV Karunia Amanah", src: "/images/clients/karunia-amanah.webp", width: 200, height: 200 },
 ];
 
 /* Career page. Positions are maintained by the admin. */

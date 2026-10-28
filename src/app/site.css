@@ -156,7 +156,7 @@ ul.ticks li svg{position:absolute;left:0;top:5px}
 .cl-item img{display:block;height:calc(var(--h,64)*1px);width:auto}
 @keyframes cl-scroll{to{transform:translateX(-50%)}}
 @media (max-width:700px){.cl-list{gap:40px;padding:0 20px}.cl-item img{height:calc(var(--h,64)*.8px)}}
-@media (prefers-reduced-motion:reduce){.cl-track{animation:none;width:auto}.cl-list[aria-hidden]{display:none}.cl-list{flex-wrap:wrap;justify-content:center;min-width:0;row-gap:24px}.cl-marquee{-webkit-mask-image:none;mask-image:none}}
+@media (prefers-reduced-motion:reduce){.cl-track{animation:none;width:auto;display:block}.cl-list[aria-hidden]{display:none}.cl-list{flex-wrap:wrap;justify-content:center;min-width:0;row-gap:24px}.cl-marquee{-webkit-mask-image:none;mask-image:none}}
 .review{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
 .review b{font-family:var(--f-head);font-size:34px;color:var(--navy)}
 .stars{display:flex;gap:2px;color:var(--gold)}
