@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Mark, PageHero } from "@/components/sections/PageHero";
+import { downloadHref } from "@/modules/cms/files";
 import { getSite, getTaxForms, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
 
@@ -60,7 +61,7 @@ export default async function TaxFormsPage() {
                         <h3>{f.title}</h3>
                         <p>{f.description}</p>
                       </div>
-                      <a className="fdl" href={f.file.url} download>
+                      <a className="fdl" href={downloadHref(f.file.url)} download>
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" />
                         </svg>

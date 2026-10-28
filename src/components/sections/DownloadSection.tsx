@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Icon } from "@/components/ui/icons";
+import { downloadHref } from "@/modules/cms/files";
 import { getDownloads } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
@@ -8,14 +9,6 @@ const sizeFmt = new Intl.NumberFormat("id-ID", { maximumFractionDigits: 1 });
 /** "2,6 MB" from 1 MB up, "506 KB" below. */
 function fileSize(kb: number) {
   return kb >= 1024 ? `${sizeFmt.format(kb / 1024)} MB` : `${kb} KB`;
-}
-
-/**
- * Files uploaded through the CMS live on Vercel Blob, another origin, where the
- * `download` attribute is ignored; `?download=1` makes Blob send them as an attachment.
- */
-function downloadHref(url: string) {
-  return url.includes(".blob.vercel-storage.com/") ? `${url}${url.includes("?") ? "&" : "?"}download=1` : url;
 }
 
 /** "Unduh profil kami": its own navy band with the documents from the CMS "Unduhan" collection, right before "Ikuti kami". */
