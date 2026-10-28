@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ArticleBrowser } from "@/components/articles/ArticleBrowser";
+import { DownloadSection } from "@/components/sections/DownloadSection";
 import { Mark, PageHero } from "@/components/sections/PageHero";
 import { SocialSection } from "@/components/sections/SocialSection";
 import { articleCardData } from "@/modules/content/articles";
@@ -42,6 +43,7 @@ export default async function ArticlesPage() {
           <ArticleBrowser articles={articles.map(articleCardData)} />
         </div>
       </section>
+      <DownloadSection />
       <SocialSection />
     </>
   );

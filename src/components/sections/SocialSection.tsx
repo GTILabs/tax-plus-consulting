@@ -2,13 +2,7 @@ import { Icon, type IconName } from "@/components/ui/icons";
 import { getSite, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
-/** Company documents offered for download below the social cards; files live in public/unduhan. */
-const downloads = [
-  { title: "Company Profile 2026", meta: "PDF · 18 halaman · 2,6 MB", href: "/unduhan/Company_Profile_TaxPlus_Consulting_2026.pdf" },
-  { title: "Brosur TaxPlus 2026", meta: "PDF · brosur lipat · 506 KB", href: "/unduhan/Brosur_Lipat_TaxPlus_Consulting_2026.pdf" },
-];
-
-/** "Ikuti kami": social media cards, then the company profile and brochure to download. */
+/** "Ikuti kami": social media cards. */
 export async function SocialSection() {
   const site = await getSite();
   const cards: { name: string; handle: string; url: string; icon: IconName }[] = [
@@ -28,22 +22,6 @@ export async function SocialSection() {
               </span>
               <b>{c.name}</b>
               <span>{c.handle}</span>
-            </a>
-          ))}
-        </div>
-        <div className="sos-dl">
-          {downloads.map((d) => (
-            <a key={d.href} className="sos-d" href={d.href} download>
-              <span className="sos-i">
-                <Icon name="doc" size={26} />
-              </span>
-              <span className="sos-d-t">
-                <b>{d.title}</b>
-                <span>{d.meta}</span>
-              </span>
-              <span className="sos-d-go" aria-hidden="true">
-                <Icon name="download" size={20} />
-              </span>
             </a>
           ))}
         </div>

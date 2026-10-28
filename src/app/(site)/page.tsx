@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { ArticleCard } from "@/components/articles/ArticleCard";
-import { ClientLogos } from "@/components/sections/ClientLogos";
 import { AboutBox } from "@/components/sections/AboutSection";
 import { FaqList, faqJsonLd, JsonLd } from "@/components/sections/Faq";
+import { ClientLogos } from "@/components/sections/ClientLogos";
 import { ConsultSection } from "@/components/sections/ConsultSection";
+import { DownloadSection } from "@/components/sections/DownloadSection";
 import { FlowSection } from "@/components/sections/FlowSection";
 import { InstagramSection } from "@/components/sections/InstagramSection";
 import { LocationSection } from "@/components/sections/LocationSection";
@@ -222,7 +223,8 @@ export default async function HomePage() {
       <ConsultSection />
       {/* 13. Lokasi kantor */}
       <LocationSection />
-      {/* 14. Ikuti kami */}
+      {/* 14. Unduh profil kami, then Ikuti kami */}
+      <DownloadSection />
       <SocialSection />
     </>
   );

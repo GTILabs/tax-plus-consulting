@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ConsultSection } from "@/components/sections/ConsultSection";
+import { DownloadSection } from "@/components/sections/DownloadSection";
 import { LocationSection } from "@/components/sections/LocationSection";
 import { Mark, PageHero } from "@/components/sections/PageHero";
 import { SocialSection } from "@/components/sections/SocialSection";
@@ -87,6 +88,7 @@ export default async function ContactPage() {
       </section>
       <ConsultSection />
       <LocationSection />
+      <DownloadSection />
       <SocialSection />
     </>
   );
