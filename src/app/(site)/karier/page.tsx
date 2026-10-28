@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { FlowSteps } from "@/components/sections/FlowSection";
 import { Mark, PageHero } from "@/components/sections/PageHero";
 import { SectionHead } from "@/components/sections/SectionHead";
@@ -31,8 +32,7 @@ export default async function CareerPage() {
           </>
         }
         sub="Kami mencari orang yang teliti, mau belajar, dan siap mendampingi klien dari kantor pajak sampai ruang sidang."
-        photo="/images/photos/team/tim-taxplus.webp"
-        blurPhoto
+        photo="/images/photos/team/team-01.jpg"
         actions={
           <div className="ctas">
             <a className="btn btn-gold" href="#lowongan">
@@ -58,6 +58,10 @@ export default async function CareerPage() {
               </div>
             ))}
           </div>
+          <figure className="team-photo">
+            <Image src="/images/photos/team/tim-taxplus.webp" alt="Tim TaxPlus Consulting di kantor Bandung" width={2000} height={1330} sizes="(max-width: 1160px) 100vw, 1120px" />
+            <figcaption>Tim TaxPlus Consulting di kantor Bandung.</figcaption>
+          </figure>
         </div>
       </section>
       <section className="soft" id="lowongan">
