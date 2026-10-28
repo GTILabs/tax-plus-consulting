@@ -30,6 +30,7 @@ export default async function ArticlesPage() {
         }
         sub="Ringkasan regulasi terbaru, panduan Coretax, dan pelajaran dari kasus pemeriksaan dan sengketa."
         photo="/images/photos/team/team-10.jpg"
+        photoPosition="50% 25%"
         actions={
           <div className="ctas">
             <a className="btn btn-gold" href={waLink(site)} target="_blank" rel="noopener noreferrer">
