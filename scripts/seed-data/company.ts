@@ -149,10 +149,10 @@ export const staff: { name: string; role: string; photo: string }[] = [
   { name: "Intan Aprilliyanti", role: "Finance & Legal", photo: "/images/photos/staff/intan-aprilliyanti.webp" },
   { name: "Muhammad Lutfy Fauzan", role: "Head of Accounting", photo: "/images/photos/staff/staff-02.webp" },
   { name: "Resa Septiani", role: "Head of Tax", photo: "/images/photos/staff/staff-03.webp" },
-  { name: "Naura Syifa Annisa", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-04.webp" },
+  { name: "Naura Syifa Annisa", role: "Tax & Accounting Staff", photo: "/images/photos/staff/naura-syifa-annisa.webp" },
   { name: "Sean Clasica Rahma", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-05.webp" },
   { name: "Dwi Agustina", role: "Tax & Accounting Staff", photo: "/images/photos/staff/dwi-agustina.webp" },
-  { name: "Xeisha Neville Evangeline", role: "Tax & Accounting Staff", photo: "/images/photos/staff/staff-07.webp" },
+  { name: "Xeisha Neville Evangeline", role: "Tax & Accounting Staff", photo: "/images/photos/staff/xeisha-neville.webp" },
   { name: "Haris Yoviana Iskandar Putra", role: "Tax & Accounting Staff", photo: "/images/photos/staff/haris-yoviana.webp" },
 ];
 
