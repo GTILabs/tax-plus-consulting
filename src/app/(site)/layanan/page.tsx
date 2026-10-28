@@ -29,6 +29,7 @@ export default function ServicesPage() {
         }
         sub="Pilih layanannya, atau ceritakan masalahnya. Kami arahkan langkahnya dalam 15 menit."
         photo="/images/photos/team/team-05.jpg"
+        photoPosition="50% 15%"
       />
       <section className="soft">
         <div className="in">
