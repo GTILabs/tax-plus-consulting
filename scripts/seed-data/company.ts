@@ -185,6 +185,24 @@ export const clientLogos: { name: string; src: string; width: number; height: nu
   { name: "CV Karunia Amanah", src: "/images/clients/karunia-amanah.webp", width: 200, height: 200 },
 ];
 
+/** Documents in the "Unduh profil kami" section; the PDFs ship in public/unduhan, covers in public/images/unduhan. */
+export const downloads = [
+  {
+    title: "Company Profile 2026",
+    text: "Profil lengkap: layanan, cara kerja, tim, pengalaman sektor, dan legalitas kami.",
+    detail: "18 halaman",
+    file: { url: "/unduhan/Company_Profile_TaxPlus_Consulting_2026.pdf", name: "Company_Profile_TaxPlus_Consulting_2026.pdf", sizeKb: 2642 },
+    cover: { src: "/images/unduhan/company-profile-2026.webp", width: 800, height: 450 },
+  },
+  {
+    title: "Brosur TaxPlus 2026",
+    text: "Ringkasan layanan dan kontak dalam satu brosur lipat, siap dibagikan.",
+    detail: "brosur lipat",
+    file: { url: "/unduhan/Brosur_Lipat_TaxPlus_Consulting_2026.pdf", name: "Brosur_Lipat_TaxPlus_Consulting_2026.pdf", sizeKb: 506 },
+    cover: { src: "/images/unduhan/brosur-2026.webp", width: 800, height: 565 },
+  },
+];
+
 /* Career page. Positions are maintained by the admin. */
 export const careerPerks = [
   { icon: "book", title: "Belajar dari praktisi berizin", text: "Bekerja langsung dengan konsultan pajak tingkat A dan B serta kuasa hukum Pengadilan Pajak." },

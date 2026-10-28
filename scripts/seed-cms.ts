@@ -72,6 +72,7 @@ const seeds: { [K in CollectionKey]: Seed[] } = {
   })),
   jobs: company.jobOpenings.map((j) => ({ data: { ...j } })),
   sectors: company.sectors.map((s) => ({ data: { ...s, featured: !!s.featured } })),
+  downloads: company.downloads.map((d) => ({ data: { ...d } })),
   clientLogos: company.clientLogos.map((l) => ({ data: { name: l.name, logo: { src: l.src, width: l.width, height: l.height } } })),
 };
 

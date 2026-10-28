@@ -93,6 +93,7 @@ export const getTaxForms = () => getCollection("taxForms");
 export const getJobs = () => getCollection("jobs");
 export const getSectors = () => getCollection("sectors");
 export const getClientLogos = () => getCollection("clientLogos");
+export const getDownloads = () => getCollection("downloads");
 export const getHome = () => getSettings("home");
 export const getAbout = () => getSettings("about");
 export const getCareer = () => getSettings("career");
