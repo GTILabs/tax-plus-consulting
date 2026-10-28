@@ -614,6 +614,8 @@ img{max-width:100%}
 .logo img{width:auto}
 /* photo backgrounds (next/image fill) */
 .vbg img,.gp-photo img{object-fit:cover}
+/* inner-page heroes: keep heads in frame, crop from the bottom (desk, floor) on wide screens */
+.ph-hero .vbg img{object-position:50% 0}
 .gp-photo img{opacity:.55}
 .vbg video{z-index:0}
 /* steps: column count follows the number of steps */

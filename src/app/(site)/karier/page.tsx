@@ -33,6 +33,7 @@ export default async function CareerPage() {
         }
         sub="Kami mencari orang yang teliti, mau belajar, dan siap mendampingi klien dari kantor pajak sampai ruang sidang."
         photo="/images/photos/team/team-01.jpg"
+        photoPosition="50% 30%"
         actions={
           <div className="ctas">
             <a className="btn btn-gold" href="#lowongan">
