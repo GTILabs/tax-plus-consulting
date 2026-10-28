@@ -28,6 +28,7 @@ const ICONS: Record<IconName, string> = {
   ladder: "Tangga",
   team: "Tim",
   doc: "Dokumen",
+  download: "Unduh",
   id: "Kartu identitas",
   grid: "Kisi",
   form: "Formulir",

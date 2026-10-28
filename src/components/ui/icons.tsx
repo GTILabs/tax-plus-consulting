@@ -109,6 +109,7 @@ const paths = {
       <path d="M14 3v5h5M10 13h6M10 17h4" />
     </>
   ),
+  download: <path d="M12 3v12M7 10l5 5 5-5M4 17v3h16v-3" />,
   id: (
     <>
       <rect x="3" y="5" width="18" height="14" rx="2" />
