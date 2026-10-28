@@ -5,13 +5,14 @@ export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:300
 /** Search engines may index the site only when explicitly enabled (staging stays noindex). */
 export const indexable = process.env.SITE_INDEXABLE === "true";
 
-export type SocialId = "instagram" | "tiktok" | "facebook" | "linkedin" | "youtube";
+export type SocialId = "instagram" | "tiktok" | "facebook" | "linkedin" | "threads" | "youtube";
 
 export const SOCIAL_LABELS: Record<SocialId, string> = {
   instagram: "Instagram",
   tiktok: "TikTok",
   facebook: "Facebook",
   linkedin: "LinkedIn",
+  threads: "Threads",
   youtube: "YouTube",
 };
 

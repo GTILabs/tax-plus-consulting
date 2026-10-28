@@ -38,6 +38,7 @@ const ICONS: Record<IconName, string> = {
   tiktok: "TikTok",
   facebook: "Facebook",
   linkedin: "LinkedIn",
+  threads: "Threads",
   youtube: "YouTube",
   star: "Bintang",
   calendar: "Kalender",
@@ -308,6 +309,7 @@ const socialOptions = [
   { value: "tiktok", label: "TikTok" },
   { value: "facebook", label: "Facebook" },
   { value: "linkedin", label: "LinkedIn" },
+  { value: "threads", label: "Threads" },
   { value: "youtube", label: "YouTube" },
 ] as const satisfies readonly Option[];
 

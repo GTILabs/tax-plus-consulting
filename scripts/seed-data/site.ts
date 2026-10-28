@@ -25,7 +25,13 @@ export const site = {
     { id: "instagram", label: "Instagram", handle: "@taxplus.consulting", url: "https://www.instagram.com/taxplus.consulting/" },
     { id: "tiktok", label: "TikTok", handle: "@taxplusconsulting", url: "https://www.tiktok.com/@taxplusconsulting" },
     { id: "facebook", label: "Facebook", handle: "", url: "" },
-    { id: "linkedin", label: "LinkedIn", handle: "", url: "" },
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      handle: "Kalam Al-Iqbal",
+      url: "https://www.linkedin.com/in/kalam-al-iqbal-s-ak-s-h-m-ak-bkp-6a3728154/",
+    },
+    { id: "threads", label: "Threads", handle: "@kalamal.iqbal", url: "https://www.threads.com/@kalamal.iqbal" },
     { id: "youtube", label: "YouTube", handle: "", url: "" },
   ],
   /** Keep in line with the Google Business Profile. */

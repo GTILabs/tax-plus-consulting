@@ -14,7 +14,7 @@ export async function SocialSection() {
     <section className="sos">
       <div className="in">
         <SectionHead title="Ikuti kami" sub="Informasi perpajakan terkini, ringkas dan mudah dipahami." />
-        <div className="sos-grid">
+        <div className={cards.length % 4 !== 0 && cards.length % 3 === 0 ? "sos-grid three" : "sos-grid"}>
           {cards.map((c) => (
             <a key={c.name} className="sos-c" href={c.url} target="_blank" rel="noopener noreferrer">
               <span className="sos-i">

@@ -165,6 +165,12 @@ const paths = {
       <path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" />
     </>
   ),
+  threads: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.9 7.9" />
+    </>
+  ),
   youtube: (
     <>
       <rect x="2.5" y="5.5" width="19" height="13" rx="4" />

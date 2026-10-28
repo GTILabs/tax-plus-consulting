@@ -316,8 +316,8 @@ footer a{text-decoration:none;display:block;padding:3px 0} footer a:hover{color:
 .loc-btns .btn{justify-content:center}
 .sos{background:var(--navy);color:#fff;padding-block:80px}
 .sos h2{color:#fff;text-align:center;font-size:clamp(26px,3.4vw,38px);margin-top:6px}
-.sos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
-@media (max-width:860px){.sos-grid{grid-template-columns:1fr 1fr}}
+.sos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}.sos-grid.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:860px){.sos-grid,.sos-grid.three{grid-template-columns:1fr 1fr}}
 .sos-c{border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:28px 16px;text-align:center;text-decoration:none;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color .2s,background .2s}
 .sos-c:hover{border-color:var(--gold);background:rgba(255,255,255,.04)}
 .sos-i{width:58px;height:58px;border-radius:50%;background:rgba(243,201,19,.12);color:var(--gold);display:grid;place-items:center;margin-bottom:6px}
