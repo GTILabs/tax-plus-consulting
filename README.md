@@ -146,8 +146,23 @@ deploying code that depends on them.
 
 ## Deployment
 
-The app deploys to [Vercel](https://vercel.com) (project `tax-plus-consulting`), connected to this repository:
-every push to `main` deploys to production, and every other branch or pull request gets a preview deployment.
+The app deploys to [Vercel](https://vercel.com) (project `tax-plus-consulting`) from GitHub Actions
+(`.github/workflows/deploy.yml`); Vercel's own Git deployments are turned off in `vercel.json`.
+
+| Trigger                                   | Vercel environment | Domain                                  |
+|-------------------------------------------|--------------------|-----------------------------------------|
+| push to `main`                            | Preview            | https://dev.taxplus-consulting.co.id    |
+| tag `vX.Y.Z` on `main` (or a GitHub Release) | Production      | https://taxplus-consulting.co.id (→ www) |
+
+```bash
+git tag v1.0.0 && git push origin v1.0.0   # release to production
+```
+
+- The workflow needs the repository secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` and
+  `VERCEL_SCOPE` (the team slug).
+- To roll back, re-run the workflow of the previous tag. Avoid "Promote"/"Instant Rollback" in the dashboard:
+  it assigns every production domain, including `dev.`, to that deployment.
+- Preview and Production share the same Neon database and Blob store, so CMS edits on dev show up in production.
 
 - `vercel.json` pins the Next.js preset and runs functions in `sin1` (Singapore), next to the Neon database in
   `ap-southeast-1`.
