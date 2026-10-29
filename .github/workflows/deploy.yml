@@ -1,8 +1,8 @@
 name: Deploy to Vercel
 
 # main → Preview build aliased to dev.taxplus-consulting.co.id
-# vX.Y.Z tag (or a GitHub Release) → Production build aliased to www.taxplus-consulting.co.id
-# (the apex redirects to www in the Vercel domain settings).
+# vX.Y.Z tag (or a GitHub Release) → Production build aliased to taxplus-consulting.co.id
+# (www redirects to the apex in the Vercel domain settings).
 on:
   push:
     branches: [main]
@@ -61,4 +61,4 @@ jobs:
       - name: Deploy and alias to production
         run: |
           url=$(vercel deploy --prebuilt --prod --skip-domain --token="$VERCEL_TOKEN")
-          .github/scripts/vercel-alias.sh "$url" www.taxplus-consulting.co.id
+          .github/scripts/vercel-alias.sh "$url" taxplus-consulting.co.id

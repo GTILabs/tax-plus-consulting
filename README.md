@@ -152,7 +152,7 @@ The app deploys to [Vercel](https://vercel.com) (project `tax-plus-consulting`) 
 | Trigger                                   | Vercel environment | Domain                                  |
 |-------------------------------------------|--------------------|-----------------------------------------|
 | push to `main`                            | Preview            | https://dev.taxplus-consulting.co.id    |
-| tag `vX.Y.Z` on `main` (or a GitHub Release) | Production      | https://taxplus-consulting.co.id (→ www) |
+| tag `vX.Y.Z` on `main` (or a GitHub Release) | Production      | https://taxplus-consulting.co.id (www → apex) |
 
 ```bash
 git tag v1.0.0 && git push origin v1.0.0   # release to production
