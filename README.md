@@ -158,8 +158,7 @@ The app deploys to [Vercel](https://vercel.com) (project `tax-plus-consulting`) 
 git tag v1.0.0 && git push origin v1.0.0   # release to production
 ```
 
-- The workflow needs the repository secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` and
-  `VERCEL_SCOPE` (the team slug).
+- The workflow needs the repository secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`.
 - To roll back, re-run the workflow of the previous tag. Avoid "Promote"/"Instant Rollback" in the dashboard:
   it assigns every production domain, including `dev.`, to that deployment.
 - Preview and Production share the same Neon database and Blob store, so CMS edits on dev show up in production.

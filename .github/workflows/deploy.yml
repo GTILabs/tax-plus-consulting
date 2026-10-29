@@ -16,7 +16,6 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  VERCEL_SCOPE: ${{ secrets.VERCEL_SCOPE }}
 
 jobs:
   dev:
@@ -37,7 +36,7 @@ jobs:
       - name: Deploy and alias to dev
         run: |
           url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")
-          vercel alias set "$url" dev.taxplus-consulting.co.id --token="$VERCEL_TOKEN" --scope="$VERCEL_SCOPE"
+          .github/scripts/vercel-alias.sh "$url" dev.taxplus-consulting.co.id
 
   production:
     if: github.ref_type == 'tag'
@@ -62,4 +61,4 @@ jobs:
       - name: Deploy and alias to production
         run: |
           url=$(vercel deploy --prebuilt --prod --skip-domain --token="$VERCEL_TOKEN")
-          vercel alias set "$url" www.taxplus-consulting.co.id --token="$VERCEL_TOKEN" --scope="$VERCEL_SCOPE"
+          .github/scripts/vercel-alias.sh "$url" www.taxplus-consulting.co.id
