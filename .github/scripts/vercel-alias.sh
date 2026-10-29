@@ -10,4 +10,5 @@ auth=(-H "Authorization: Bearer $VERCEL_TOKEN")
 
 id=$(curl -fsS "${auth[@]}" "$api/v13/deployments/$host?teamId=$VERCEL_ORG_ID" | jq -r .id)
 curl -fsS "${auth[@]}" -H "Content-Type: application/json" \
-  -d "{\"alias\":\"$2\"}" "$api/v2/deployments/$id/aliases?teamId=$VERCEL_ORG_ID" | jq -r '"aliased \(.alias) -> \(.deploymentId)"'
+  -d "{\"alias\":\"$2\"}" "$api/v2/deployments/$id/aliases?teamId=$VERCEL_ORG_ID" >/dev/null
+echo "aliased $2 -> $id"
