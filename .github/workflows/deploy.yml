@@ -35,7 +35,7 @@ jobs:
       - run: vercel build --token="$VERCEL_TOKEN"
       - name: Deploy and alias to dev
         run: |
-          url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")
+          url=$(vercel deploy --prebuilt --archive=tgz --token="$VERCEL_TOKEN")
           .github/scripts/vercel-alias.sh "$url" dev.taxplus-consulting.co.id
 
   production:
@@ -60,5 +60,5 @@ jobs:
       # --skip-domain keeps dev.taxplus-consulting.co.id (also a project domain) on the main build.
       - name: Deploy and alias to production
         run: |
-          url=$(vercel deploy --prebuilt --prod --skip-domain --token="$VERCEL_TOKEN")
+          url=$(vercel deploy --prebuilt --archive=tgz --prod --skip-domain --token="$VERCEL_TOKEN")
           .github/scripts/vercel-alias.sh "$url" taxplus-consulting.co.id
