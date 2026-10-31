@@ -12,7 +12,7 @@ import { inviteEmail, passwordResetEmail } from "@/lib/email/templates";
 import { siteUrl } from "@/modules/content/site";
 import { hashPassword, MIN_PASSWORD_LENGTH, verifyPassword } from "./password";
 import { canDeleteUser, isRole, roleLabel, type Role } from "./roles";
-import { createSession, destroyOtherSessions, destroySession, requireAdmin } from "./session";
+import { createSession, destroyOtherSessions, destroySession, getCurrentAdmin, requireAdmin } from "./session";
 import { closeTokens, findToken, issueToken, recentLinks } from "./tokens";
 
 export type FormState = { error?: string; ok?: string };
@@ -79,6 +79,19 @@ export async function login(_: FormState, formData: FormData): Promise<FormState
 export async function logout() {
   await destroySession();
   redirect("/admin/login");
+}
+
+/** Pinged by the idle timer while the admin is active; false once the session is gone. */
+export async function keepAlive() {
+  return (await getCurrentAdmin()) !== null;
+}
+
+/** Called by the idle timer after 30 minutes without activity; the login page explains why. */
+export async function logoutIdle(next: string) {
+  await destroySession();
+  const params = new URLSearchParams({ keluar: "idle" });
+  if (next.startsWith("/admin") && !next.startsWith("/admin/login")) params.set("next", next);
+  redirect(`/admin/login?${params}`);
 }
 
 const inviteSchema = z.object({ name: nameSchema, email: emailSchema, phone: phoneSchema, role: roleSchema });

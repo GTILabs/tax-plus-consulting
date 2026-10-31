@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getCurrentAdmin } from "@/modules/admin/session";
+import { getCurrentAdmin, IDLE_MINUTES } from "@/modules/admin/session";
 import { LoginForm } from "./LoginForm";
 
 export const metadata = { title: "Masuk" };
 
 export default async function LoginPage({ searchParams }: PageProps<"/admin/login">) {
   if (await getCurrentAdmin()) redirect("/admin");
-  const { next } = await searchParams;
+  const { next, keluar } = await searchParams;
   return (
     <div className="adm-login">
       <div className="adm-card">
@@ -17,6 +17,11 @@ export default async function LoginPage({ searchParams }: PageProps<"/admin/logi
         <p className="adm-muted" style={{ marginBottom: 22 }}>
           Kelola konten situs TaxPlus Consulting.
         </p>
+        {keluar === "idle" && (
+          <p className="adm-msg ok" role="status" style={{ marginBottom: 16 }}>
+            Anda keluar otomatis karena tidak ada aktivitas selama {IDLE_MINUTES} menit. Silakan masuk lagi.
+          </p>
+        )}
         <LoginForm next={typeof next === "string" ? next : "/admin"} />
         <p className="adm-login-alt">
           <Link href="/admin/forgot">Lupa kata sandi?</Link>

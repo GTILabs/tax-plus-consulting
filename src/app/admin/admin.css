@@ -94,6 +94,12 @@
 .adm-msg.ok{background:#ECFDF3;color:#17663A;border:1px solid #ABEFC6}
 .adm-savebar{position:sticky;bottom:0;display:flex;gap:12px;align-items:center;justify-content:flex-end;flex-wrap:wrap;padding:14px 0;background:linear-gradient(transparent,var(--soft) 30%)}
 .adm-savebar .adm-msg{margin-right:auto}
+/* Idle sign-out warning */
+.adm-idle{position:fixed;right:20px;bottom:20px;z-index:50;width:min(360px,calc(100vw - 32px));display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:12px;background:var(--navy);color:#fff;box-shadow:0 12px 32px rgba(8,22,52,.3)}
+.adm-idle p{margin:0;font-size:14px;line-height:1.5}
+.adm-idle b{color:var(--gold);font-variant-numeric:tabular-nums}
+@media (max-width:760px){.adm-idle{right:16px;bottom:16px}}
+.adm .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* Login */
 .adm-login{min-height:100dvh;display:grid;place-items:center;padding:24px;background:linear-gradient(160deg,var(--navy),#081634)}
 .adm-login .adm-card{width:min(420px,100%);padding:30px}

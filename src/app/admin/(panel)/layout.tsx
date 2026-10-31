@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AdminNav } from "@/components/admin/AdminNav";
+import { IdleLogout } from "@/components/admin/IdleLogout";
 import { logout } from "@/modules/admin/actions";
 import { adminNav } from "@/modules/admin/nav";
 import { roleLabel } from "@/modules/admin/roles";
-import { requireAdmin } from "@/modules/admin/session";
+import { IDLE_MINUTES, requireAdmin } from "@/modules/admin/session";
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdmin();
@@ -36,6 +37,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
         </header>
         <div className="adm-body">{children}</div>
       </div>
+      <IdleLogout minutes={IDLE_MINUTES} />
     </div>
   );
 }
