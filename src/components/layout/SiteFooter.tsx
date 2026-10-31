@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MemberLogos } from "@/components/sections/MemberLogos";
 import { Icon, type IconName } from "@/components/ui/icons";
-import { getServices, getSite, waLink } from "@/modules/content/data";
+import { getServices, getSite, telLink, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
 
 /** Cached so pages stay prerendered; refreshed with the default cache lifetime. */
@@ -63,9 +63,12 @@ export async function SiteFooter() {
                 <span className="fi">
                   <Icon name="chat" size={18} strokeWidth={1.8} />
                 </span>
-                <a href={waLink(site)} target="_blank" rel="noopener noreferrer">
-                  {site.contact.whatsappDisplay}
-                </a>
+                <span>
+                  <a href={waLink(site)} target="_blank" rel="noopener noreferrer">
+                    {site.contact.whatsappDisplay}
+                  </a>{" "}
+                  &middot; <a href={telLink(site)}>Telepon</a>
+                </span>
               </li>
               <li>
                 <span className="fi">

@@ -1,5 +1,5 @@
 import { Icon } from "@/components/ui/icons";
-import { getSite, waLink } from "@/modules/content/data";
+import { getSite, telLink, waLink } from "@/modules/content/data";
 import { SectionHead } from "./SectionHead";
 
 /** "Lokasi kantor": Google Maps embed + navy office panel. */
@@ -28,11 +28,13 @@ export async function LocationSection() {
               </li>
               <li>
                 <Icon name="chat" size={20} strokeWidth={1.8} />
-                <span>{contact.whatsappDisplay} (WhatsApp)</span>
+                <span>
+                  <a href={telLink(site)}>{contact.whatsappDisplay}</a> (telepon &amp; WhatsApp)
+                </span>
               </li>
               <li>
                 <Icon name="mail" size={20} strokeWidth={1.8} />
-                <span>{contact.email}</span>
+                <a href={`mailto:${contact.email}`}>{contact.email}</a>
               </li>
               <li>
                 <Icon name="clock" size={20} strokeWidth={1.8} />

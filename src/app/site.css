@@ -312,6 +312,7 @@ footer a{text-decoration:none;display:block;padding:3px 0} footer a:hover{color:
 .loc-info ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
 .loc-info li{display:flex;gap:12px;align-items:flex-start;color:var(--on-navy);font-size:15px}
 .loc-info li svg{color:var(--gold);flex:none;margin-top:2px}
+.loc-info li a{color:#fff;text-underline-offset:3px;overflow-wrap:anywhere}
 .loc-btns{display:grid;gap:10px;margin-top:auto;padding-top:18px;border-top:1px solid rgba(255,255,255,.15)}
 .loc-btns .btn{justify-content:center}
 .sos{background:var(--navy);color:#fff;padding-block:80px}

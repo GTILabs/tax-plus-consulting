@@ -46,6 +46,11 @@ export async function getSite() {
 
 export type Site = Awaited<ReturnType<typeof getSite>>;
 
+/** Phone link to the office number (the WhatsApp number also takes calls). */
+export function telLink(site: Site) {
+  return `tel:+${site.contact.whatsappNumber}`;
+}
+
 /** WhatsApp link to the office; without a message it opens with the default greeting. */
 export function waLink(site: Site, message = site.messages.default) {
   return whatsappLink(site.contact.whatsappNumber, message);
