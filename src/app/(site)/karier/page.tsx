@@ -26,7 +26,7 @@ export default async function CareerPage() {
         kicker="Karier di TaxPlus"
         title={
           <>
-            Tumbuh bersama
+            Tumbuh bersama{" "}
             <br />
             <Mark>TaxPlus.</Mark>
           </>

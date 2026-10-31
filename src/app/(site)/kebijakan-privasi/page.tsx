@@ -20,7 +20,7 @@ export default async function PrivacyPage() {
         kicker="Kebijakan Privasi"
         title={
           <>
-            Data Anda,
+            Data Anda,{" "}
             <br />
             <Mark>kami jaga.</Mark>
           </>

@@ -11,7 +11,7 @@ export default function NotFound() {
         kicker="Halaman tidak ditemukan"
         title={
           <>
-            Alamat ini
+            Alamat ini{" "}
             <br />
             <Mark>tidak tersedia.</Mark>
           </>

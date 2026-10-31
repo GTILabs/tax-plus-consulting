@@ -7,7 +7,7 @@ export async function AboutBox() {
     <article className="about-box">
       <span className="ab-badge">Tentang TaxPlus</span>
       <h2>
-        Kantor Konsultan Pajak
+        Kantor Konsultan Pajak{" "}
         <br />
         <span className="ab-mark">di Bandung</span>
       </h2>

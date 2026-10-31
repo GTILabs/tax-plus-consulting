@@ -23,7 +23,7 @@ export default async function ArticlesPage() {
         kicker="Artikel & Insight"
         title={
           <>
-            Aturan pajak,
+            Aturan pajak,{" "}
             <br />
             <Mark>dijelaskan singkat.</Mark>
           </>

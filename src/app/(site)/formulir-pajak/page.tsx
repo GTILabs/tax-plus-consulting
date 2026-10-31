@@ -23,7 +23,7 @@ export default async function TaxFormsPage() {
         kicker="Formulir Pajak"
         title={
           <>
-            Formulir pajak yang
+            Formulir pajak yang{" "}
             <br />
             <Mark>paling sering dicari.</Mark>
           </>

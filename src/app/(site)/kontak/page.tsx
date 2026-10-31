@@ -31,7 +31,7 @@ export default async function ContactPage() {
         kicker="Kontak"
         title={
           <>
-            Mari bicarakan
+            Mari bicarakan{" "}
             <br />
             <Mark>pajak Anda.</Mark>
           </>

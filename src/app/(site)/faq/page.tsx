@@ -23,7 +23,7 @@ export default async function FaqPage() {
         kicker="FAQ Pajak"
         title={
           <>
-            Pertanyaan pajak
+            Pertanyaan pajak{" "}
             <br />
             <Mark>paling sering muncul.</Mark>
           </>

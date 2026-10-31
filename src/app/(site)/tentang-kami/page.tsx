@@ -26,7 +26,7 @@ export default async function AboutPage() {
         kicker="Tentang Kami"
         title={
           <>
-            Your Trusted
+            Your Trusted{" "}
             <br />
             <Mark>Tax Partner.</Mark>
           </>

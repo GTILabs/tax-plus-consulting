@@ -70,7 +70,7 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
                 TP
               </span>
               <span>
-                <b>{ARTICLE_AUTHOR}</b>
+                <b>{ARTICLE_AUTHOR}</b>{" "}
                 <br />
                 <time dateTime={article.publishedAt}>{formatArticleDate(article.publishedAt)}</time> &middot;{" "}
                 {article.readingMinutes} menit baca

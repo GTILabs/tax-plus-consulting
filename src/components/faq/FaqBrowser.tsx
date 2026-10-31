@@ -70,7 +70,7 @@ export function FaqBrowser({ categories }: { categories: FaqCategory[] }) {
 
       {total === 0 && (
         <div className="faqb-empty">
-          <b>Tidak ada pertanyaan yang cocok.</b>
+          <b>Tidak ada pertanyaan yang cocok.</b>{" "}
           <br />
           Coba kata lain, atau tanyakan langsung lewat konsultasi gratis 15 menit.
         </div>

@@ -51,8 +51,8 @@ function HeroVideo({ site }: { site: Site }) {
       <div className="vshade" aria-hidden="true" />
       <div className="in hv-in">
         <h1 className="hv-title">
-          <span className="pre">Kantor Konsultan Pajak &amp; Kuasa Hukum Pengadilan Pajak</span>
-          Dari <span className="ul">lapor bulanan</span>
+          <span className="pre">Kantor Konsultan Pajak &amp; Kuasa Hukum Pengadilan Pajak</span>{" "}
+          Dari <span className="ul">lapor bulanan</span>{" "}
           <br />
           sampai <span className="mk">ruang sidang.</span>
         </h1>
