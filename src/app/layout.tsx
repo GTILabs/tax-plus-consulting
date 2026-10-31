@@ -27,8 +27,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: SITE_NAME,
       title: site.title,
       description: site.description,
-      images: [{ url: "/images/logo.png", width: 360, height: 115, alt: SITE_NAME }],
+      // Article pages set their own cover instead.
+      images: [{ url: "/images/og/taxplus-share.jpg", width: 1200, height: 630, alt: `${SITE_NAME}, kantor konsultan pajak di Bandung` }],
     },
+    twitter: { card: "summary_large_image" },
   };
 }
 
