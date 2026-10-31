@@ -6,8 +6,12 @@ export type Service = {
   slug: string;
   name: string;
   icon: ServiceIcon;
-  /** Kicker in the hero and subtitle on cards. */
+  /** Subtitle on cards and menus. */
   subtitle: string;
+  /** Page H1, in the words people search for. */
+  headline: string;
+  /** <title> without the brand (the layout template adds it). */
+  seoTitle: string;
   /** One-line summary on the service cards. */
   summary: string;
   /** Final hero intro (brief: "Intro hero (final)"). */
@@ -31,6 +35,8 @@ export const services: Service[] = [
     name: "Tax Compliance",
     icon: "compliance",
     subtitle: "Kepatuhan pajak bulanan dan tahunan",
+    headline: "Jasa Kepatuhan Pajak Bulanan & Tahunan",
+    seoTitle: "Jasa Kepatuhan Pajak & Lapor SPT Bandung",
     summary: "Perhitungan dan pelaporan SPT bulanan dan tahunan, dipantau lewat sistem monitoring internal.",
     intro:
       "Kami menghitung, menyetor, dan melaporkan pajak bulanan dan tahunan perusahaan Anda. Setiap tenggat dipantau, sehingga tidak ada yang terlewat.",
@@ -86,6 +92,8 @@ export const services: Service[] = [
     name: "Tax Accounting",
     icon: "accounting",
     subtitle: "Pembukuan dan laporan keuangan fiskal",
+    headline: "Jasa Pembukuan & Akuntansi Pajak",
+    seoTitle: "Jasa Pembukuan & Akuntansi Pajak Bandung",
     summary: "Pembukuan, rekonsiliasi, laporan keuangan fiskal, dan ekualisasi.",
     intro:
       "Pembukuan yang rapi adalah dasar SPT yang benar. Kami menyusun pembukuan dan laporan keuangan fiskal yang konsisten dengan SPT Anda.",
@@ -140,6 +148,8 @@ export const services: Service[] = [
     name: "Tax Management",
     icon: "management",
     subtitle: "Perencanaan dan efisiensi pajak",
+    headline: "Jasa Perencanaan Pajak",
+    seoTitle: "Jasa Perencanaan Pajak Bandung",
     summary: "Perencanaan pajak dan efisiensi beban pajak sesuai ketentuan.",
     intro:
       "Keputusan bisnis selalu punya akibat pajak. Kami menyusun perencanaan agar beban pajak efisien, tetap sesuai ketentuan.",
@@ -191,6 +201,8 @@ export const services: Service[] = [
     name: "Tax Audit",
     icon: "audit",
     subtitle: "Pendampingan SP2DK dan pemeriksaan",
+    headline: "Jasa Pendampingan SP2DK & Pemeriksaan Pajak",
+    seoTitle: "Jasa Pendampingan SP2DK & Pemeriksaan Bandung",
     summary: "Pendampingan SP2DK dan pemeriksaan pajak dari awal sampai pembahasan akhir.",
     intro:
       "Surat dari kantor pajak perlu ditanggapi dengan tepat dan tepat waktu. Kami mendampingi Anda dari SP2DK sampai pembahasan akhir pemeriksaan.",
@@ -245,6 +257,8 @@ export const services: Service[] = [
     name: "Tax Litigation",
     icon: "litigation",
     subtitle: "Keberatan, banding, gugatan, dan PK",
+    headline: "Jasa Keberatan & Banding Pajak",
+    seoTitle: "Jasa Keberatan & Banding Pajak Bandung",
     summary: "Keberatan, banding, gugatan, dan peninjauan kembali sengketa pajak.",
     intro:
       "Tidak sependapat dengan ketetapan pajak? Ada jalur hukum yang bisa ditempuh. Kami menangani sengketa dari keberatan sampai Mahkamah Agung, langsung oleh kuasa hukum yang juga advokat.",

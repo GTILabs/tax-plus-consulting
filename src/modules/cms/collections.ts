@@ -127,6 +127,8 @@ export const collections = {
       { type: "text", name: "slug", label: "Slug (alamat URL)", required: true },
       { type: "select", name: "icon", label: "Ikon", options: iconOptions },
       { type: "text", name: "subtitle", label: "Subjudul", required: true, hint: "Tampil di kartu dan menu." },
+      { type: "text", name: "headline", label: "Judul halaman (H1)", max: 80, hint: "Pakai kata yang dicari orang. Contoh: Jasa Pendampingan SP2DK & Pemeriksaan Pajak. Kosong = nama layanan." },
+      { type: "text", name: "seoTitle", label: "Judul di Google", max: 45, hint: "Maksimal 45 karakter; nama TaxPlus ditambahkan otomatis. Contoh: Jasa Pendampingan SP2DK Bandung." },
       { type: "textarea", name: "summary", label: "Ringkasan di kartu", rows: 2, required: true },
       { type: "textarea", name: "intro", label: "Intro halaman", rows: 3, required: true },
       { type: "objects", name: "scope", label: "Yang kami kerjakan", itemLabel: "lingkup", titleField: "title", fields: [

@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/layanan/[slug]">)
   const service = await getService((await params).slug);
   if (!service) return {};
   return {
-    title: `${service.name}: ${service.subtitle}`,
+    title: service.seoTitle || `${service.name}: ${service.subtitle}`,
     description: service.intro,
     alternates: { canonical: routes.service(service.slug) },
   };
@@ -38,7 +38,8 @@ export default async function ServicePage({ params }: PageProps<"/layanan/[slug]
   if (!service) notFound();
 
   const waMessage = serviceWhatsappMessage(service);
-  const [first, ...rest] = service.name.split(" ");
+  // H1 in the words people search for; the service name then becomes the kicker.
+  const [first, ...rest] = (service.headline || service.name).split(" ");
   const isLitigation = service.slug === "tax-litigation";
 
   return (
@@ -47,7 +48,7 @@ export default async function ServicePage({ params }: PageProps<"/layanan/[slug]
       {/* 1. Hero */}
       <PageHero
         crumbs={[{ label: "Layanan", href: routes.services }, { label: service.name }]}
-        kicker={service.subtitle}
+        kicker={service.headline ? service.name : service.subtitle}
         title={
           <>
             {first} <Mark>{rest.join(" ")}</Mark>
