@@ -34,6 +34,25 @@ export async function getEntry(key: CollectionKey, id: string) {
   return row;
 }
 
+/**
+ * When each published entry of a collection was last edited, by slug (ISO strings).
+ * Entries never edited after they were created (seeded or imported) are left out,
+ * since their timestamps say nothing about the content.
+ */
+export async function readEditedAt(key: CollectionKey) {
+  const rows = await getDb()
+    .select({ slug: cmsEntries.slug, updatedAt: cmsEntries.updatedAt })
+    .from(cmsEntries)
+    .where(
+      and(
+        eq(cmsEntries.collection, key),
+        eq(cmsEntries.status, "published"),
+        sql`${cmsEntries.updatedAt} > ${cmsEntries.createdAt} + interval '1 minute'`,
+      ),
+    );
+  return Object.fromEntries(rows.flatMap((r) => (r.slug ? [[r.slug, r.updatedAt.toISOString()]] : []))) as Record<string, string>;
+}
+
 /** Published entries, parsed with the collection schema. Invalid rows are skipped and logged. */
 export async function readPublished(key: CollectionKey) {
   const rows = await getDb()

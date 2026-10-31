@@ -2,7 +2,7 @@ import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
 import type { CollectionData, CollectionKey, SettingsData, SettingsKey } from "./collections";
-import { collectionTag, readPublished, readSettings, settingsTag } from "./repo";
+import { collectionTag, readEditedAt, readPublished, readSettings, settingsTag } from "./repo";
 
 /*
  * Public reads. Cached until an admin saves (the Server Action calls updateTag),
@@ -21,4 +21,12 @@ export async function getSettings<K extends SettingsKey>(key: K): Promise<Settin
   cacheLife("max");
   cacheTag(settingsTag(key));
   return (await readSettings(key)) as unknown as SettingsData<K>;
+}
+
+/** Last edit per slug, for the sitemap's lastmod. */
+export async function getEditedAt(key: CollectionKey): Promise<Record<string, string>> {
+  "use cache";
+  cacheLife("max");
+  cacheTag(collectionTag(key));
+  return readEditedAt(key);
 }
