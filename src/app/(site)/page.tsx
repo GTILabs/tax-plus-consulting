@@ -26,17 +26,20 @@ export const metadata = {
 };
 
 /**
- * Hero background video. Set once the MP4 (15–30 s, no sound) and poster from
- * Pak Kalam are in public/video/; until then animated navy shapes stand in.
+ * Hero background video: a muted 10 s aerial of Bandung. Set to null to fall back to the
+ * animated navy shapes. Visitors who prefer reduced motion see the poster instead (site.css).
  */
-const heroVideo: { src: string; poster: string } | null = null;
+const heroVideo: { src: string; poster: string } | null = {
+  src: "/video/hero.mp4",
+  poster: "/video/hero-poster.jpg",
+};
 
 function HeroVideo({ site }: { site: Site }) {
   return (
     <section className="hero hero-vid">
       <div className="vbg" aria-hidden="true">
         {heroVideo ? (
-          <video autoPlay muted loop playsInline poster={heroVideo.poster}>
+          <video autoPlay muted loop playsInline preload="auto" poster={heroVideo.poster}>
             <source src={heroVideo.src} type="video/mp4" />
           </video>
         ) : (
