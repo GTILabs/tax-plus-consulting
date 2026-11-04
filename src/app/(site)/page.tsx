@@ -26,11 +26,13 @@ export const metadata = {
 };
 
 /**
- * Hero background video: a muted 10 s aerial of Bandung. Set to null to fall back to the
- * animated navy shapes. Visitors who prefer reduced motion see the poster instead (site.css).
+ * Hero background video: a muted 10 s FPV flight over Bandung to the office, 1080p with a 720p
+ * copy for small screens. Set to null to fall back to the animated navy shapes. Visitors who
+ * prefer reduced motion see the poster instead (site.css).
  */
-const heroVideo: { src: string; poster: string } | null = {
+const heroVideo: { src: string; mobileSrc: string; poster: string } | null = {
   src: "/video/hero.mp4",
+  mobileSrc: "/video/hero-720.mp4",
   poster: "/video/hero-poster.jpg",
 };
 
@@ -40,6 +42,7 @@ function HeroVideo({ site }: { site: Site }) {
       <div className="vbg" aria-hidden="true">
         {heroVideo ? (
           <video autoPlay muted loop playsInline preload="auto" poster={heroVideo.poster}>
+            <source media="(max-width: 900px)" src={heroVideo.mobileSrc} type="video/mp4" />
             <source src={heroVideo.src} type="video/mp4" />
           </video>
         ) : (
