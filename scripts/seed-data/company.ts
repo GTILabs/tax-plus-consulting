@@ -169,7 +169,7 @@ export const aboutPromises = [
   { icon: "scale", title: "Didampingi sampai ruang sidang", text: "Sengketa tidak dialihkan ke pihak lain." },
 ] as const;
 
-/** Client logos approved for display, from the "Logo Klien" Drive folder (Oct 2026). */
+/** Client logos approved for display, from the "Logo Klien" Drive folder (Oct–Nov 2026). */
 export const clientLogos: { name: string; src: string; width: number; height: number }[] = [
   { name: "Rumah Sakit Humana Prima", src: "/images/clients/humana-prima.webp", width: 253, height: 200 },
   { name: "SSOM Studio", src: "/images/clients/ssom-studio.webp", width: 384, height: 149 },
@@ -183,6 +183,13 @@ export const clientLogos: { name: string; src: string; width: number; height: nu
   { name: "CV Abadi Daya Perkasa", src: "/images/clients/abadi-daya-perkasa.webp", width: 455, height: 200 },
   { name: "CV Laju Gerak Pemuda", src: "/images/clients/laju-gerak-pemuda.webp", width: 356, height: 200 },
   { name: "CV Karunia Amanah", src: "/images/clients/karunia-amanah.webp", width: 200, height: 200 },
+  { name: "PT Nawasena Data Sinergi", src: "/images/clients/nawasena-data-sinergi.webp", width: 267, height: 200 },
+  { name: "Lova.id", src: "/images/clients/lova.webp", width: 378, height: 200 },
+  { name: "Klinik dr. Alfred", src: "/images/clients/klinik-dr-alfred.webp", width: 200, height: 200 },
+  { name: "Kytir Premium Brownies", src: "/images/clients/kytir.webp", width: 200, height: 200 },
+  { name: "Crab Entertainment", src: "/images/clients/crab-entertainment.webp", width: 234, height: 200 },
+  { name: "Shining Bright", src: "/images/clients/shining-bright.webp", width: 200, height: 200 },
+  { name: "Sato Collection", src: "/images/clients/sato-collection.webp", width: 283, height: 200 },
 ];
 
 /** Documents in the "Unduh profil kami" section; the PDFs ship in public/unduhan, covers in public/images/unduhan. */
