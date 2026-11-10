@@ -54,7 +54,8 @@ export default async function PrivacyPage() {
             Situs ini memuat peta Google Maps dan tautan ke WhatsApp, Instagram, dan TikTok. Saat Anda memakai layanan
             tersebut, kebijakan privasi masing-masing penyedia yang berlaku. Kami juga memakai Google Analytics untuk
             mengukur kunjungan secara agregat, seperti halaman yang dibuka, jenis perangkat, dan kota. Google Analytics
-            memakai cookie; Anda dapat memblokirnya lewat pengaturan browser.
+            memakai cookie; Anda dapat memblokirnya lewat pengaturan browser. Penghitung kunjungan Histats di bagian
+            bawah situs juga memakai cookie untuk menghitung pengunjung secara agregat.
           </p>
           <h3>Hak Anda</h3>
           <p>

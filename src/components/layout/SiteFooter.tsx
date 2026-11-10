@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Histats } from "@/components/analytics/Histats";
 import { MemberLogos } from "@/components/sections/MemberLogos";
 import { Icon, type IconName } from "@/components/ui/icons";
 import { getServices, getSite, telLink, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
+import { indexable } from "@/modules/content/site";
 
 /** Cached so pages stay prerendered; refreshed with the default cache lifetime. */
 async function currentYear() {
@@ -104,6 +106,8 @@ export async function SiteFooter() {
             <span>Seluruh hak dilindungi</span>
             <span className="dot" />
             <Link href={routes.privacy}>Kebijakan Privasi</Link>
+            {/* Visit counter on the live site only, so staging visits are not counted. */}
+            {indexable && <Histats />}
           </div>
           <div className="l2-right">
             {legalChips.map((c) => (
