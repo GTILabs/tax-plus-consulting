@@ -31,6 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [{ url: "/images/og/taxplus-share.jpg", width: 1200, height: 630, alt: `${SITE_NAME}, kantor konsultan pajak di Bandung` }],
     },
     twitter: { card: "summary_large_image" },
+    // Google Search Console ownership check, requested by the SEO team.
+    verification: { google: "oaVDvyF2ac7X7Aqj1oYZncPv89QCRN-YQRgOE0w39gE" },
   };
 }
 
