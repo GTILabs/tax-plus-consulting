@@ -447,6 +447,8 @@ a.art,a.art-feat{color:inherit;text-decoration:none;transition:transform .2s,box
 .ar-lead{font-size:18.5px;color:var(--muted);margin:0 0 18px}
 .ar-by{display:flex;gap:12px;align-items:center;font-size:14px;color:var(--muted)}.ar-by b{color:var(--ink)}
 .ar-av{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:15px}
+.ar-av-photo{flex-shrink:0;width:56px;height:56px;overflow:hidden;display:block;background:var(--soft,#eef1f6);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}.ar-av-photo img{display:block;width:100%;height:auto;transform:scale(1.4);transform-origin:50% 6%}
+.ar-by .ar-author{color:var(--ink);font-weight:700;text-decoration:none}.ar-by .ar-author:hover{text-decoration:underline}
 .ar-cover{max-width:880px;margin:34px auto 0;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px rgba(13,35,84,.12)}
 .ar-body{font-size:17.5px;line-height:1.8;color:#262D40;padding:40px 0 10px}
 .ar-body h3{font-family:var(--f-head);font-size:25px;color:var(--navy);margin:38px 0 10px;line-height:1.3}

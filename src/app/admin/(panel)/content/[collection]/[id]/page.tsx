@@ -6,6 +6,7 @@ import { requireAdmin } from "@/modules/admin/session";
 import { publicUrlFor } from "@/modules/cms/admin-links";
 import { collections, isCollectionKey, type CollectionDef } from "@/modules/cms/collections";
 import { emptyData } from "@/modules/cms/fields";
+import { withLiveOptions } from "@/modules/cms/options";
 import { getEntry } from "@/modules/cms/repo";
 
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -20,6 +21,7 @@ export default async function EditEntryPage({ params, searchParams }: PageProps<
   const entry = await getEntry(collection, id);
   if (!entry) notFound();
   const data = { ...emptyData(def.fields), ...(entry.data as Record<string, unknown>) };
+  const fields = await withLiveOptions(def.fields, data);
   const title = String(data[def.titleField] ?? "") || `Edit ${def.singular}`;
   const href = entry.status === "published" ? publicUrlFor(collection, entry.slug) : null;
   const { saved } = await searchParams;
@@ -37,7 +39,7 @@ export default async function EditEntryPage({ params, searchParams }: PageProps<
         key={entry.updatedAt.toISOString()}
         collection={collection}
         singular={def.singular}
-        fields={def.fields}
+        fields={fields}
         drafts={!!def.drafts}
         canDelete={can(admin.role, "content.delete")}
         initial={{ id: entry.id, data, status: entry.status }}

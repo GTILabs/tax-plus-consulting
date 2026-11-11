@@ -92,6 +92,12 @@ export async function getTeam() {
   };
 }
 
+/** The team member picked as an article's author, matched by name; undefined for the team byline. */
+export async function getArticleAuthor(name: string | undefined) {
+  if (!name) return undefined;
+  return (await getCollection("team")).find((p) => p.name === name);
+}
+
 export const getReviews = () => getCollection("reviews");
 export const getInstagramPosts = () => getCollection("instagram");
 export const getTaxForms = () => getCollection("taxForms");

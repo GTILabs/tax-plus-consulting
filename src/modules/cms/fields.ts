@@ -23,7 +23,11 @@ export type UrlField = Base & { type: "url"; placeholder?: string };
 export type NumberField = Base & { type: "number"; min?: number; max?: number; step?: number };
 /** ISO date, YYYY-MM-DD. */
 export type DateField = Base & { type: "date" };
-export type SelectField = Base & { type: "select"; options: readonly Option[] };
+/**
+ * `optionsFrom` fills the options from another collection when the admin form opens
+ * (see withLiveOptions); the stored value is then any string, checked against nothing.
+ */
+export type SelectField = Base & { type: "select"; options: readonly Option[]; optionsFrom?: "team" };
 export type BooleanField = Base & { type: "boolean" };
 export type ColorField = Base & { type: "color" };
 export type ImageField = Base & { type: "image" };
@@ -49,23 +53,25 @@ export type Field = LeafField | ObjectsField;
 
 /* ---------- Types of the stored data ---------- */
 
-type ValueOf<F> = F extends { type: "select"; options: readonly { value: infer V }[] }
-  ? V
-  : F extends { type: "text" | "textarea" | "richtext" | "url" | "date" | "color" }
-    ? string
-    : F extends { type: "number" }
-      ? number
-      : F extends { type: "boolean" }
-        ? boolean
-        : F extends { type: "image" }
-          ? ImageValue | null
-          : F extends { type: "file" }
-            ? FileValue | null
-            : F extends { type: "list" }
-              ? string[]
-              : F extends { type: "objects"; fields: infer S extends readonly Field[] }
-                ? DataOf<S>[]
-                : never;
+type ValueOf<F> = F extends { type: "select"; optionsFrom: string }
+  ? string
+  : F extends { type: "select"; options: readonly { value: infer V }[] }
+    ? V
+    : F extends { type: "text" | "textarea" | "richtext" | "url" | "date" | "color" }
+      ? string
+      : F extends { type: "number" }
+        ? number
+        : F extends { type: "boolean" }
+          ? boolean
+          : F extends { type: "image" }
+            ? ImageValue | null
+            : F extends { type: "file" }
+              ? FileValue | null
+              : F extends { type: "list" }
+                ? string[]
+                : F extends { type: "objects"; fields: infer S extends readonly Field[] }
+                  ? DataOf<S>[]
+                  : never;
 
 export type DataOf<S extends readonly Field[]> = { [F in S[number] as F["name"]]: ValueOf<F> };
 
@@ -104,6 +110,8 @@ function fieldSchema(f: Field): z.ZodType {
     case "boolean":
       return z.boolean().default(false);
     case "select": {
+      // Live options change with the other collection, so an old value must still load.
+      if (f.optionsFrom) return z.string().trim().default("");
       const values = f.options.map((o) => o.value);
       return z
         .string()

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleCard, ArticleCover } from "@/components/articles/ArticleCard";
@@ -6,7 +7,7 @@ import { JsonLd } from "@/components/sections/Faq";
 import { SectionHead } from "@/components/sections/SectionHead";
 import { formatArticleDate } from "@/modules/content/article-meta";
 import { ARTICLE_AUTHOR, articleCardData, articleWhatsappMessage, relatedArticles } from "@/modules/content/articles";
-import { getArticle, getArticles, getSite, waLink } from "@/modules/content/data";
+import { getArticle, getArticleAuthor, getArticles, getSite, waLink } from "@/modules/content/data";
 import { routes } from "@/modules/content/navigation";
 import { SITE_NAME, siteUrl } from "@/modules/content/site";
 
@@ -20,6 +21,7 @@ const absolute = (src: string) => (src.startsWith("/") ? `${siteUrl}${src}` : sr
 export async function generateMetadata({ params }: PageProps<"/artikel/[slug]">): Promise<Metadata> {
   const article = await getArticle((await params).slug);
   if (!article) return {};
+  const author = await getArticleAuthor(article.author);
   const image = { url: article.cover.src, width: article.cover.width, height: article.cover.height, alt: article.title };
   return {
     title: article.title,
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: PageProps<"/artikel/[slug]">)
       title: article.title,
       description: article.excerpt,
       publishedTime: article.publishedAt,
-      authors: [ARTICLE_AUTHOR],
+      authors: [author?.name ?? ARTICLE_AUTHOR],
       images: [image],
     },
     twitter: { card: "summary_large_image", images: [image.url] },
@@ -40,6 +42,8 @@ export async function generateMetadata({ params }: PageProps<"/artikel/[slug]">)
 export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]">) {
   const [article, all, site] = await Promise.all([getArticle((await params).slug), getArticles(), getSite()]);
   if (!article) notFound();
+  const author = await getArticleAuthor(article.author);
+  const organization = { "@type": "Organization", "@id": `${siteUrl}/#organization`, name: SITE_NAME, url: siteUrl };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -48,7 +52,16 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
     description: article.excerpt,
     datePublished: article.publishedAt,
     image: absolute(article.cover.src),
-    author: { "@type": "Organization", name: SITE_NAME, url: siteUrl },
+    author: author
+      ? {
+          "@type": "Person",
+          name: author.name,
+          jobTitle: author.role,
+          ...(author.photo && { image: absolute(author.photo.src) }),
+          url: `${siteUrl}${routes.about}`,
+          worksFor: organization,
+        }
+      : organization,
     publisher: { "@type": "Organization", name: SITE_NAME, logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo.png` } },
     mainEntityOfPage: `${siteUrl}${routes.article(article.slug)}`,
   };
@@ -66,11 +79,28 @@ export default async function ArticlePage({ params }: PageProps<"/artikel/[slug]
             <h1>{article.title}</h1>
             <p className="ar-lead">{article.excerpt}</p>
             <div className="ar-by">
-              <span className="ar-av" aria-hidden="true">
-                TP
-              </span>
+              {author?.photo ? (
+                // Team photos are half-length portraits, so the circle zooms in on the face.
+                <span className="ar-av ar-av-photo">
+                  <Image src={author.photo.src} width={author.photo.width} height={author.photo.height} sizes="112px" alt="" />
+                </span>
+              ) : (
+                <span className="ar-av" aria-hidden="true">
+                  TP
+                </span>
+              )}
               <span>
-                <b>{ARTICLE_AUTHOR}</b>{" "}
+                {author ? (
+                  <>
+                    Ditulis oleh{" "}
+                    <Link className="ar-author" href={routes.about}>
+                      {author.name}
+                    </Link>
+                    <span className="ar-role">, {author.role}</span>
+                  </>
+                ) : (
+                  <b>{ARTICLE_AUTHOR}</b>
+                )}{" "}
                 <br />
                 <time dateTime={article.publishedAt}>{formatArticleDate(article.publishedAt)}</time> &middot;{" "}
                 {article.readingMinutes} menit baca
