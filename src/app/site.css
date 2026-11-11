@@ -567,7 +567,8 @@ footer.site{padding-bottom:0!important}
 .l2-left .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.7}
 footer.site .l2-left a{display:inline;padding:0;color:var(--on-navy-muted);text-decoration:underline;text-decoration-color:rgba(255,255,255,.25);text-underline-offset:3px}
 footer.site .l2-left a:hover{color:#fff!important}
-.histats{line-height:0}.histats:empty{display:none}footer.site .l2-left .histats a{text-decoration:none}
+/* Histats draws its 17 px badge at the top of a 37 px canvas; clip the empty rest so the badge centres on the text. */
+.histats{line-height:0;height:17px;overflow:hidden}.histats canvas{display:block}.histats:empty{display:none}footer.site .l2-left .histats a{text-decoration:none}
 .l2-right{display:flex;flex-wrap:wrap;gap:6px}
 .lc{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:4px 9px;color:#E3E8F3;font-size:12px;font-variant-numeric:tabular-nums}
 .lc small{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);opacity:.85}
