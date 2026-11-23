@@ -208,6 +208,13 @@ export const downloads = [
     file: { url: "/unduhan/Brosur_Lipat_TaxPlus_Consulting_2026.pdf", name: "Brosur_Lipat_TaxPlus_Consulting_2026.pdf", sizeKb: 506 },
     cover: { src: "/images/unduhan/brosur-2026.webp", width: 800, height: 565 },
   },
+  {
+    title: "Kartu Nama Kalam Al-Iqbal",
+    text: "Konsultan pajak dan kuasa hukum Pengadilan Pajak: izin praktik, nomor anggota IKPI, dan kontak.",
+    detail: "kartu nama",
+    file: { url: "/unduhan/Kartu_Nama_Kalam_Al-Iqbal_TaxPlus_Consulting.pdf", name: "Kartu_Nama_Kalam_Al-Iqbal_TaxPlus_Consulting.pdf", sizeKb: 102 },
+    cover: { src: "/images/unduhan/kartu-nama-kalam.webp", width: 800, height: 450 },
+  },
 ];
 
 /* Career page. Positions are maintained by the admin. */
